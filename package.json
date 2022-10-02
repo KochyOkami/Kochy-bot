@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node main.js"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "author": "Kochy_Okami",
   "license": "ISC",
   "dependencies": {
