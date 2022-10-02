@@ -7,6 +7,8 @@ const bot = new Discord.Client({
         "GuildWebhooks"
     ]
 });
+const dotenv = require('dotenv');
+dotenv.config();
 const fs = require('fs');
 const request = require('request');
 const {
@@ -20,19 +22,17 @@ const { Routes } = require('discord.js');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commands = [];
 
-bot.login(process.env.TOKEN);
+bot.login(process.env.DISCORD_TOKEN);
 
 const sdk = require("matrix-bot-sdk");
 const { EmbedBuilder } = require('discord.js');
-const process = require('process');
 const MatrixClient = sdk.MatrixClient;
 const SimpleFsStorageProvider = sdk.SimpleFsStorageProvider;
 const AutojoinRoomsMixin = sdk.AutojoinRoomsMixin;
 const homeserverUrl = "https://matrix.org"; // make sure to update this with your url
-const accessToken = config.token_matrix;
 const storage = new SimpleFsStorageProvider("bot.json");
 
-const client = new MatrixClient(homeserverUrl, accessToken, storage);
+const client = new MatrixClient(homeserverUrl, process.env.MATRIX_TOKEN, storage);
 AutojoinRoomsMixin.setupOnClient(client);
 
 
@@ -92,7 +92,7 @@ async function MatrixCheckRooms(roomId) {
         }
     }
     return false;
- 
+
 }
 
 async function MatrixSendImage(roomId, data, name, avatar) {
@@ -163,7 +163,7 @@ bot.on("ready", async () => {
     //Register all commands for the bot.
     const rest = new REST({
         version: '10'
-    }).setToken(process.env.TOKEN);
+    }).setToken(process.env.DISCORD_TOKEN);
 
     const TEST_GUILD_ID = false;
     const CLIENT_ID = bot.user.id;
@@ -320,7 +320,7 @@ bot.on("messageCreate", async (message) => {
                                 username: message.member.displayName,
                                 avatarURL: message.author.avatarURL()
                             });
-                            log.msg(message.content, message.member, await bot.channels.fetch(link,false))
+                            log.msg(message.content, message.member, await bot.channels.fetch(link, false))
 
                         } else if (MatrixCheckRooms(link)) {
                             MatrixSend(link, message.content, message.member.displayName, message.author.avatarURL());
