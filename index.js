@@ -11,21 +11,19 @@ const dotenv = require('dotenv');
 dotenv.config();
 const fs = require('fs');
 const request = require('request');
-const {
-    Collection
-} = require('discord.js');
-const config = require('./config.js');
-const log = require('./logs/logBuilder.js');
+const { Collection,
+        EmbedBuilder ,
+        Routes } = require('discord.js');
+
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord.js');
+
+const log = require('./logs/logBuilder.js');
+const config = require('./config.js');
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commands = [];
 
-bot.login(process.env.DISCORD_TOKEN);
-
 const sdk = require("matrix-bot-sdk");
-const { EmbedBuilder } = require('discord.js');
 const MatrixClient = sdk.MatrixClient;
 const SimpleFsStorageProvider = sdk.SimpleFsStorageProvider;
 const AutojoinRoomsMixin = sdk.AutojoinRoomsMixin;
@@ -36,6 +34,7 @@ const client = new MatrixClient(homeserverUrl, process.env.MATRIX_TOKEN, storage
 AutojoinRoomsMixin.setupOnClient(client);
 
 
+bot.login(process.env.DISCORD_TOKEN);
 client.start().then(() => log.write("Client started!"));
 
 module.exports = { MatrixCheckRooms };
