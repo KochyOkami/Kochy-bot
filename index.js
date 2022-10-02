@@ -11,6 +11,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const fs = require('fs');
 const request = require('request');
+const loo = require('matrix-js-sdk/lib/logger.js');
 const {
     Collection
 } = require('discord.js');
