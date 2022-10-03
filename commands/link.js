@@ -39,379 +39,216 @@ module.exports = {
 
       }
 
-      //test if it's a valid matrix room id.
-      if (link1.startsWith('!')) {
-        try {
-          if (!await main.MatrixCheckRooms(link1)) {
+      //test if it's a valid id
+      try {
+        await interaction.client.channels.fetch(link1);
+
+      } catch (error) {
+        //log the error message.
+        log.write(error + "3", interaction.member, interaction.channel);
+
+        //reply the error message.
+        const text = new EmbedBuilder()
+          .setColor('#C0392B')
+          .setTitle('**Error**')
+          .setDescription('The first link is not a valid channel id')
+          .addFields(
+            { name: 'Link 1', value: '`' + link1 + '`' },
+            { name: 'Link 2', value: '`' + link2 + '`' },
+            { name: '\u200B', value: '\u200B' }
+          )
+          .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+
+        await interaction.reply({ embeds: [text] });
+        return;
+      }
+
+
+      //test if link2 it's a valis matrix room id.
+
+      try {
+        await interaction.client.channels.fetch(link2);
+
+      } catch (error) {
+        //log the error message.
+        log.write(error, interaction.member, interaction.channel);
+
+        //reply the error message.
+        const text = new EmbedBuilder()
+          .setColor('#C0392B')
+          .setTitle('**Error**')
+          .setDescription('The second link is not a valid channel id')
+          .addFields(
+            { name: 'Link 1', value: '`' + link1 + '`' },
+            { name: 'Link 2', value: '`' + link2 + '`' },
+            { name: '\u200B', value: '\u200B' }
+          )
+          .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+
+        await interaction.reply({ embeds: [text] });
+        return;
+      }
+
+
+
+      if (await interaction.options.getBoolean('double_way', false)) {
+        if (!links_list[link1] && !links_list[link2]) {
+          links_list[link1] = Array(link2);
+          links_list[link2] = Array(link1);
+
+          create_webhook(interaction, link1);
+
+          create_webhook(interaction, link2);
+
+        } else if (!links_list[link1] && links_list[link2]) {
+          links_list[link1] = Array(link2);
+
+          create_webhook(interaction, link2);
+
+          if (links_list[link2].indexOf(link1) > -1) {
             const text = new EmbedBuilder()
-              .setColor('#C0392B')
-              .setTitle('**Error**')
-              .setDescription('The first link is not a valid room id')
-              .addFields(
-                { name: 'Link 1', value: '`' + link1 + '`' },
-                { name: 'Link 2', value: '`' + link2 + '`' },
-                { name: '\u200B', value: '\u200B' }
-              )
+              .setColor('#F39C12')
+              .setTitle('**Warning**')
+              .setDescription(`${link1} is already linked to:`)
               .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
 
             await interaction.reply({ embeds: [text] });
             return;
+
+          } else {
+            links_list[link2].push(link1);
+            create_webhook(interaction, link1);
           }
 
-        } catch {
-          //log the error message.
-          log.write(error + " 2", interaction.member, interaction.channel);
+        } else if (links_list[link1] && !links_list[link2]) {
+          links_list[link2] = Array(link1);
 
-          //reply the error message.
-          const text = new EmbedBuilder()
-            .setColor('#C0392B')
-            .setTitle('**Error**')
-            .setDescription(error)
-            .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+          create_webhook(interaction, link1);
 
-          await interaction.reply({ embeds: [text] });
-          return;
-        }
-
-        //test if it's a valid channel id
-      } else {
-        try {
-          await interaction.client.channels.fetch(link1);
-
-        } catch (error) {
-          //log the error message.
-          log.write(error + "3", interaction.member, interaction.channel);
-
-          //reply the error message.
-          const text = new EmbedBuilder()
-            .setColor('#C0392B')
-            .setTitle('**Error**')
-            .setDescription('The first link is not a valid channel id')
-            .addFields(
-              { name: 'Link 1', value: '`' + link1 + '`' },
-              { name: 'Link 2', value: '`' + link2 + '`' },
-              { name: '\u200B', value: '\u200B' }
-            )
-            .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-          await interaction.reply({ embeds: [text] });
-          return;
-        }
-
-      }
-      //test if link2 it's a valis matrix room id.
-      if (link2.startsWith('!')) {
-        try {
-          if (!await main.MatrixCheckRooms(link2)) {
-
+          if (links_list[link1].indexOf(link2) > -1) {
             const text = new EmbedBuilder()
-              .setColor('#C0392B')
-              .setTitle('**Error**')
-              .setDescription('The second link is not a valid room id')
-              .addFields(
-                { name: 'Link 1', value: '`' + link1 + '`' },
-                { name: 'Link 2', value: '`' + link2 + '`' },
-                { name: '\u200B', value: '\u200B' }
-              )
+              .setColor('#F39C12')
+              .setTitle('**Warning**')
+              .setDescription(`${link2} is already linked to:`)
               .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
 
-            await interaction.reply({ embeds: [text] })
+            var values = "";
+
+            for (let index = 0; index < links_list[link1].length; index++) {
+              try {
+                values += "<#" + await interaction.client.channels.fetch(links_list[link1][index]) + ">\n";
+
+              } catch {
+                values += "`" + links_list[link1][index] + "`\n";
+              }
+
+            }
+            text.setFields({ name: "Channels:", value: values })
+            await interaction.reply({ embeds: [text] });
             return;
+
           } else {
-            if (await interaction.options.getBoolean('double_way', false)) {
-              if (links_list[link1] && links_list[link2]) {
-                if (links_list[link1].indexOf(link2) > -1) {
-                  const text = new EmbedBuilder()
-                    .setColor('#F39C12')
-                    .setTitle('**Warning**')
-                    .setDescription(`${link1} is already linked to:`)
-                    .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+            links_list[link1].push(link2);
 
-                  await interaction.reply({ embeds: [text] });
-                  return;
-
-                } else {
-                  if (links_list[link2].indexOf(link1) > -1) {
-                    const text = new EmbedBuilder()
-                      .setColor('#F39C12')
-                      .setTitle('**Warning**')
-                      .setDescription(`${link2} is already linked to:`)
-                      .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-                    await interaction.reply({ embeds: [text] });
-                    return;
-
-                  } else {
-                    links_list[link1].push(link2)
-                    links_list[link2].push(link1)
-                  }
-
-                }
-              } else if (!links_list[link1] && links_list[link2]) {
-                if (links_list[link2].indexOf(link1) > -1) {
-                  const text = new EmbedBuilder()
-                    .setColor('#F39C12')
-                    .setTitle('**Warning**')
-                    .setDescription(`${link2} is already linked to:`)
-                    .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-                  await interaction.reply({ embeds: [text] });
-                  return;
-
-                } else {
-                  links_list[link1] = Array(link2)
-                  links_list[link2].push(link1)
-                }
-
-              } else if (links_list[link1] && !links_list[link2]) {
-                if (links_list[link1].indexOf(link2) > -1) {
-                  const text = new EmbedBuilder()
-                    .setColor('#F39C12')
-                    .setTitle('**Warning**')
-                    .setDescription(`${link1} is already linked to:`)
-                    .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-                  await interaction.reply({ embeds: [text] });
-                  return;
-
-                } else {
-                  links_list[link2] = Array(link1)
-                  links_list[link1].push(link2)
-                }
-
-              } else {
-                links_list[link2] = Array(link1)
-                links_list[link1] = Array(link2)
-              }
-
-
-
-            } else {
-              if (links_list[link1]) {
-                console.log(`${links_list[link1]} is already linked to:`);
-                if (links_list[link1].indexOf(link2) > -1) {
-                  const text = new EmbedBuilder()
-                    .setColor('#F39C12')
-                    .setTitle('**Warning**')
-                    .setDescription(`${link1} is already linked to:`)
-                    .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-                  await interaction.reply({ embeds: [text] });
-                  return;
-
-                } else {
-                  console.log(`${links_list[link1]} is already linkedz`);
-                  links_list[link1].push(link2);
-                }
-              } else {
-
-                links_list[link1] = Array(link2);
-                console.log('Warning', links_list[link1]);
-
-              }
-            }
+            create_webhook(interaction, link2);
           }
 
-        } catch {
-          //log the error message.
-          log.write(error + "4", interaction.member, interaction.channel);
+        } else if (links_list[link1] && links_list[link2]) {
 
-          //reply the error message.
-          const text = new EmbedBuilder()
-            .setColor('#C0392B')
-            .setTitle('**Error**')
-            .setDescription(error)
-            .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+          if (links_list[link1].indexOf(link2) > -1) {
+            const text = new EmbedBuilder()
+              .setColor('#F39C12')
+              .setTitle('**Warning**')
+              .setDescription(`${link2} is already linked to:`)
+              .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
 
-          await interaction.reply({ embeds: [text] });
-          return;
+            var values = "";
+
+            for (let index = 0; index < links_list[link2].length; index++) {
+              try {
+                values += "<#" + await interaction.client.channels.fetch(links_list[link2][index]) + ">\n";
+
+              } catch {
+                values += "`" + links_list[link2][index] + "`\n";
+              }
+
+            }
+            text.setFields({ name: "Channels:", value: values })
+            await interaction.reply({ embeds: [text] });
+            return;
+
+          } else {
+            links_list[link1].push(link2);
+
+            create_webhook(interaction, link2);
+          }
+
+          if (links_list[link2].indexOf(link1) > -1) {
+            const text = new EmbedBuilder()
+              .setColor('#F39C12')
+              .setTitle('**Warning**')
+              .setDescription(`${link1} is already linked to:`)
+              .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+
+            var values = "";
+
+            for (let index = 0; index < links_list[link1].length; index++) {
+              try {
+                values += "<#" + await interaction.client.channels.fetch(links_list[link1][index]) + ">\n";
+
+              } catch {
+                values += "`" + links_list[link1][index] + "`\n";
+              }
+
+            }
+            text.setFields({ name: "Channels:", value: values })
+            await interaction.reply({ embeds: [text] });
+            return;
+
+          } else {
+            links_list[link2].push(link1);
+
+            create_webhook(interaction, link1);
+          }
+
         }
-
-        //test if it's a valid channel id.
       } else {
-        try {
-          await interaction.client.channels.fetch(link2);
+        if (!links_list[link1]) {
+          links_list[link1] = Array(link2);
 
-        } catch (error) {
-          //log the error message.
-          log.write(error, interaction.member, interaction.channel);
+          create_webhook(interaction, link2);
 
-          //reply the error message.
-          const text = new EmbedBuilder()
-            .setColor('#C0392B')
-            .setTitle('**Error**')
-            .setDescription('The second link is not a valid channel id')
-            .addFields(
-              { name: 'Link 1', value: '`' + link1 + '`' },
-              { name: 'Link 2', value: '`' + link2 + '`' },
-              { name: '\u200B', value: '\u200B' }
-            )
-            .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+        } else if (links_list[link1]) {
 
-          await interaction.reply({ embeds: [text] });
-          return;
-        }
+          if (links_list[link1].indexOf(link2) > -1) {
+            const text = new EmbedBuilder()
+              .setColor('#F39C12')
+              .setTitle('**Warning**')
+              .setDescription(`${link1} is already linked to:`)
+              .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
 
+            var values = "";
 
+            for (let index = 0; index < links_list[link1].length; index++) {
+              try {
+                values += "<#" + await interaction.client.channels.fetch(links_list[link1][index]) + ">\n";
 
-        if (await interaction.options.getBoolean('double_way', false)) {
-          if (!links_list[link1] && !links_list[link2]) {
-            links_list[link1] = Array(link2);
-            links_list[link2] = Array(link1);
+              } catch {
+                values += "`" + links_list[link1][index] + "`\n";
+              }
 
-            create_webhook(interaction, link1);
+            }
+            text.setFields({ name: "Channels:", value: values })
+            await interaction.reply({ embeds: [text] });
+            return;
 
+          } else {
+            links_list[link1].push(link2);
             create_webhook(interaction, link2);
-
-          } else if (!links_list[link1] && links_list[link2]) {
-            links_list[link1] = Array(link2);
-
-            create_webhook(interaction, link2);
-
-            if (links_list[link2].indexOf(link1) > -1) {
-              const text = new EmbedBuilder()
-                .setColor('#F39C12')
-                .setTitle('**Warning**')
-                .setDescription(`${link1} is already linked to:`)
-                .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-              await interaction.reply({ embeds: [text] });
-              return;
-
-            } else {
-              links_list[link2].push(link1);
-              create_webhook(interaction, link1);
-            }
-
-          } else if (links_list[link1] && !links_list[link2]) {
-            links_list[link2] = Array(link1);
-
-            create_webhook(interaction, link1);
-
-            if (links_list[link1].indexOf(link2) > -1) {
-              const text = new EmbedBuilder()
-                .setColor('#F39C12')
-                .setTitle('**Warning**')
-                .setDescription(`${link2} is already linked to:`)
-                .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-              var values = "";
-
-              for (let index = 0; index < links_list[link1].length; index++) {
-                try {
-                  values += "<#" + await interaction.client.channels.fetch(links_list[link1][index]) + ">\n";
-
-                } catch {
-                  values += "`" + links_list[link1][index] + "`\n";
-                }
-
-              }
-              text.setFields({ name: "Channels:", value: values })
-              await interaction.reply({ embeds: [text] });
-              return;
-
-            } else {
-              links_list[link1].push(link2);
-
-              create_webhook(interaction, link2);
-            }
-
-          } else if (links_list[link1] && links_list[link2]) {
-
-            if (links_list[link1].indexOf(link2) > -1) {
-              const text = new EmbedBuilder()
-                .setColor('#F39C12')
-                .setTitle('**Warning**')
-                .setDescription(`${link2} is already linked to:`)
-                .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-              var values = "";
-
-              for (let index = 0; index < links_list[link2].length; index++) {
-                try {
-                  values += "<#" + await interaction.client.channels.fetch(links_list[link2][index]) + ">\n";
-
-                } catch {
-                  values += "`" + links_list[link2][index] + "`\n";
-                }
-
-              }
-              text.setFields({ name: "Channels:", value: values })
-              await interaction.reply({ embeds: [text] });
-              return;
-
-            } else {
-              links_list[link1].push(link2);
-
-              create_webhook(interaction, link2);
-            }
-
-            if (links_list[link2].indexOf(link1) > -1) {
-              const text = new EmbedBuilder()
-                .setColor('#F39C12')
-                .setTitle('**Warning**')
-                .setDescription(`${link1} is already linked to:`)
-                .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-              var values = "";
-
-              for (let index = 0; index < links_list[link1].length; index++) {
-                try {
-                  values += "<#" + await interaction.client.channels.fetch(links_list[link1][index]) + ">\n";
-
-                } catch {
-                  values += "`" + links_list[link1][index] + "`\n";
-                }
-
-              }
-              text.setFields({ name: "Channels:", value: values })
-              await interaction.reply({ embeds: [text] });
-              return;
-
-            } else {
-              links_list[link2].push(link1);
-
-              create_webhook(interaction, link1);
-            }
-
-          }
-        } else {
-          if (!links_list[link1]) {
-            links_list[link1] = Array(link2);
-
-            create_webhook(interaction, link2);
-
-          } else if (links_list[link1]) {
-
-            if (links_list[link1].indexOf(link2) > -1) {
-              const text = new EmbedBuilder()
-                .setColor('#F39C12')
-                .setTitle('**Warning**')
-                .setDescription(`${link1} is already linked to:`)
-                .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
-
-              var values = "";
-
-              for (let index = 0; index < links_list[link1].length; index++) {
-                try {
-                  values += "<#" + await interaction.client.channels.fetch(links_list[link1][index]) + ">\n";
-
-                } catch {
-                  values += "`" + links_list[link1][index] + "`\n";
-                }
-
-              }
-              text.setFields({ name: "Channels:", value: values })
-              await interaction.reply({ embeds: [text] });
-              return;
-
-            } else {
-              links_list[link1].push(link2);
-              create_webhook(interaction, link2);
-            }
           }
         }
       }
+
       settings.links_list = links_list;
 
       fs.writeFileSync("./settings.json", JSON.stringify(settings));

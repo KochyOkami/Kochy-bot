@@ -12,8 +12,8 @@ dotenv.config();
 const fs = require('fs');
 const request = require('request');
 const { Collection,
-        EmbedBuilder ,
-        Routes } = require('discord.js');
+    EmbedBuilder,
+    Routes } = require('discord.js');
 
 const { REST } = require('@discordjs/rest');
 
@@ -23,123 +23,8 @@ const config = require('./config.js');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commands = [];
 
-const sdk = require("matrix-bot-sdk");
-const MatrixClient = sdk.MatrixClient;
-const SimpleFsStorageProvider = sdk.SimpleFsStorageProvider;
-const AutojoinRoomsMixin = sdk.AutojoinRoomsMixin;
-const homeserverUrl = "https://matrix.org"; // make sure to update this with your url
-const storage = new SimpleFsStorageProvider("bot.json");
-
-const client = new MatrixClient(homeserverUrl, process.env.MATRIX_TOKEN, storage);
-AutojoinRoomsMixin.setupOnClient(client);
-
 
 bot.login(process.env.DISCORD_TOKEN);
-client.start().then(() => log.write("Client started!"));
-
-module.exports = { MatrixCheckRooms };
-
-client.on("room.message", async (roomId, event) => {
-    if (!event["content"]) return;
-    if (event['sender'] === "@kochy_bot:matrix.org") return;
-    const sender = event["sender"];
-    const body = event["content"]["body"];
-    const profile = await client.getUserProfile(sender);
-
-    log.write(`${roomId}: ${sender} says '${body}'`);
-    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-    var links_list = eval(settings.links_list);
-
-
-    if (links_list[roomId]) {
-        links_list[roomId].forEach(async function (link) {
-            if (event['content']['msgtype'] === 'm.image') {
-                console.log('img')
-                await DiscordSendImage(link, '', { 'path': client.mxcToHttp(event['content']['url']), "name": body }, sender, client.mxcToHttp(profile.avatar_url))
-
-            } else {
-                if (!isNaN(link)) {
-                    if (profile.avatar_url.startsWith("mxc://")) {
-                        var avatar = client.mxcToHttp(profile.avatar_url);
-                    } else { var avatar = profile.avatar_url; }
-
-                    await DiscordSend(link, body, profile.displayname, avatar);
-
-                } else if (checkRooms(link)) {
-                    if (!profile.avatar_url.startsWith("mxc://")) {
-                        var avatar = client.uploadContent(profile.avatar_url);
-                    } else { var avatar = profile.avatar_url; }
-
-                    MatrixSend(link, body, sender, profile.displayname, avatar);
-                    log.write(body, link)
-                }
-            }
-
-        });
-
-    }
-});
-
-async function MatrixCheckRooms(roomId) {
-    if (typeof roomId != "string") { return false; }
-
-    var rooms = await client.getJoinedRooms();
-
-    for (var i = 0; i < rooms.length; i++) {
-        if (rooms[i] === roomId) {
-            return true;
-        }
-    }
-    return false;
-
-}
-
-async function MatrixSendImage(roomId, data, name, avatar) {
-
-    var rooms = await client.getJoinedRooms();
-
-    if (rooms.indexOf(roomId) != -1) {
-        var text = data.name
-        let url = await client.uploadContentFromUrl(data.url);
-        let type = 'image/' + name.split('.')[1]
-        await client.setAvatarUrl(avatar);
-        await client.setDisplayName(name);
-        await client.sendMessage(roomId, {
-            "msgtype": "m.image",
-            "url": url,
-            "body": text,
-            "info": {
-                "size": data.size,
-                "mimetype": type,
-                "thumbnail_info": null,
-                "w": data.wight,
-                "h": data.height,
-                "thumbnail_url": null,
-            },
-
-        });
-    } else {
-
-        console.log(`Unkwnow room Id: ${roomId}`);
-    }
-};
-async function MatrixSend(roomId, message, name, avatar) {
-    if (typeof message != "string") {
-        log.write(`The body must be a string, body: ${message}`);
-    }
-    var rooms = await client.getJoinedRooms();
-
-    if (rooms.indexOf(roomId) != -1) {
-        await client.setDisplayName(name);
-        await client.setAvatarUrl(avatar);
-        await client.sendMessage(roomId, {
-            "msgtype": "m.text",
-            "body": message,
-        });
-    } else {
-        console.log(`Unkwnow room Id: ${roomId}`);
-    }
-};
 
 //-----------------------------------Discord------------------------------------------------
 
@@ -155,7 +40,7 @@ for (const file of commandFiles) {
 
 bot.on("ready", async () => {
     //set the presence of the bot
-    await bot.user.setPresence({
+    bot.user.setPresence({
         status: "online",
         activities: [{ name: "la version" + config.bot_version }],
     });
@@ -261,48 +146,35 @@ bot.on("messageCreate", async (message) => {
                         var path = "./images/" + name.toString()
 
                         links_list[message.channel.id].forEach(async function (link) {
-                            if (!isNaN(link)) {
 
-                                if (message.content != '') {
-                                    var webhook = await bot.fetchWebhook(webhooks_list[link]);
-                                    await webhook.send({
-                                        content: message.content,
-                                        files: [{
-                                            attachment: path,
-                                            name: name,
-                                            description: `Image by ${message.member.displayName}`
-                                        }
-                                        ],
-                                        content: message.content,
-                                        username: message.member.displayName,
-                                        avatarURL: message.author.avatarURL()
-                                    });
-                                    log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
-                                } else {
-                                    var webhook = await bot.fetchWebhook(webhooks_list[link]);
-                                    await webhook.send({
-                                        files: [{
-                                            attachment: path,
-                                            name: name,
-                                            description: `Image by ${message.member.displayName}`
-                                        }
-                                        ],
-                                        content: message.content,
-                                        username: message.member.displayName,
-                                        avatarURL: message.author.avatarURL()
-                                    });
-                                }
-
-                            } else if (MatrixCheckRooms(link)) {
-                                if (message.content != '') {
-                                    await MatrixSend(link, message.content, message.member.displayName, message.author.avatarURL());
-                                    await MatrixSendImage(link, attach, message.member.displayName, message.author.avatarURL());
-
-                                } else {
-                                    await MatrixSendImage(link, attach, message.member.displayName, message.author.avatarURL());
-
-                                }
-
+                            if (message.content != '') {
+                                var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                                await webhook.send({
+                                    content: message.content,
+                                    files: [{
+                                        attachment: path,
+                                        name: name,
+                                        description: `Image by ${message.member.displayName}`
+                                    }
+                                    ],
+                                    content: message.content,
+                                    username: message.member.displayName,
+                                    avatarURL: message.author.avatarURL()
+                                });
+                                log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                            } else {
+                                var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                                await webhook.send({
+                                    files: [{
+                                        attachment: path,
+                                        name: name,
+                                        description: `Image by ${message.member.displayName}`
+                                    }
+                                    ],
+                                    content: message.content,
+                                    username: message.member.displayName,
+                                    avatarURL: message.author.avatarURL()
+                                });
                             }
                         });
                     }
@@ -310,9 +182,7 @@ bot.on("messageCreate", async (message) => {
                 })
             } else {
                 if (message.content != '') {
-
                     links_list[message.channel.id].forEach(async function (link) {
-                        if (!isNaN(link)) {
                             var webhook = await bot.fetchWebhook(webhooks_list[link]);
                             await webhook.send({
                                 content: message.content,
@@ -320,12 +190,6 @@ bot.on("messageCreate", async (message) => {
                                 avatarURL: message.author.avatarURL()
                             });
                             log.msg(message.content, message.member, await bot.channels.fetch(link, false))
-
-                        } else if (MatrixCheckRooms(link)) {
-                            MatrixSend(link, message.content, message.member.displayName, message.author.avatarURL());
-                            log.msg(message.content, message.member, link)
-                        }
-
                     });
 
                 }
@@ -337,37 +201,6 @@ bot.on("messageCreate", async (message) => {
 
     }
 });
-
-async function DiscordSend(room, message, username, avatar) {
-    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-    var links_list = eval(settings.links_list);
-    var webhooks_list = eval(settings.webhooks_list);
-    var webhook = await bot.fetchWebhook(webhooks_list[room]);
-    await webhook.send({
-        content: message,
-        username: username,
-        avatarURL: avatar
-    });
-    return true;
-};
-
-async function DiscordSendImage(room, message, img = { 'path': null, 'name': null }, username, avatar) {
-    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-    var links_list = eval(settings.links_list);
-    var webhooks_list = eval(settings.webhooks_list);
-    var webhook = await bot.fetchWebhook(webhooks_list[room]);
-    await webhook.send({
-        content: message,
-        files: [{
-            attachment: img.path,
-            name: img.name,
-            description: `Image by ${username}`
-        }],
-        username: username.replace("@", "").replace(":matrix.org", ""),
-        avatarURL: avatar
-    });
-
-};
 
 async function download(url, name) {
 
