@@ -172,6 +172,7 @@ bot.on("messageCreate", async (message) => {
                                     avatarURL: message.author.avatarURL()
                                 });
                                 log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                                fs.unlinkSync(path)
                             } else {
                                 if (!webhooks_list.hasOwnProperty(link)) {
                                     await create_webhook(message, message.channelId)
@@ -192,6 +193,7 @@ bot.on("messageCreate", async (message) => {
                                     avatarURL: message.author.avatarURL()
                                 });
                                 log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                                fs.unlinkSync(path)
                             }
                         });
                     }
@@ -244,6 +246,7 @@ bot.on("messageCreate", async (message) => {
                                 avatarURL: message.author.avatarURL()
                             });
                             log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                            fs.unlinkSync(path)
                         });
                     }
                 });
@@ -252,7 +255,6 @@ bot.on("messageCreate", async (message) => {
 
     } catch (error) {
         log.write(error, message.member, message.channel);
-
     }
 });
 

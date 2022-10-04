@@ -228,7 +228,7 @@ async function create_webhook(interaction, channel_id) {
     
     log.write(`A webhook for "${channel.name}"(${channel}) was successfully registred`, interaction.member, interaction.channel);
 
-    var fresh_linked_channel = await interaction.client.fetchWebhook(webhook.id);
+    var fresh_linked_channel = await interaction.client.fetchWebhook(webhooks_list[channel_id]);
 
     const text = new EmbedBuilder()
       .setColor('#245078')
