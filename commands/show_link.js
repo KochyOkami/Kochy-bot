@@ -3,7 +3,6 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
 const { PermissionFlagsBits } = require('discord.js');
-const { logger } = require('matrix-js-sdk/lib/logger.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -21,33 +20,37 @@ module.exports = {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var links_list = eval(settings.links_list);
             var channel = interaction.channelId;
+            
 
             if (await interaction.options.getBoolean('all', false)) {
 
                 const text = new EmbedBuilder()
                     .setColor('#245078')
                     .setTitle('**Information**')
-                    .setDescription(`This channel is linked to:`)
+                    .setDescription(`List of all channels and their associated channels:`)
 
                 await interaction.channel.send({ embeds: [text] });
-                var values = "";
+                
                 for (let links in links_list) {
-
+                    var values = "";
                     for (let index = 0; index < links_list[links].length; index++) {
                         try {
-                            await interaction.client.channels.fetch(links_list[links][index])
-                            values += "  * <#" + links_list[links][index] + ">\n";
-                        } catch {
+                            var channel_rep = await interaction.client.channels.fetch(links_list[links][index])
+                            values += "  * <#" + links_list[links][index] + `> in server ${channel_rep.guild.name} \n`;
+                        } catch (e){
+                            console.log(e)
                             values += "  * `" + links_list[links][index] + "`\n";
                         }
                     }
                     try {
                         try {
+                            var channel_rep = await interaction.client.channels.fetch(links)
                             const text = new EmbedBuilder()
                                 .setColor('#245078')
-                                .setDescription("**Channels <#" + await interaction.client.channels.fetch(links, true) + "> with**: \n\n" + values)
+                                .setDescription("**Channels <#" + await interaction.client.channels.fetch(links, true) + `> in server ${channel_rep.guild.name} with**: \n\n` + values)
                             await interaction.channel.send({ embeds: [text] });
                         } catch (e) {
+                            console.log(e)
                             const text = new EmbedBuilder()
                                 .setColor('#245078')
                                 .setDescription("**Channels `" + links + "` with**: \n\n" + values)
@@ -72,9 +75,11 @@ module.exports = {
 
                     for (let index = 0; index < links_list[channel].length; index++) {
                         try {
+                            var channel_rep = await interaction.client.channels.fetch(links_list[channel][index])
                             await interaction.client.channels.fetch(links_list[channel][index])
-                            values += "  * <#" + links_list[channel][index] + ">\n";
-                        } catch {
+                            values += "  * <#" + links_list[channel][index] + `> in server ${channel_rep.guild.name} \n`;
+                        } catch (e) {
+                            console.log(e)
                             values += "  * `" + links_list[channel][index] + "`\n";
                         }
                     }
@@ -89,10 +94,9 @@ module.exports = {
                     await interaction.editReply({ embeds: [text] });
                     return;
                 }
-
             }
 
-        }catch (error) {
+        } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()
                 .setColor('#FF0000')

@@ -3,7 +3,6 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
 const config = require('../config.js');
-const { ConsoleLogger } = require('matrix-bot-sdk');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -60,7 +59,7 @@ module.exports = {
             var language = await interaction.options.getString('language', true);
             var link = await interaction.options.getString('link', true);
             var image = await interaction.options.getAttachment('image', false);
-            console.log(config.unknown_book)
+
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
@@ -69,7 +68,7 @@ module.exports = {
                         .setStyle(ButtonStyle.Link),
                 );
             var text = new EmbedBuilder()
-                .setColor('#245078')
+                .setColor('#ff36c5')
                 .setTitle(title)
                 .addFields({ name: 'Author', value: author })
                 .addFields({ name: 'Synopsis', value: description })
@@ -105,7 +104,7 @@ module.exports = {
                 } catch (error) {
                     log.write(error);
                     const text = new EmbedBuilder()
-                        .setColor('#FF0000')
+                        .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription(`There was an error executing /yaoi: \n` + '```' + error + '```')
                     await interaction.editReply({ embeds: [text] });
@@ -130,7 +129,7 @@ module.exports = {
                 } catch (error) {
                     log.write(error);
                     const text = new EmbedBuilder()
-                        .setColor('#FF0000')
+                        .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription(`There was an error executing /yaoi: \n` + '```' + error + '```')
                     await interaction.editReply({ embeds: [text] });
@@ -141,7 +140,7 @@ module.exports = {
         } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()
-                .setColor('#FF0000')
+                .setColor('#C0392B')
                 .setTitle('**Error**')
                 .setDescription(`There was an error executing /yaoi: \n` + '```' + error + '```')
             await interaction.editReply({ embeds: [text] });

@@ -31,8 +31,8 @@ module.exports = {
                 var user = false;
             }
             try {
-                if (webhooks_list[interaction.channel]) {
-                    var webhook = await interaction.client.fetchWebhook(webhooks_list[interaction.channel]);
+                if (webhooks_list[interaction.channel.id]) {
+                    var webhook = await interaction.client.fetchWebhook(webhooks_list[interaction.channel.id]);
                 } else {
 
                     var wbs = await interaction.guild.channels.fetchWebhooks(interaction.channel)
@@ -57,7 +57,7 @@ module.exports = {
                             });
                         }
                     }
-                    webhooks_list[interaction.channel] = webhook_id;
+                    webhooks_list[interaction.channel.id] = webhook_id;
                     var webhook = await interaction.client.fetchWebhook(webhook_id);
                 }
             } catch (error) {
@@ -67,7 +67,7 @@ module.exports = {
                     avatar: config.avatar,
                     reason: 'Need a cool Webhook to send beautiful images UwU'
                 });
-                webhooks_list[interaction.channel] = webhook.id;
+                webhooks_list[interaction.channel.id] = webhook.id;
                 log.write(`A webhook has been registered for ${interaction.channelId}`);
             }
             if (user) {

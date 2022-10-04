@@ -1,0 +1,275 @@
+--------------------Start Log 2022-10-03 19:17:05--------------------
+2022-10-03 19:17:05: test_bot#9176 logged successfully.
+2022-10-03 19:17:05: Successfully registered 8 application commands for global
+2022-10-03 19:17:05: Command: /save_img '1015653134921642065'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 19:17:05: A webhook for "commands"(<#1015653134921642065>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-03 20:01:31--------------------
+2022-10-03 20:01:31: test_bot#9176 logged successfully.
+2022-10-03 20:01:31: Successfully registered 8 application commands for global
+2022-10-03 20:01:31: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+2022-10-03 20:01:31: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+2022-10-03 20:01:31: Command: /unlink '988784456959672350' '948170961360916543'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 20:01:31: Channel: 948170961360916543 has been unlink to 988784456959672350 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 20:01:31: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 20:01:31: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 20:01:31: Command: /unlink '948170961360916543'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 20:01:31: Command: /unlink '948170961360916543'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 20:01:31: Channel: <#948170961360916543> `(948170961360916543)`
+<#987849896382062622> `(987849896382062622)`
+ has been unlink to 988784456959672350 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 20:01:31: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 20:01:31: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-03 21:23:13--------------------
+2022-10-03 21:23:13: test_bot#9176 logged successfully.
+2022-10-03 21:23:13: Successfully registered 8 application commands for global
+2022-10-03 21:23:13: Command: /link '1015653134921642065'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+--------------------Start Log 2022-10-03 21:27:45--------------------
+2022-10-03 21:27:45: test_bot#9176 logged successfully.
+2022-10-03 21:27:45: Successfully registered 8 application commands for global
+2022-10-03 21:27:45: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:27:45: Command: /link '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:27:45: A webhook for "test"(<#987122812105916457>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:27:45: Command: /unlink '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:27:45: TypeError: links_list.includes is not a function
+--------------------Start Log 2022-10-03 21:29:06--------------------
+2022-10-03 21:29:06: test_bot#9176 logged successfully.
+2022-10-03 21:29:06: Successfully registered 8 application commands for global
+2022-10-03 21:29:06: Command: /unlink '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:29:06: Channel: 987122812105916457 has been unlink to 987849896382062622 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:29:06: Error: Received one or more errors
+--------------------Start Log 2022-10-03 21:30:29--------------------
+2022-10-03 21:30:29: test_bot#9176 logged successfully.
+2022-10-03 21:30:29: Successfully registered 8 application commands for global
+2022-10-03 21:30:29: Command: /unlink '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:30:29: Channel: 987122812105916457 has been unlink to 987849896382062622 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:30:29: Error: Received one or more errors
+--------------------Start Log 2022-10-03 21:32:45--------------------
+2022-10-03 21:32:45: test_bot#9176 logged successfully.
+2022-10-03 21:32:45: Successfully registered 8 application commands for global
+2022-10-03 21:32:45: Command: /unlink '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:32:45: Channel: 987122812105916457 has been unlink to 987849896382062622 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:32:45: Error: Received one or more errors
+--------------------Start Log 2022-10-03 21:34:12--------------------
+2022-10-03 21:34:12: test_bot#9176 logged successfully.
+2022-10-03 21:34:12: Successfully registered 8 application commands for global
+2022-10-03 21:34:12: Command: /unlink '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:34:12: Channel: 987122812105916457 has been unlink to 987849896382062622 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+--------------------Start Log 2022-10-03 21:37:01--------------------
+2022-10-03 21:37:01: test_bot#9176 logged successfully.
+2022-10-03 21:37:01: Successfully registered 8 application commands for global
+2022-10-03 21:37:01: Command: /unlink '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:37:01: Channel: 1015653134921642065 has been unlink to 987849896382062622 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 21:37:01: TypeError: Cannot read properties of undefined (reading 'length')
+--------------------Start Log 2022-10-03 21:50:30--------------------
+2022-10-03 21:50:30: test_bot#9176 logged successfully.
+2022-10-03 21:50:30: Successfully registered 8 application commands for global
+2022-10-03 21:50:30: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 21:50:30: Command: /unlink  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-03 22:24:03--------------------
+2022-10-03 22:24:03: test_bot#9176 logged successfully.
+2022-10-03 22:24:03: Successfully registered 8 application commands for global
+2022-10-03 22:24:03: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 22:24:03: Command: /unlink  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 22:24:03: Command: /link '988501605034889226'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 22:24:03: A webhook for "ahahh"(<#988501605034889226>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-03 22:31:22--------------------
+--------------------Start Log 2022-10-03 22:34:53--------------------
+2022-10-03 22:34:53: test_bot#9176 logged successfully.
+2022-10-03 22:34:53: Successfully registered 8 application commands for global
+2022-10-03 22:34:53: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ahahh(<#988501605034889226>)
+2022-10-03 22:34:53: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+--------------------Start Log 2022-10-03 22:36:37--------------------
+2022-10-03 22:36:37: test_bot#9176 logged successfully.
+2022-10-03 22:36:37: Successfully registered 8 application commands for global
+2022-10-03 22:36:37: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+--------------------Start Log 2022-10-03 22:37:11--------------------
+2022-10-03 22:37:11: test_bot#9176 logged successfully.
+2022-10-03 22:37:11: Successfully registered 8 application commands for global
+2022-10-03 22:37:11: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:37:11: TypeError: Cannot read properties of undefined (reading '0')
+--------------------Start Log 2022-10-03 22:38:49--------------------
+2022-10-03 22:38:49: test_bot#9176 logged successfully.
+2022-10-03 22:38:49: Successfully registered 8 application commands for global
+2022-10-03 22:38:49: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:38:49: Error: Received one or more errors
+--------------------Start Log 2022-10-03 22:41:20--------------------
+2022-10-03 22:41:20: test_bot#9176 logged successfully.
+2022-10-03 22:41:20: Successfully registered 8 application commands for global
+2022-10-03 22:41:20: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:41:20: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:41:20: Command: /show_link 'false'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:41:20: Command: /link '988753095611797554'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:41:20: A webhook for "❘『🐱yaoi-suki🐈』"(<#988753095611797554>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+--------------------Start Log 2022-10-03 22:46:59--------------------
+2022-10-03 22:46:59: test_bot#9176 logged successfully.
+2022-10-03 22:46:59: Successfully registered 8 application commands for global
+2022-10-03 22:46:59: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘『🐱yaoi-suki🐈』(<#988753095611797554>)
+2022-10-03 22:46:59: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘『🐱yaoi-suki🐈』(<#988753095611797554>)
+2022-10-03 22:46:59: Command: /unlink  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘『🐱yaoi-suki🐈』(<#988753095611797554>)
+2022-10-03 22:46:59: Command: /unlink '988753095611797554'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:46:59: Channel: 988753095611797554 has been unlink to 987849896382062622 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:46:59: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test-bot(<#987849896382062622>)
+2022-10-03 22:46:59: Command: /say 'khbmiku:jgb'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+2022-10-03 22:46:59: Command: /yaoi 'light' 'oultjhf' 'ùouljb' 'ùoujlb' 'english' 'https://refcx.com'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+2022-10-03 22:46:59: Command: /yaoi 'hard' 'ytjfhb' 'ygjhkjbn' 'yotujlvhkb' 'english' 'https///edsxw.cr' '1026597522631819294'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+2022-10-03 22:46:59: Error: Invalid URL
+2022-10-03 22:46:59: Command: /yaoi 'hard' 'ytjfhb' 'ygjhkjbn' 'yotujlvhkb' 'english' 'https///edsxw.com'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+2022-10-03 22:46:59: Error: Invalid URL
+2022-10-03 22:46:59: Command: /yaoi 'hard' 'ytjfhb' 'ygjhkjbn' 'yotujlvhkb' 'english' 'https://refcx.com' '1026597726705688656'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+--------------------Start Log 2022-10-03 22:54:54--------------------
+2022-10-03 22:54:54: test_bot#9176 logged successfully.
+2022-10-03 22:54:54: Successfully registered 8 application commands for global
+2022-10-03 22:54:54: Command: /yaoi 'hard' 'ytjfhb' 'ygjhkjbn' 'yotujlvhkb' 'english' 'https///edsxw.com'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+2022-10-03 22:54:54: Error: Invalid URL
+2022-10-03 22:54:54: Command: /yaoi 'hard' 'ytjfhb' 'ygjhkjbn' 'yotujlvhkb' 'english' 'https://edsxw.com'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel commands(<#1015653134921642065>)
+2022-10-03 22:54:54: Command: /save_img '1015653134921642065'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 22:54:54: Command: /link '988784456959672350'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-03 22:59:14--------------------
+2022-10-03 22:59:14: test_bot#9176 logged successfully.
+2022-10-03 22:59:14: Successfully registered 8 application commands for global
+--------------------Start Log 2022-10-03 23:00:57--------------------
+2022-10-03 23:00:57: test_bot#9176 logged successfully.
+2022-10-03 23:00:57: Successfully registered 8 application commands for global
+--------------------Start Log 2022-10-03 23:01:23--------------------
+2022-10-03 23:01:23: test_bot#9176 logged successfully.
+2022-10-03 23:01:23: Successfully registered 8 application commands for global
+2022-10-03 23:01:23: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-03 23:01:23: Command: /link '988501605034889226'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-03 23:09:36--------------------
+2022-10-03 23:09:36: test_bot#9176 logged successfully.
+2022-10-03 23:09:36: Successfully registered 8 application commands for global
+2022-10-03 23:09:36: Command: /unlink  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘『🐱yaoi-suki🐈』(<#988753095611797554>)
+2022-10-03 23:09:36: Command: /link '988753094290600021'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘『🐱yaoi-suki🐈』(<#988753095611797554>)
+2022-10-03 23:09:36: A webhook for "❘-✨rdv-tabac-et-upjers"(<#988753094290600021>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘『🐱yaoi-suki🐈』(<#988753095611797554>)
+2022-10-03 23:09:36: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘『🐱yaoi-suki🐈』(<#988753095611797554>)
+2022-10-03 23:09:36: Command: /unlink  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:09:36: Command: /unlink '988753095611797554' '988753094290600021'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:09:36: Channel: 988753094290600021 has been unlink to 988753095611797554 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:09:36: TypeError: Cannot read properties of undefined (reading 'length') by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:09:36: Command: /unlink '988753095611797554' '988753094290600021'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:09:36: Channel: 988753094290600021 has been unlink to 988753095611797554 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:09:36: TypeError: Cannot read properties of undefined (reading 'length') by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+--------------------Start Log 2022-10-03 23:17:14--------------------
+2022-10-03 23:17:14: test_bot#9176 logged successfully.
+2022-10-03 23:17:14: Successfully registered 8 application commands for global
+2022-10-03 23:17:14: Command: /unlink '988753095611797554' '988753094290600021'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:17:14: Channel: 988753094290600021 has been unlink to 988753095611797554 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:17:14: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:17:14: Command: /say 'UwU'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-✨rdv-tabac-et-upjers(<#988753094290600021>)
+2022-10-03 23:17:14: Command: /save_img '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+--------------------Start Log 2022-10-03 23:20:14--------------------
+2022-10-03 23:20:14: test_bot#9176 logged successfully.
+2022-10-03 23:20:14: Successfully registered 8 application commands for global
+2022-10-03 23:20:14: Command: /show_link  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 23:20:14: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 23:20:14: Command: /save_img '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+--------------------Start Log 2022-10-03 23:23:54--------------------
+2022-10-03 23:23:54: Successfully registered 8 application commands for global
+2022-10-03 23:23:54: Command: /save_img '987122812105916457'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 23:23:54: test_bot#9176 logged successfully.
+--------------------Start Log 2022-10-03 23:25:22--------------------
+2022-10-03 23:25:22: test_bot#9176 logged successfully.
+2022-10-03 23:25:22: Successfully registered 8 application commands for global
+--------------------Start Log 2022-10-03 23:26:50--------------------
+2022-10-03 23:26:50: test_bot#9176 logged successfully.
+2022-10-03 23:26:50: Successfully registered 8 application commands for global
+--------------------Start Log 2022-10-03 23:28:20--------------------
+2022-10-03 23:28:20: test_bot#9176 logged successfully.
+2022-10-03 23:28:20: Successfully registered 8 application commands for global
+--------------------Start Log 2022-10-03 23:32:24--------------------
+2022-10-03 23:32:24: test_bot#9176 logged successfully.
+2022-10-03 23:32:24: Successfully registered 8 application commands for global
+--------------------Start Log 2022-10-03 23:37:00--------------------
+2022-10-03 23:37:00: test_bot#9176 logged successfully.
+2022-10-03 23:37:00: Successfully registered 8 application commands for global
+--------------------Start Log 2022-10-03 23:38:03--------------------
+2022-10-03 23:38:03: ConnectTimeoutError: Connect Timeout Error
+2022-10-03 23:38:03: test_bot#9176 logged successfully.
+2022-10-03 23:38:03: File 1653401938904.jpg send to channel 1026576418374697091 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 23:38:03: File 1653401938904.jpg send to channel 1026576418374697091 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+--------------------Start Log 2022-10-03 23:40:43--------------------
+2022-10-03 23:40:43: test_bot#9176 logged successfully.
+2022-10-03 23:40:43: Successfully registered 9 application commands for global
+2022-10-03 23:40:43: Command: /unlink_img  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel test(<#987122812105916457>)
+2022-10-03 23:40:43: Command: /unlink_img  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 23:40:43: Error: Received one or more errors by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+--------------------Start Log 2022-10-03 23:43:00--------------------
+2022-10-03 23:43:00: test_bot#9176 logged successfully.
+2022-10-03 23:43:00: Successfully registered 9 application commands for global
+2022-10-03 23:43:00: Command: /unlink_img  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+2022-10-03 23:43:00: Channel: 987122812105916457 has been unlink to 988735879277322240 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel zkdk(<#988735879277322240>)
+--------------------Start Log 2022-10-03 23:44:39--------------------
+2022-10-03 23:44:39: test_bot#9176 logged successfully.
+2022-10-03 23:44:39: Successfully registered 9 application commands for global
+2022-10-03 23:44:39: Command: /say 'I'm the best UwU'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ζ-staff🌱(<#988753092843561000>)
+2022-10-03 23:44:39: A webhook has been registered for 988753092843561000
+2022-10-03 23:44:39: Command: /say 'dfer'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ❘-vérif-âge🕵♂(<#988753097918652427>)
+2022-10-03 23:44:39: webhook has been deleted
+--------------------Start Log 2022-10-03 23:54:34--------------------
+2022-10-03 23:54:34: test_bot#9176 logged successfully.
+2022-10-03 23:54:34: Successfully registered 9 application commands for global
+2022-10-03 23:54:34: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-03 23:58:03--------------------
+2022-10-03 23:58:03: test_bot#9176 logged successfully.
+2022-10-03 23:58:03: Successfully registered 9 application commands for global
+2022-10-03 23:58:03: Command: /say 'ezd'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel ζ-staff🌱(<#988753092843561000>)
+2022-10-03 23:58:03: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:05:51--------------------
+2022-10-04 00:05:51: test_bot#9176 logged successfully.
+2022-10-04 00:05:51: Successfully registered 9 application commands for global
+2022-10-04 00:05:51: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:21:38--------------------
+2022-10-04 00:21:38: test_bot#9176 logged successfully.
+2022-10-04 00:21:38: Successfully registered 9 application commands for global
+--------------------Start Log 2022-10-04 00:25:50--------------------
+2022-10-04 00:25:50: test_bot#9176 logged successfully.
+2022-10-04 00:25:50: Successfully registered 9 application commands for global
+--------------------Start Log 2022-10-04 00:26:27--------------------
+2022-10-04 00:26:27: test_bot#9176 logged successfully.
+2022-10-04 00:26:27: Successfully registered 9 application commands for global
+2022-10-04 00:26:27: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:30:05--------------------
+2022-10-04 00:30:05: test_bot#9176 logged successfully.
+2022-10-04 00:30:05: Successfully registered 9 application commands for global
+2022-10-04 00:30:05: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:32:15--------------------
+2022-10-04 00:32:15: test_bot#9176 logged successfully.
+2022-10-04 00:32:15: Successfully registered 9 application commands for global
+--------------------Start Log 2022-10-04 00:33:32--------------------
+2022-10-04 00:33:32: test_bot#9176 logged successfully.
+2022-10-04 00:33:32: Successfully registered 9 application commands for global
+2022-10-04 00:33:32: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:35:35--------------------
+2022-10-04 00:35:35: test_bot#9176 logged successfully.
+2022-10-04 00:35:35: Successfully registered 9 application commands for global
+2022-10-04 00:35:35: A webhook has been registered for "eu" (988784456959672350).
+2022-10-04 00:35:35: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:35:35: TypeError: Cannot read properties of undefined (reading 'id') by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:39:22--------------------
+2022-10-04 00:39:22: test_bot#9176 logged successfully.
+2022-10-04 00:39:22: Successfully registered 9 application commands for global
+2022-10-04 00:39:22: A webhook has been registered for "eu" (988784456959672350).
+2022-10-04 00:39:22: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:39:22: TypeError: Cannot read properties of undefined (reading 'id') by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:40:35--------------------
+2022-10-04 00:40:35: test_bot#9176 logged successfully.
+2022-10-04 00:40:35: Successfully registered 9 application commands for global
+2022-10-04 00:40:35: A webhook has been registered for "eu" (988784456959672350).
+2022-10-04 00:40:35: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:40:35: TypeError: Cannot read properties of undefined (reading 'id') by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:43:20--------------------
+2022-10-04 00:43:20: test_bot#9176 logged successfully.
+2022-10-04 00:43:20: Successfully registered 9 application commands for global
+2022-10-04 00:43:20: A webhook has been registered for "eu" (988784456959672350).
+2022-10-04 00:43:20: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:43:20: DiscordAPIError[0]: 404: Not Found by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 00:45:50--------------------
+2022-10-04 00:45:50: test_bot#9176 logged successfully.
+2022-10-04 00:45:50: Successfully registered 9 application commands for global
+2022-10-04 00:45:50: A webhook has been registered for "eu" (988784456959672350).
+2022-10-04 00:45:50: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:45:50: A webhook for "eu"(<#988784456959672350>) was successfully registred by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:45:50: File 1653401938904.jpg send to channel 1026543512298205195 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:45:50: Command: /unlink_img  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:45:50: Channel: 1015653134921642065 has been unlink to 988784456959672350 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 00:45:50: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)

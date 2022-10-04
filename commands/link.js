@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const main = require('../index.js');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
 const { PermissionFlagsBits } = require('discord.js');
@@ -26,6 +25,7 @@ module.exports = {
 
   async execute(interaction) {
     try {
+      await interaction.deferReply();
       var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
       var links_list = eval(settings.links_list);
 
@@ -47,7 +47,7 @@ module.exports = {
         //log the error message.
         log.write(error + "3", interaction.member, interaction.channel);
 
-        //reply the error message.
+        //editReply the error message.
         const text = new EmbedBuilder()
           .setColor('#C0392B')
           .setTitle('**Error**')
@@ -57,14 +57,14 @@ module.exports = {
             { name: 'Link 2', value: '`' + link2 + '`' },
             { name: '\u200B', value: '\u200B' }
           )
-          .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+          .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-        await interaction.reply({ embeds: [text] });
+        await interaction.editReply({ embeds: [text] });
         return;
       }
 
 
-      //test if link2 it's a valis matrix room id.
+      //test if link2 it's a valis id.
 
       try {
         await interaction.client.channels.fetch(link2);
@@ -73,7 +73,7 @@ module.exports = {
         //log the error message.
         log.write(error, interaction.member, interaction.channel);
 
-        //reply the error message.
+        //editReply the error message.
         const text = new EmbedBuilder()
           .setColor('#C0392B')
           .setTitle('**Error**')
@@ -83,15 +83,16 @@ module.exports = {
             { name: 'Link 2', value: '`' + link2 + '`' },
             { name: '\u200B', value: '\u200B' }
           )
-          .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+          .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-        await interaction.reply({ embeds: [text] });
+        await interaction.editReply({ embeds: [text] });
         return;
       }
 
 
 
       if (await interaction.options.getBoolean('double_way', false)) {
+        
         if (!links_list[link1] && !links_list[link2]) {
           links_list[link1] = Array(link2);
           links_list[link2] = Array(link1);
@@ -109,10 +110,10 @@ module.exports = {
             const text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
-              .setDescription(`${link1} is already linked to:`)
-              .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+              .setDescription(`<#${link1}> is already linked to:`)
+              .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-            await interaction.reply({ embeds: [text] });
+            await interaction.editReply({ embeds: [text] });
             return;
 
           } else {
@@ -129,8 +130,8 @@ module.exports = {
             const text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
-              .setDescription(`${link2} is already linked to:`)
-              .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+              .setDescription(`<#${link2}>  is already linked to:`)
+              .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
             var values = "";
 
@@ -144,7 +145,7 @@ module.exports = {
 
             }
             text.setFields({ name: "Channels:", value: values })
-            await interaction.reply({ embeds: [text] });
+            await interaction.editReply({ embeds: [text] });
             return;
 
           } else {
@@ -159,8 +160,8 @@ module.exports = {
             const text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
-              .setDescription(`${link2} is already linked to:`)
-              .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+              .setDescription(`<#${link2}> is already linked to:`)
+              .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
             var values = "";
 
@@ -174,7 +175,7 @@ module.exports = {
 
             }
             text.setFields({ name: "Channels:", value: values })
-            await interaction.reply({ embeds: [text] });
+            await interaction.editReply({ embeds: [text] });
             return;
 
           } else {
@@ -187,8 +188,8 @@ module.exports = {
             const text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
-              .setDescription(`${link1} is already linked to:`)
-              .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+              .setDescription(`<#${link1}> is already linked to:`)
+              .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
             var values = "";
 
@@ -202,7 +203,7 @@ module.exports = {
 
             }
             text.setFields({ name: "Channels:", value: values })
-            await interaction.reply({ embeds: [text] });
+            await interaction.editReply({ embeds: [text] });
             return;
 
           } else {
@@ -224,8 +225,8 @@ module.exports = {
             const text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
-              .setDescription(`${link1} is already linked to:`)
-              .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+              .setDescription(`<#${link1}> is already linked to:`)
+              .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
             var values = "";
 
@@ -239,7 +240,7 @@ module.exports = {
 
             }
             text.setFields({ name: "Channels:", value: values })
-            await interaction.reply({ embeds: [text] });
+            await interaction.editReply({ embeds: [text] });
             return;
 
           } else {
@@ -259,7 +260,7 @@ module.exports = {
         .setColor('#2ECC71')
         .setTitle('**Validation**')
         .setDescription(`<#${link1}> has been linked to:`)
-        .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+        .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
       var values = "";
 
@@ -272,7 +273,7 @@ module.exports = {
 
       }
       text.setFields({ name: "Channels:", value: values })
-      await interaction.reply({ embeds: [text] });
+      await interaction.editReply({ embeds: [text] });
       return;
 
       //security in case of error
@@ -280,14 +281,14 @@ module.exports = {
       //log the error message.
       log.write(error + "1", interaction.member, interaction.channel);
 
-      //reply the error message.
+      //editReply the error message.
       const text = new EmbedBuilder()
         .setColor('#C0392B')
         .setTitle('**Error**')
-        .setDescription(error)
-        .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+        .setDescription("error:\n`" + error + "`")
+        .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-      await interaction.reply({ embeds: [text] });
+      await interaction.editReply({ embeds: [text] });
       return;
     }
   }
@@ -299,31 +300,32 @@ async function create_webhook(interaction, channel_id) {
     //check if the channel already have a webhook.
     var wbs = await interaction.guild.channels.fetchWebhooks(channel_id)
 
+    const channel = await interaction.client.channels.fetch(channel_id);
+
     var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
     var webhooks_list = eval(settings.webhooks_list);
 
     //find all webhooks who named KochyBot.
     if (wbs.find(Webhook => Webhook.name === 'KochyBot')) {
 
-      var a = [];
-      Array.from(wbs.values()).filter(Webhook => Webhook.name === 'KochyBot').forEach(function (webhook) { a.push(webhook.id); });
+      var webhooks_already_registered = [];
+      Array.from(wbs.values()).filter(Webhook => Webhook.name === 'KochyBot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
 
-      if (a.length > 1) {
+      if (webhooks_already_registered.length > 1) {
         //keep the first if multiple webhooks are found.
-        webhooks_list[channel_id] = a[0];
-        delete a[0];
+        webhooks_list[channel_id] = webhooks_already_registered[0];
+        delete webhooks_already_registered[0];
 
         //delete all the other webhooks.
-        a.forEach(async function (id) {
+        webhooks_already_registered.forEach(async function (id) {
           var wb = await interaction.client.fetchWebhook(id);
           wb.delete('They have too much webhook :(');
           log.write('webhook ' + wbs.values().filter(Webhook => Webhook.id === id) + 'has been deleted');
         });
-      } else { webhooks_list[channel_id] = a[0]; }
+      } else { webhooks_list[channel_id] = webhooks_already_registered[0]; }
 
-      var b = await interaction.guild.channels.fetch(channel_id);
 
-      log.write(`A webhook has been registered for "${b.name}" (${channel_id}).`);
+      log.write(`A webhook has been registered for "${channel.name}" (${channel_id}).`);
 
     } else {
 
@@ -339,14 +341,14 @@ async function create_webhook(interaction, channel_id) {
         //log the error message.
         log.write(error, interaction.member, interaction.channel);
 
-        //reply the error message.
+        //editReply the error message.
         const text = new EmbedBuilder()
           .setColor('#C0392B')
           .setTitle('**Error**')
-          .setDescription(error)
-          .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+          .setDescription("error:\n`" + error + "`")
+          .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-        await interaction.reply({ embeds: [text] });
+        await interaction.editReply({ embeds: [text] });
         return;
       }
 
@@ -357,31 +359,31 @@ async function create_webhook(interaction, channel_id) {
 
     fs.writeFileSync("./settings.json", JSON.stringify(settings));
 
-    const channel = await interaction.guild.channels.fetch(channel_id);
+
     log.write(`A webhook for "${channel.name}"(${channel}) was successfully registred`, interaction.member, interaction.channel);
 
-    var test = await interaction.client.fetchWebhook(webhook.id);
+    var fresh_linked_channel = await interaction.client.fetchWebhook(webhooks_list[channel_id]);
 
     const text = new EmbedBuilder()
       .setColor('#245078')
       .setTitle('**Information**')
-      .setDescription(`This channel has been linked to ${channel}`)
-      .setFooter({ text: '*/unlink to unlinck this channel*' })
+      .setDescription(`This channel has been linked to ${channel} in server ${channel.guild.name}`)
+      .setFooter({ text: 'unlink to unlink this channel' })
 
-    await test.send({ embeds: [text] });
+    await fresh_linked_channel.send({ embeds: [text] });
     return;
   } catch (error) {
     //log the error message.
     log.write(error, interaction.member, interaction.channel);
 
-    //reply the error message.
+    //editReply the error message.
     const text = new EmbedBuilder()
       .setColor('#C0392B')
       .setTitle('**Error**')
-      .setDescription(`error: ${error.message}`)
-      .setFooter({ text: '*/link `arg1` `arg2`  arg* must be a channel id or room link*' })
+      .setDescription("error:\n`" + error + "`")
+      .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-    await interaction.reply({ embeds: [text] });
+    await interaction.editReply({ embeds: [text] });
     return;
   }
 };
