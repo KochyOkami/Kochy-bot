@@ -20,8 +20,9 @@ module.exports = {
                     .setTitle('**Information**')
                     .setDescription(`Baackup of the server, V${config.bot_version}`)
                     .setFooter({ text: '/backup' })
-                    .setatt
-                var name = 'backup_kochy_bot_v'+ toString(config.bot_version)
+
+                var name = 'backup_kochy_bot_v'+ config.bot_version;
+                console.log(name)
                 await interaction.editReply({
                     embeds: [text], 
                     files: [{

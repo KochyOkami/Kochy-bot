@@ -52,9 +52,9 @@ bot.on("ready", async () => {
     var TEST_GUILD_ID = "948170961360916540";
     const CLIENT_ID = bot.user.id;
 
-    rest.put(Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID), { body: [] })
-        .then(() => console.log('Successfully deleted all guild commands.'))
-        .catch(console.error);
+    // rest.put(Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID), { body: [] })
+    //     .then(() => console.log('Successfully deleted all guild commands.'))
+    //     .catch(console.error);
 
     TEST_GUILD_ID = false;
 
