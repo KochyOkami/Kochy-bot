@@ -3,6 +3,7 @@ var dateTime = require('node-datetime');
 var dt = dateTime.create();
 
 
+
 fs.writeFile('logs/errors.log', "-".repeat(20) + "Start Log " + dt.format('Y-m-d H:M:S') + "-".repeat(20) + "\n", { flag: 'a+' }, (err) => {
     if (err) {
         console.error(err)

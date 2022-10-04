@@ -142,11 +142,12 @@ bot.on("messageCreate", async (message) => {
 
         if (links_list[message.channel.id]) {
             if (message.attachments != undefined && message.attachments.size) {
-
+                log.write(message.attachments,message.member, message.channel)
                 message.attachments.forEach(async function (attach) {
                     if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                         var name = await download(attach.url, attach.name);
                         var path = "./images/" + name.toString()
+                        
 
                         links_list[message.channel.id].forEach(async function (link) {
 
@@ -190,6 +191,7 @@ bot.on("messageCreate", async (message) => {
                                     username: message.member.displayName,
                                     avatarURL: message.author.avatarURL()
                                 });
+                                log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
                             }
                         });
                     }
@@ -203,7 +205,6 @@ bot.on("messageCreate", async (message) => {
                             settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                             webhooks_list = eval(settings.webhooks_list);
                         }
-                        console.log(webhooks_list[link])
                         var webhook = await bot.fetchWebhook(webhooks_list[link]);
                         await webhook.send({
                             content: message.content,
