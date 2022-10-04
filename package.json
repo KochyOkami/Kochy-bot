@@ -14,6 +14,7 @@
   "dependencies": {
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.3",
-    "node-datetime": "^2.1.2"
+    "node-datetime": "^2.1.2",
+    "request": "^2.88.2"
   }
 }
