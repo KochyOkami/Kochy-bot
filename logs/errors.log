@@ -273,3 +273,12 @@
 2022-10-04 00:45:50: Command: /unlink_img  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
 2022-10-04 00:45:50: Channel: 1015653134921642065 has been unlink to 988784456959672350 by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
 2022-10-04 00:45:50: Command: /show_link 'true'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+--------------------Start Log 2022-10-04 07:38:45--------------------
+2022-10-04 07:38:45: test_bot#9176 logged successfully.
+2022-10-04 07:38:45: Successfully registered 10 application commands for global
+2022-10-04 07:38:45: Command: /backup  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
+2022-10-04 07:38:45: Error: ENOENT: no such file or directory, stat '/home/kochy-okami/Desktop/settings.json'
+--------------------Start Log 2022-10-04 07:39:19--------------------
+2022-10-04 07:39:19: test_bot#9176 logged successfully.
+2022-10-04 07:39:19: Successfully registered 10 application commands for global
+2022-10-04 07:39:19: Command: /backup  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel eu(<#988784456959672350>)
