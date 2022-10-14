@@ -79,7 +79,7 @@ module.exports = {
                     .setThumbnail(image.url)
 
             } else {
-                
+
                 text.setThumbnail(config.unknown_book)
             }
 
@@ -87,7 +87,7 @@ module.exports = {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var links_list = eval(settings.links_list);
             var channel = ""
-            
+
             if (type === 'light') {
                 if (settings.light_book == "") {
                     const text = new EmbedBuilder()
@@ -99,14 +99,25 @@ module.exports = {
                     return;
                 }
                 try {
-                    if (links_list[settings.light_book]){
+                    if (links_list[settings.light_book]) {
                         links_list[settings.light_book].forEach(async function (link) {
-                            channel = await interaction.client.channels.fetch(link, true)
-                            await channel.send({ embeds: [text], components: [row] });
+                            try {
+                                channel = await interaction.client.channels.fetch(link, true)
+                                await channel.send({ embeds: [text], components: [row] });
+                            } catch (error) {
+                                log.write(error);
+                                const text = new EmbedBuilder()
+                                    .setColor('#C0392B')
+                                    .setTitle('**Error**')
+                                    .setDescription(`There was an error executing /book: \n` + '```' + error + '```')
+                                await interaction.editReply({ embeds: [text] });
+                                return;
+                            }
+
                         })
                         channel = await interaction.client.channels.fetch(settings.light_book, true)
                         await channel.send({ embeds: [text], components: [row] });
-                    }else{
+                    } else {
                         const channel = await interaction.client.channels.fetch(settings.light_book, true)
                         await channel.send({ embeds: [text], components: [row] });
                     }
@@ -133,17 +144,26 @@ module.exports = {
                 }
                 try {
 
-                    if (links_list[settings.hard_book]){
+                    if (links_list[settings.hard_book]) {
 
                         links_list[settings.hard_book].forEach(async function (link) {
-
-                            channel = await interaction.client.channels.fetch(link, true)
-                            await channel.send({ embeds: [text], components: [row] });
+                            try {
+                                channel = await interaction.client.channels.fetch(link, true)
+                                await channel.send({ embeds: [text], components: [row] });
+                            } catch (error) {
+                                log.write(error);
+                                const text = new EmbedBuilder()
+                                    .setColor('#C0392B')
+                                    .setTitle('**Error**')
+                                    .setDescription(`There was an error executing /book: \n` + '```' + error + '```')
+                                await interaction.editReply({ embeds: [text] });
+                                return;
+                            }
                         })
                         channel = await interaction.client.channels.fetch(settings.hard_book, true)
                         await channel.send({ embeds: [text], components: [row] });
-                        
-                    }else{
+
+                    } else {
                         const channel = await interaction.client.channels.fetch(settings.hard_book, true)
                         await channel.send({ embeds: [text], components: [row] });
                     }

@@ -70,7 +70,7 @@ module.exports = {
                 webhooks_list[interaction.channel.id] = webhook.id;
                 log.write(`A webhook has been registered for ${interaction.channelId}`);
             }
-            if (user) {
+            if (user != false) {
                 await webhook.send({ content: text, username: interaction.member.displayName, avatarURL: interaction.user.avatarURL() });
             } else {
                 await webhook.send({ content: text });
