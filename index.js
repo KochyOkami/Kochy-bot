@@ -43,7 +43,7 @@ bot.on("ready", async () => {
         //set the presence of the bot
         bot.user.setPresence({
             status: "online",
-            activities: [{ name: "la version" + config.bot_version }],
+            activities: [{ name: "la version " + config.bot_version }],
         });
         //Register all commands for the bot.
         const rest = new REST({
@@ -275,6 +275,7 @@ bot.on("messageCreate", async (message) => {
                         //send the message with the webhook.
                         var webhook = await bot.fetchWebhook(webhooks_list[link]);
                         await webhook.send({
+                            content: message.content,
                             username: message.member.displayName,
                             avatarURL: message.author.avatarURL()
                         });
