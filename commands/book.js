@@ -72,7 +72,7 @@ module.exports = {
                 .setTitle(title)
                 .addFields({ name: 'Author', value: author })
                 .addFields({ name: 'Synopsis', value: description })
-                .setFooter({ text: language })
+                .setFooter({ text: language + "     by: " + interaction.member.displayName })
 
             if (await interaction.options.getAttachment('image')) {
                 text.setImage(image.url)
