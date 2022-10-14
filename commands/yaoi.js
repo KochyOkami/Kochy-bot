@@ -84,7 +84,10 @@ module.exports = {
             }
 
 
-
+            var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+            var links_list = eval(settings.links_list);
+            var channel = ""
+            
             if (type === 'light') {
                 if (settings.light_book == "") {
                     const text = new EmbedBuilder()
@@ -96,9 +99,17 @@ module.exports = {
                     return;
                 }
                 try {
-
-                    const channel = await interaction.client.channels.fetch(settings.light_book, true)
-                    await channel.send({ embeds: [text], components: [row] });
+                    if (links_list[settings.light_book]){
+                        links_list[settings.light_book].forEach(async function (link) {
+                            channel = await interaction.client.channels.fetch(link, true)
+                            await channel.send({ embeds: [text], components: [row] });
+                        })
+                        channel = await interaction.client.channels.fetch(ssettings.light_book, true)
+                        await channel.send({ embeds: [text], components: [row] });
+                    }else{
+                        const channel = await interaction.client.channels.fetch(settings.light_book, true)
+                        await channel.send({ embeds: [text], components: [row] });
+                    }
                     await interaction.deleteReply();
 
                 } catch (error) {
@@ -122,8 +133,20 @@ module.exports = {
                 }
                 try {
 
-                    const channel = await interaction.client.channels.fetch(settings.hard_book, true)
-                    await channel.send({ embeds: [text], components: [row] });
+                    if (links_list[settings.hard_book]){
+
+                        links_list[settings.hard_book].forEach(async function (link) {
+
+                            channel = await interaction.client.channels.fetch(link, true)
+                            await channel.send({ embeds: [text], components: [row] });
+                        })
+                        channel = await interaction.client.channels.fetch(settings.hard_book, true)
+                        await channel.send({ embeds: [text], components: [row] });
+                        
+                    }else{
+                        const channel = await interaction.client.channels.fetch(settings.hard_book, true)
+                        await channel.send({ embeds: [text], components: [row] });
+                    }
                     await interaction.deleteReply();
 
                 } catch (error) {

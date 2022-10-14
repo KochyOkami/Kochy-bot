@@ -81,8 +81,10 @@ bot.on("ready", async () => {
     })();
 
     //Say that the bot is ready.
-    const channel = await bot.channels.fetch('988784456959672350');
-    await channel.send("@here, I'm ready ^^");
+    var channel = await bot.channels.fetch('988784456959672350');
+    await channel.send("@everyone I'm ready ^^");
+    channel = await bot.channels.fetch('961894734752800819');
+    await channel.send("I've restarted ^^");
     log.write(`${bot.user.tag} logged successfully.`);
 
 });
@@ -139,7 +141,7 @@ bot.on("messageCreate", async (message) => {
         var links_list = eval(settings.links_list);
         var save_img_list = eval(settings.save_img_list);
         var webhooks_list = eval(settings.webhooks_list);
-
+        var i_path = ""
         if (links_list[message.channel.id]) {
             if (message.attachments != undefined && message.attachments.size) {
                 log.write(message.attachments,message.member, message.channel)
@@ -147,7 +149,7 @@ bot.on("messageCreate", async (message) => {
                     if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                         var name = await download(attach.url, attach.name);
                         var path = "./images/" + name.toString()
-                        
+                        i_path = path
 
                         links_list[message.channel.id].forEach(async function (link) {
 
@@ -172,7 +174,6 @@ bot.on("messageCreate", async (message) => {
                                     avatarURL: message.author.avatarURL()
                                 });
                                 log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
-                                fs.unlinkSync(path)
                             } else {
                                 if (!webhooks_list.hasOwnProperty(link)) {
                                     await create_webhook(message, message.channelId)
@@ -193,7 +194,6 @@ bot.on("messageCreate", async (message) => {
                                     avatarURL: message.author.avatarURL()
                                 });
                                 log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
-                                fs.unlinkSync(path)
                             }
                         });
                     }
@@ -225,6 +225,7 @@ bot.on("messageCreate", async (message) => {
                     if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                         var name = await download(attach.url, attach.name);
                         var path = "./images/" + name.toString()
+                        i_path = path
                         save_img_list[message.channel.id].forEach(async function (link) {
                             console.log('img save detected')
                             if (!webhooks_list.hasOwnProperty(link)) {
@@ -246,12 +247,16 @@ bot.on("messageCreate", async (message) => {
                                 avatarURL: message.author.avatarURL()
                             });
                             log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
-                            fs.unlinkSync(path)
                         });
                     }
                 });
             }
         }
+        try{
+            if (fs.existsSync(i_path)){
+                fs.unlinkSync(i_path)
+            }
+        }catch(e) {log.write(e)}
 
     } catch (error) {
         log.write(error, message.member, message.channel);
