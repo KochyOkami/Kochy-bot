@@ -104,7 +104,7 @@ module.exports = {
                             channel = await interaction.client.channels.fetch(link, true)
                             await channel.send({ embeds: [text], components: [row] });
                         })
-                        channel = await interaction.client.channels.fetch(ssettings.light_book, true)
+                        channel = await interaction.client.channels.fetch(settings.light_book, true)
                         await channel.send({ embeds: [text], components: [row] });
                     }else{
                         const channel = await interaction.client.channels.fetch(settings.light_book, true)
