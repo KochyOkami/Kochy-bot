@@ -142,7 +142,7 @@ bot.on('interactionCreate', async interaction => {
 
 bot.on("messageCreate", async (message) => {
     try {
-        const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg');
+        const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg', 'mp4');
 
         if (message.webhookId) return;
         if (message.member.id === bot.user.id) return;
@@ -261,7 +261,28 @@ bot.on("messageCreate", async (message) => {
                         }
                     });
                 }
+                //if the message start with a link  (only https:// links).
+                if (message.content.startsWith('https://')) {
+                    //search all channel to send messages.
+                    save_img_list[message.channel.id].forEach(async function (link) {
+                        //find or create the webhook in the channel if it,s inexistent.
+                        if (!webhooks_list.hasOwnProperty(link)) {
+                            await create_webhook(message, message.channelId)
+                            settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+                            webhooks_list = eval(settings.webhooks_list);
+                        }
+                        
+                        //send the message with the webhook.
+                        var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                        await webhook.send({
+                            username: message.member.displayName,
+                            avatarURL: message.author.avatarURL()
+                        });
+                        log.write(`${message.content} was send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                    });
+                }
             }
+            //try to delete the downloaded image.
             try {
                 if (fs.existsSync(i_path)) {
                     fs.unlinkSync(i_path)
@@ -279,6 +300,14 @@ bot.on("messageCreate", async (message) => {
 });
 
 async function download(url, name) {
+    /**
+   * Download a file on the server and return the name of the downloaded file. 
+   * If the name of the file is unknown, create a new name bases on 'KochyBotImg_(randint)'
+   * 
+   * @param  {String} name  The original name of the file
+   * @param  {String} url   The URL to download the file
+   * @return {String}       The name of the downloaded file
+   */
     try {
         if (name.includes('unknown')) {
             name = ('KochyBotImg_' + Math.random().toString(36).substring(2) + '.' + name.split('.').pop(0));
@@ -308,6 +337,14 @@ async function download(url, name) {
 };
 
 async function create_webhook(message, channel_id) {
+
+    /**
+     * Create a webhook for the specified channel if he is not already registered to the webhook server.
+     * 
+     * @param {Discord.Message} message The message who the command process is associated with.
+     * @param {string} channel_id The ID of the channel who the webhook will be associated with.
+     * @return  Return nothings, but the webhook_list has been edited.
+     */
 
     try {
         const channel = await bot.channels.fetch(channel_id);

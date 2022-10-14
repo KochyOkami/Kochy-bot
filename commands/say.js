@@ -25,10 +25,9 @@ module.exports = {
         var webhooks_list = eval(settings.webhooks_list);
         try {
             var text = await interaction.options.getString('text', true);
+            var user = false;
             if (await interaction.options.getUser('user', false)) {
                 var user = await interaction.options.getUser('user', true);
-            } else {
-                var user = false;
             }
             try {
                 if (webhooks_list[interaction.channel.id]) {
@@ -71,7 +70,7 @@ module.exports = {
                 log.write(`A webhook has been registered for ${interaction.channelId}`);
             }
             if (user != false) {
-                await webhook.send({ content: text, username: interaction.member.displayName, avatarURL: interaction.user.avatarURL() });
+                await webhook.send({ content: text, username: user.username, avatarURL: user.avatarURL() });
             } else {
                 await webhook.send({ content: text });
             }
