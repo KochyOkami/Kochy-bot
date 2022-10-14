@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
         .setDescription('Responds with the list of commands available, and information about KochyBot.')
-        .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply()

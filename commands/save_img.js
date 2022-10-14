@@ -17,7 +17,7 @@ module.exports = {
             option.setName('2channel')
                 .setDescription("the 2nd channel to connect, it's optional, take the current channel if false.")
                 .setRequired(false))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply();

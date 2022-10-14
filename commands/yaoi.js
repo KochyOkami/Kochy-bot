@@ -45,7 +45,7 @@ module.exports = {
             option.setName('image')
                 .setDescription('A immage to ilustrate the book, you can put your files in hour website: YaoiCute.fr.')
                 .setRequired(false))
-        .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply();

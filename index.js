@@ -39,54 +39,63 @@ for (const file of commandFiles) {
 }
 
 bot.on("ready", async () => {
-    //set the presence of the bot
-    bot.user.setPresence({
-        status: "online",
-        activities: [{ name: "la version" + config.bot_version }],
-    });
-    //Register all commands for the bot.
-    const rest = new REST({
-        version: '10'
-    }).setToken(process.env.DISCORD_TOKEN);
+    try {
+        //set the presence of the bot
+        bot.user.setPresence({
+            status: "online",
+            activities: [{ name: "la version" + config.bot_version }],
+        });
+        //Register all commands for the bot.
+        const rest = new REST({
+            version: '10'
+        }).setToken(process.env.DISCORD_TOKEN);
 
-    var TEST_GUILD_ID = "948170961360916540";
-    const CLIENT_ID = bot.user.id;
+        var TEST_GUILD_ID = "948170961360916540";
+        const CLIENT_ID = bot.user.id;
 
-    // rest.put(Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID), { body: [] })
-    //     .then(() => console.log('Successfully deleted all guild commands.'))
-    //     .catch(console.error);
+        // rest.put(Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID), { body: [] })
+        //     .then(() => console.log('Successfully deleted all guild commands.'))
+        //     .catch(console.error);
 
-    TEST_GUILD_ID = false;
+        TEST_GUILD_ID = false;
 
-    //Load all commands.
-    (async () => {
-        try {
-            if (TEST_GUILD_ID == false) {
-                await rest.put(
-                    Routes.applicationCommands(CLIENT_ID),
-                    { body: commands },
-                );
-                log.write(`Successfully registered ${commands.length} application commands for global`);
+        //Load all commands.
+        (async () => {
+            try {
+                if (TEST_GUILD_ID == false) {
+                    await rest.put(
+                        Routes.applicationCommands(CLIENT_ID),
+                        { body: commands },
+                    );
+                    log.write(`Successfully registered ${commands.length} application commands for global`);
 
-            } else {
-                await rest.put(
-                    Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID),
-                    { body: commands },
-                );
-                log.write(`Successfully registered ${commands.length} application commands for development guild`);
+                } else {
+                    await rest.put(
+                        Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID),
+                        { body: commands },
+                    );
+                    log.write(`Successfully registered ${commands.length} application commands for development guild`);
+                }
+            } catch (error) {
+                if (error) log.write(error);
             }
+        })();
+        try {
+            //Say that the bot is ready
+            var channel = await bot.channels.fetch('988784456959672350');
+            await channel.send("@everyone I'm ready ^^");
+            channel = await bot.channels.fetch('961894734752800819');
+            await channel.send("I've restarted ^^");
+
         } catch (error) {
-            if (error) log.write(error);
+            log.write('Error when sending staring message:  ' + error);
+
         }
-    })();
 
-    //Say that the bot is ready.
-    var channel = await bot.channels.fetch('988784456959672350');
-    await channel.send("@everyone I'm ready ^^");
-    channel = await bot.channels.fetch('961894734752800819');
-    await channel.send("I've restarted ^^");
-    log.write(`${bot.user.tag} logged successfully.`);
-
+        log.write(`${bot.user.tag} logged successfully.`);
+    } catch (e) {
+        log.write(e);
+    }
 });
 
 
@@ -132,166 +141,176 @@ bot.on('interactionCreate', async interaction => {
 });
 
 bot.on("messageCreate", async (message) => {
-    const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg');
-
-    if (message.webhookId) return;
-    if (message.member.id === bot.user.id) return;
     try {
-        var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-        var links_list = eval(settings.links_list);
-        var save_img_list = eval(settings.save_img_list);
-        var webhooks_list = eval(settings.webhooks_list);
-        var i_path = ""
-        if (links_list[message.channel.id]) {
-            if (message.attachments != undefined && message.attachments.size) {
-                log.write(message.attachments,message.member, message.channel)
-                message.attachments.forEach(async function (attach) {
-                    if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
-                        var name = await download(attach.url, attach.name);
-                        var path = "./images/" + name.toString()
-                        i_path = path
+        const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg');
 
-                        links_list[message.channel.id].forEach(async function (link) {
+        if (message.webhookId) return;
+        if (message.member.id === bot.user.id) return;
+        try {
+            var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+            var links_list = eval(settings.links_list);
+            var save_img_list = eval(settings.save_img_list);
+            var webhooks_list = eval(settings.webhooks_list);
+            var i_path = ""
+            if (links_list[message.channel.id]) {
+                if (message.attachments != undefined && message.attachments.size) {
+                    log.write(message.attachments, message.member, message.channel)
+                    message.attachments.forEach(async function (attach) {
+                        if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
+                            var name = await download(attach.url, attach.name);
+                            var path = "./images/" + name.toString()
+                            i_path = path
 
-                            if (message.content != '') {
-                                if (!webhooks_list.hasOwnProperty(link)) {
-                                    await create_webhook(message, message.channelId)
-                                    settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-                                    webhooks_list = eval(settings.webhooks_list);
-                                }
-                                console.log(webhooks_list[link])
-                                var webhook = await bot.fetchWebhook(webhooks_list[link]);
-                                await webhook.send({
-                                    content: message.content,
-                                    files: [{
-                                        attachment: path,
-                                        name: name,
-                                        description: `Image by ${message.member.displayName}`
+                            links_list[message.channel.id].forEach(async function (link) {
+
+                                if (message.content != '') {
+                                    if (!webhooks_list.hasOwnProperty(link)) {
+                                        await create_webhook(message, message.channelId)
+                                        settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+                                        webhooks_list = eval(settings.webhooks_list);
                                     }
-                                    ],
-                                    content: message.content,
-                                    username: message.member.displayName,
-                                    avatarURL: message.author.avatarURL()
-                                });
-                                log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
-                            } else {
-                                if (!webhooks_list.hasOwnProperty(link)) {
-                                    await create_webhook(message, message.channelId)
-                                    settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-                                    webhooks_list = eval(settings.webhooks_list);
-                                }
-                                console.log(webhooks_list[link])
-                                var webhook = await bot.fetchWebhook(webhooks_list[link]);
-                                await webhook.send({
-                                    files: [{
-                                        attachment: path,
-                                        name: name,
-                                        description: `Image by ${message.member.displayName}`
+                                    console.log(webhooks_list[link])
+                                    var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                                    await webhook.send({
+                                        content: message.content,
+                                        files: [{
+                                            attachment: path,
+                                            name: name,
+                                            description: `Image by ${message.member.displayName}`
+                                        }
+                                        ],
+                                        content: message.content,
+                                        username: message.member.displayName,
+                                        avatarURL: message.author.avatarURL()
+                                    });
+                                    log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                                } else {
+                                    if (!webhooks_list.hasOwnProperty(link)) {
+                                        await create_webhook(message, message.channelId)
+                                        settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+                                        webhooks_list = eval(settings.webhooks_list);
                                     }
-                                    ],
-                                    content: message.content,
-                                    username: message.member.displayName,
-                                    avatarURL: message.author.avatarURL()
-                                });
-                                log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
-                            }
-                        });
-                    }
-
-                })
-            } else {
-                if (message.content != '') {
-                    links_list[message.channel.id].forEach(async function (link) {
-                        if (!webhooks_list.hasOwnProperty(link)) {
-                            await create_webhook(message, message.channelId)
-                            settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-                            webhooks_list = eval(settings.webhooks_list);
+                                    console.log(webhooks_list[link])
+                                    var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                                    await webhook.send({
+                                        files: [{
+                                            attachment: path,
+                                            name: name,
+                                            description: `Image by ${message.member.displayName}`
+                                        }
+                                        ],
+                                        content: message.content,
+                                        username: message.member.displayName,
+                                        avatarURL: message.author.avatarURL()
+                                    });
+                                    log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                                }
+                            });
                         }
-                        var webhook = await bot.fetchWebhook(webhooks_list[link]);
-                        await webhook.send({
-                            content: message.content,
-                            username: message.member.displayName,
-                            avatarURL: message.author.avatarURL()
-                        });
-                        log.msg(message.content, message.member, await bot.channels.fetch(link, false))
-                    });
 
-                }
-            }
-        }
-        if (save_img_list[message.channel.id]) {
-            if (message.attachments != undefined && message.attachments.size) {
-                message.attachments.forEach(async function (attach) {
-                    if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
-                        var name = await download(attach.url, attach.name);
-                        var path = "./images/" + name.toString()
-                        i_path = path
-                        save_img_list[message.channel.id].forEach(async function (link) {
-                            console.log('img save detected')
+                    })
+                } else {
+                    if (message.content != '') {
+                        links_list[message.channel.id].forEach(async function (link) {
                             if (!webhooks_list.hasOwnProperty(link)) {
                                 await create_webhook(message, message.channelId)
                                 settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                 webhooks_list = eval(settings.webhooks_list);
-
                             }
                             var webhook = await bot.fetchWebhook(webhooks_list[link]);
                             await webhook.send({
                                 content: message.content,
-                                files: [{
-                                    attachment: path,
-                                    name: name,
-                                    description: `Image by ${message.member.displayName}`
-                                }
-                                ],
                                 username: message.member.displayName,
                                 avatarURL: message.author.avatarURL()
                             });
-                            log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                            log.msg(message.content, message.member, await bot.channels.fetch(link, false))
                         });
-                    }
-                });
-            }
-        }
-        try{
-            if (fs.existsSync(i_path)){
-                fs.unlinkSync(i_path)
-            }
-        }catch(e) {log.write(e)}
 
-    } catch (error) {
-        log.write(error, message.member, message.channel);
+                    }
+                }
+            }
+            if (save_img_list[message.channel.id]) {
+                if (message.attachments != undefined && message.attachments.size) {
+                    message.attachments.forEach(async function (attach) {
+                        if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
+                            var name = await download(attach.url, attach.name);
+                            var path = "./images/" + name.toString()
+                            i_path = path
+                            save_img_list[message.channel.id].forEach(async function (link) {
+                                console.log('img save detected')
+                                if (!webhooks_list.hasOwnProperty(link)) {
+                                    await create_webhook(message, message.channelId)
+                                    settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+                                    webhooks_list = eval(settings.webhooks_list);
+
+                                }
+                                var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                                await webhook.send({
+                                    content: message.content,
+                                    files: [{
+                                        attachment: path,
+                                        name: name,
+                                        description: `Image by ${message.member.displayName}`
+                                    }
+                                    ],
+                                    username: message.member.displayName,
+                                    avatarURL: message.author.avatarURL()
+                                });
+                                log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                            });
+                        }
+                    });
+                }
+            }
+            try {
+                if (fs.existsSync(i_path)) {
+                    fs.unlinkSync(i_path)
+                }
+            } catch (e) { log.write(e) }
+
+        } catch (error) {
+            log.write(error, message.member, message.channel);
+        }
+
+    } catch (e) {
+        log.write(e + ' ' + message);
     }
+
 });
 
 async function download(url, name) {
+    try {
+        if (name.includes('unknown')) {
+            name = ('KochyBotImg_' + Math.random().toString(36).substring(2) + '.' + name.split('.').pop(0));
+        }
+        var file = fs.createWriteStream('images/' + name);
+        return new Promise((resolve, reject) => {
+            var responseSent = false; // flag to make sure that response is sent only once.
+            request.get(url)
+                .pipe(file)
+                .on('finish', () => {
+                    if (responseSent) return;
+                    responseSent = true;
+                    file.close();
+                    console.log(`${name} downloaded successfully.`);
+                    resolve(name);
+                })
+                .on('error', err => {
+                    if (responseSent) return;
+                    responseSent = true;
+                    reject(err);
+                });
+        })
 
-    if (name.includes('unknown')) {
-        name = ('KochyBotImg_' + Math.random().toString(36).substring(2) + '.' + name.split('.').pop(0));
+    } catch (e) {
+        log.write(e + ' ' + name)
     }
-    var file = fs.createWriteStream('images/' + name);
-    return new Promise((resolve, reject) => {
-        var responseSent = false; // flag to make sure that response is sent only once.
-        request.get(url)
-            .pipe(file)
-            .on('finish', () => {
-                if (responseSent) return;
-                responseSent = true;
-                file.close();
-                console.log(`${name} downloaded successfully.`);
-                resolve(name);
-            })
-            .on('error', err => {
-                if (responseSent) return;
-                responseSent = true;
-                reject(err);
-            });
-    })
 };
 
 async function create_webhook(message, channel_id) {
-    const channel = await bot.channels.fetch(channel_id);
-    try {
 
+    try {
+        const channel = await bot.channels.fetch(channel_id);
         //check if the channel already have a webhook.
         var wbs = await channel.fetchWebhooks()
 

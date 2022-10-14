@@ -16,7 +16,7 @@ module.exports = {
             option.setName('delete')
                 .setDescription('if you want to unlink only a specifique channel. Use channel id.')
                 .setRequired(false))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply();

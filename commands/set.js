@@ -20,7 +20,7 @@ module.exports = {
             option.setName('id')
                 .setDescription("the id of the channel who that been set, by defaul take the current channel")
                 .setRequired(false))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply();

@@ -12,7 +12,7 @@ module.exports = {
             option.setName('all')
                 .setDescription('"true" see all link settings,"false" see with withch channels is linked.(false in defaultValue)')
                 .setRequired(false))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply();

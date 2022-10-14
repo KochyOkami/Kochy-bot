@@ -17,7 +17,7 @@ module.exports = {
             option.setName('user')
                 .setDescription('if you want to say something with the name of somemone ;)')
                 .setRequired(false))
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply();

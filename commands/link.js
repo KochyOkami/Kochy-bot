@@ -21,7 +21,7 @@ module.exports = {
       option.setName('double_way')
         .setDescription('"true" for double-way, "false" for only 1channel to 2 channels. (false in defaultValue)')
         .setRequired(false))
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels | PermissionFlagsBits.Administrator),
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels || PermissionFlagsBits.Administrator),
 
   async execute(interaction) {
     try {

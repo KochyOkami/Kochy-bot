@@ -8,7 +8,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("backup")
         .setDescription("Send a backup of the bot configuration")
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild | PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply();
