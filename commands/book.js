@@ -6,7 +6,7 @@ const config = require('../config.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("yaoi")
+        .setName("book")
         .setDescription("Show with witch channel this channel is linked. ")
         .addStringOption(option =>
             option.setName('type')
@@ -25,17 +25,17 @@ module.exports = {
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('description')
-                .setDescription('A description of the book, a sort text who resume the book.')
+                .setDescription('A description of the book, a short text who resume the book.')
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('language')
                 .setDescription('The language of the book.')
                 .addChoices(
-                    { name: 'English', value: 'english' },
-                    { name: 'French', value: 'french' },
-                    { name: 'Japanese', value: 'japanese' },
-                    { name: 'Korean', value: 'korean' },
-                    { name: 'Other', value: 'other' },)
+                    { name: 'English', value: 'Anglais' },
+                    { name: 'French', value: 'Français' },
+                    { name: 'Japanese', value: 'Japonais' },
+                    { name: 'Korean', value: 'Coréen' },
+                    { name: 'Other', value: 'Autre' },)
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('link')
@@ -43,7 +43,7 @@ module.exports = {
                 .setRequired(true))
         .addAttachmentOption(option =>
             option.setName('image')
-                .setDescription('A immage to ilustrate the book, you can put your files in hour website: YaoiCute.fr.')
+                .setDescription('A image to illustrate the book, you can put your files in hour website: YaoiCute.fr.')
                 .setRequired(false))
         .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages || PermissionFlagsBits.Administrator),
 
@@ -94,7 +94,7 @@ module.exports = {
                         .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription('The channel to send the book is not defined.')
-                        .setFooter({ text: '/set `Yaoi Light` `id`' })
+                        .setFooter({ text: '/set `book Light` `id`' })
                     interaction.editReply({ embeds: [text] });
                     return;
                 }
@@ -117,7 +117,7 @@ module.exports = {
                     const text = new EmbedBuilder()
                         .setColor('#C0392B')
                         .setTitle('**Error**')
-                        .setDescription(`There was an error executing /yaoi: \n` + '```' + error + '```')
+                        .setDescription(`There was an error executing /book: \n` + '```' + error + '```')
                     await interaction.editReply({ embeds: [text] });
                     return;
                 }
@@ -127,7 +127,7 @@ module.exports = {
                         .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription('The channel to send the book is not defined.')
-                        .setFooter({ text: '/set `Yaoi Hard` `id`' })
+                        .setFooter({ text: '/set `book Hard` `id`' })
                     interaction.editReply({ embeds: [text] });
                     return;
                 }
@@ -154,7 +154,7 @@ module.exports = {
                     const text = new EmbedBuilder()
                         .setColor('#C0392B')
                         .setTitle('**Error**')
-                        .setDescription(`There was an error executing /yaoi: \n` + '```' + error + '```')
+                        .setDescription(`There was an error executing /book: \n` + '```' + error + '```')
                     await interaction.editReply({ embeds: [text] });
                     return;
                 }
@@ -165,7 +165,7 @@ module.exports = {
             const text = new EmbedBuilder()
                 .setColor('#C0392B')
                 .setTitle('**Error**')
-                .setDescription(`There was an error executing /yaoi: \n` + '```' + error + '```')
+                .setDescription(`There was an error executing /book: \n` + '```' + error + '```')
             await interaction.editReply({ embeds: [text] });
             return;
         }

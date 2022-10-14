@@ -8,13 +8,13 @@ const config = require('../config.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("set")
-        .setDescription("To set a specific channel, for yaoi book.")
+        .setDescription("To set a specific channel, for books.")
         .addStringOption(option =>
             option.setName('option')
                 .setDescription('the setting that will be set')
                 .addChoices(
-                    { name: 'Yaoi Light', value: 'yaoi light' },
-                    { name: 'Yaoi Hard', value: 'yaoi hard' },)
+                    { name: 'Book Light', value: 'book light' },
+                    { name: 'Book Hard', value: 'book hard' },)
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('id')
@@ -30,10 +30,10 @@ module.exports = {
                     var option = await interaction.options.getString('option', true);
                     let settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
 
-                    if (option === 'yaoi hard') {
+                    if (option === 'book hard') {
                         settings.hard_book = await interaction.client.channels.fetch(await interaction.options.getString('id', true));
 
-                    } else if (option === 'yaoi light') {
+                    } else if (option === 'book light') {
                         settings.light_book = await interaction.client.channels.fetch(await interaction.options.getString('id', true));
 
                     }
@@ -64,10 +64,10 @@ module.exports = {
                     var option = await interaction.options.getString('option', true);
                     let settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
 
-                    if (option === 'yaoi hard') {
+                    if (option === 'book hard') {
                         settings.hard_book = interaction.channelId;
 
-                    } else if (option === 'yaoi light') {
+                    } else if (option === 'book light') {
                         settings.light_book = interaction.channelId;
 
                     }
