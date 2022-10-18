@@ -20,10 +20,10 @@ const {
 
 const { REST } = require('@discordjs/rest');
 
-const log = require('/home/pi/Desktop/Kochy-bot/logs/logBuilder.js');
-const config = require('/home/pi/Desktop/Kochy-bot/config.js');
+const log = require('./logs/logBuilder.js');
+const config = require('./config.js');
 
-const commandFiles = fs.readdirSync('/home/pi/Desktop/Kochy-bot/commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commands = [];
 
 
@@ -36,7 +36,7 @@ bot.commands = new Collection();
 
 //Declare all commands. 
 for (const file of commandFiles) {
-    const command = require(`/home/pi/Desktop/Kochy-bot/commands/${file}`);
+    const command = require(`./commands/${file}`);
     commands.push(command.data.toJSON());
     bot.commands.set(command.data.name, command);
 }
@@ -47,12 +47,12 @@ bot.on("ready", async () => {
         bot.user.setPresence({
             status: "online",
             activities: [{ name: "la version " + config.bot_version }],
-        }).catch(err => log.write(err));
+        })
 
         //Register all commands for the bot.
         const rest = new REST({
             version: '10'
-        }).setToken(process.env.DISCORD_TOKEN).catch(err => log.write(err));
+        }).setToken(process.env.DISCORD_TOKEN)
 
         var TEST_GUILD_ID = "948170961360916540";
         const CLIENT_ID = bot.user.id;
@@ -152,7 +152,7 @@ bot.on("messageCreate", async (message) => {
         if (message.webhookId) return;
         if (message.member.id === bot.user.id) return;
         try {
-            var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+            var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var links_list = eval(settings.links_list);
             var save_img_list = eval(settings.save_img_list);
             var webhooks_list = eval(settings.webhooks_list);
@@ -163,7 +163,7 @@ bot.on("messageCreate", async (message) => {
                     message.attachments.forEach(async function (attach) {
                         if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                             var name = await download(attach.url, attach.name);
-                            var path = "/home/pi/Desktop/Kochy-bot/images/" + name.toString()
+                            var path = "./images/" + name.toString()
                             i_path = path
 
                             links_list[message.channel.id].forEach(async function (link) {
@@ -171,7 +171,7 @@ bot.on("messageCreate", async (message) => {
                                 if (message.content != '') {
                                     if (!webhooks_list.hasOwnProperty(link)) {
                                         await create_webhook(message, message.channelId)
-                                        settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+                                        settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
                                     }
                                     console.log(webhooks_list[link])
@@ -192,7 +192,7 @@ bot.on("messageCreate", async (message) => {
                                 } else {
                                     if (!webhooks_list.hasOwnProperty(link)) {
                                         await create_webhook(message, message.channelId)
-                                        settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+                                        settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
                                     }
                                     console.log(webhooks_list[link])
@@ -219,7 +219,7 @@ bot.on("messageCreate", async (message) => {
                         links_list[message.channel.id].forEach(async function (link) {
                             if (!webhooks_list.hasOwnProperty(link)) {
                                 await create_webhook(message, message.channelId)
-                                settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+                                settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                 webhooks_list = eval(settings.webhooks_list);
                             }
                             var webhook = await bot.fetchWebhook(webhooks_list[link]);
@@ -241,13 +241,13 @@ bot.on("messageCreate", async (message) => {
                         message.attachments.forEach(async function (attach) {
                             if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                                 var name = await download(attach.url, attach.name);
-                                var path = "/home/pi/Desktop/Kochy-bot/images/" + name.toString()
+                                var path = "./images/" + name.toString()
                                 i_path = path
                                 save_img_list[message.channel.id].forEach(async function (link) {
                                     console.log('img save detected')
                                     if (!webhooks_list.hasOwnProperty(link)) {
                                         await create_webhook(message, message.channelId)
-                                        settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+                                        settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
 
                                     }
@@ -276,7 +276,7 @@ bot.on("messageCreate", async (message) => {
                             //find or create the webhook in the channel if it,s inexistent.
                             if (!webhooks_list.hasOwnProperty(link)) {
                                 await create_webhook(message, message.channelId)
-                                settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+                                settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                 webhooks_list = eval(settings.webhooks_list);
                             }
 
@@ -362,7 +362,7 @@ async function create_webhook(message, channel_id) {
         //check if the channel already have a webhook.
         var wbs = await channel.fetchWebhooks()
 
-        var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+        var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
         var webhooks_list = eval(settings.webhooks_list);
 
         //find all webhooks who named KochyBot.
@@ -416,7 +416,7 @@ async function create_webhook(message, channel_id) {
 
         settings.webhooks_list = webhooks_list;
 
-        fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
+        fs.writeFileSync("./settings.json", JSON.stringify(settings));
 
 
         log.write(`A webhook for "${channel.name}"(${channel}) was successfully registred`, message.member, message.channel);
