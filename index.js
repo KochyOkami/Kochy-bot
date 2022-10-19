@@ -274,21 +274,6 @@ bot.on("messageCreate", async (message) => {
                             }
                         });
                     }
-[Unit]
-Description=YaoiCute Service
-After=multi-user.target
-
-[Service]
-Type = inactif
-
-User=pi
-ExecStart=/usr/bin/node /home/pi/Desktop/Kochy-bot/index.js
-
-Restart=always
-RestartSec=0
-
-[Install]
-WantedBy=multi-user.target
                     
                     
                     //if the message start with a link  (only https:// links).
