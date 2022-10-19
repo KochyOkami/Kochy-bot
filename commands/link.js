@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const log = require('../logs/logBuilder.js');
+const log = require('/home/pi/Desktop/Kochy-bot/logs/logBuilder.js');
 const fs = require('fs');
 const { PermissionFlagsBits } = require('discord.js');
-const config = require('../config.js');
+const config = require('/home/pi/Desktop/Kochy-bot/config.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -26,7 +26,7 @@ module.exports = {
   async execute(interaction) {
     try {
       await interaction.deferReply();
-      var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+      var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
       var links_list = eval(settings.links_list);
 
       //catch the 2 options.
@@ -252,7 +252,7 @@ module.exports = {
 
       settings.links_list = links_list;
 
-      fs.writeFileSync("./settings.json", JSON.stringify(settings));
+      fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
 
       log.write(`Command /link ${link1} ${link2} Done !`, interaction.members, interaction.channel);
 
@@ -302,7 +302,7 @@ async function create_webhook(interaction, channel_id) {
 
     const channel = await interaction.client.channels.fetch(channel_id);
 
-    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
     var webhooks_list = eval(settings.webhooks_list);
 
     //find all webhooks who named KochyBot.
@@ -357,7 +357,7 @@ async function create_webhook(interaction, channel_id) {
 
     settings.webhooks_list = webhooks_list;
 
-    fs.writeFileSync("./settings.json", JSON.stringify(settings));
+    fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
 
 
     log.write(`A webhook for "${channel.name}"(${channel}) was successfully registred`, interaction.member, interaction.channel);

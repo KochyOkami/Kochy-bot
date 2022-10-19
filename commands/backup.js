@@ -1,8 +1,8 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const log = require('../logs/logBuilder.js');
+const log = require('/home/pi/Desktop/Kochy-bot/logs/logBuilder.js');
 const { PermissionFlagsBits } = require('discord.js');
-const config = require('../config.js');
+const config = require('/home/pi/Desktop/Kochy-bot/config.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -26,7 +26,7 @@ module.exports = {
                 await interaction.editReply({
                     embeds: [text], 
                     files: [{
-                        attachment: "./settings.json",
+                        attachment: "/home/pi/Desktop/Kochy-bot/settings.json",
                         name: name,
                         description: `Backup wanted by ${interaction.member.displayName}`
                     }],

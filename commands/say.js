@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const log = require('../logs/logBuilder.js');
+const log = require('/home/pi/Desktop/Kochy-bot/logs/logBuilder.js');
 const fs = require('fs');
 const { PermissionFlagsBits } = require('discord.js');
-const config = require('../config.js');
+const config = require('/home/pi/Desktop/Kochy-bot/config.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -21,7 +21,7 @@ module.exports = {
 
     async execute(interaction) {
         await interaction.deferReply();
-        var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+        var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
         var webhooks_list = eval(settings.webhooks_list);
         try {
             var text = await interaction.options.getString('text', true);
@@ -75,7 +75,7 @@ module.exports = {
                 await webhook.send({ content: text });
             }
             settings.webhooks_list = webhooks_list;
-            fs.writeFileSync("./settings.json", JSON.stringify(settings));
+            fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
             await interaction.deleteReply();
             return;
         } catch (error) {

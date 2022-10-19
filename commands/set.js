@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const log = require('../logs/logBuilder.js');
+const log = require('/home/pi/Desktop/Kochy-bot/logs/logBuilder.js');
 const fs = require('fs');
 const { PermissionFlagsBits } = require('discord.js');
-const config = require('../config.js');
+const config = require('/home/pi/Desktop/Kochy-bot/config.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,7 +28,7 @@ module.exports = {
             if (await interaction.options.getString('id', false)) {
                 try {
                     var option = await interaction.options.getString('option', true);
-                    let settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+                    let settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
 
                     if (option === 'book hard') {
                         settings.hard_book = await interaction.client.channels.fetch(await interaction.options.getString('id', true));
@@ -46,7 +46,7 @@ module.exports = {
 
 
                     await interaction.editReply({ embeds: [text] });
-                    fs.writeFileSync("./settings.json", JSON.stringify(settings));
+                    fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
                     return;
 
                 } catch (error) {
@@ -62,7 +62,7 @@ module.exports = {
             } else {
                 try {
                     var option = await interaction.options.getString('option', true);
-                    let settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+                    let settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
 
                     if (option === 'book hard') {
                         settings.hard_book = interaction.channelId;
@@ -80,7 +80,7 @@ module.exports = {
 
 
                     await interaction.editReply({ embeds: [text] });
-                    fs.writeFileSync("./settings.json", JSON.stringify(settings));
+                    fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
                     return;
 
                 } catch (error) {

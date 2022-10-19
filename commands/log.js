@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const log = require('../logs/logBuilder.js');
+const log = require('/home/pi/Desktop/Kochy-bot/logs/logBuilder.js');
 const { PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
 var dateTime = require('node-datetime');
@@ -28,20 +28,20 @@ module.exports = {
                 await interaction.editReply({
                     embeds: [text],
                     files: [{
-                        attachment: "./logs/errors.log",
+                        attachment: "/home/pi/Desktop/Kochy-bot/logs/errors.log",
                         name: name_log,
                         description: `Log wanted by ${interaction.member.displayName}`
                     },
                     {
-                        attachment: "./logs/msg.log",
+                        attachment: "/home/pi/Desktop/Kochy-bot/logs/msg.log",
                         name: name_msg,
                         description: `mgs wanted by ${interaction.member.displayName}`
                     }],
                 });
-                fs.writeFile("./logs/errors.log", '', function (err) {
+                fs.writeFile("/home/pi/Desktop/Kochy-bot/logs/errors.log", '', function (err) {
                     if (err) throw err;
                 });
-                fs.writeFile("./logs/msg.log", '', function (err) {
+                fs.writeFile("/home/pi/Desktop/Kochy-bot/logs/msg.log", '', function (err) {
                     if (err) throw err;
                 });
                 return;

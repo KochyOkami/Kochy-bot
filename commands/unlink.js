@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const log = require('../logs/logBuilder.js');
+const log = require('/home/pi/Desktop/Kochy-bot/logs/logBuilder.js');
 const fs = require('fs');
 const { PermissionFlagsBits } = require('discord.js');
 const { PassThrough } = require('stream');
@@ -23,7 +23,7 @@ module.exports = {
         await interaction.deferReply();
         try {
 
-            var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+            var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
             var links_list = eval(settings.links_list);
 
             //Use the default channel if a specific channel is not specified.
@@ -105,7 +105,7 @@ module.exports = {
                 await interaction.editReply({ embeds: [text] });
 
                 settings.links_list = links_list;
-                fs.writeFileSync("./settings.json", JSON.stringify(settings));
+                fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
                 return;
 
             } else {
@@ -135,7 +135,7 @@ module.exports = {
                 await interaction.editReply({ embeds: [text] });
 
                 settings.links_list = links_list;
-                fs.writeFileSync("./settings.json", JSON.stringify(settings));
+                fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
                 return;
             }
 
