@@ -242,7 +242,7 @@ bot.on("messageCreate", async (message) => {
             }
             if (save_img_list[message.channel.id]) {
                 var blacklist = settings.blacklist;
-                if (!blacklist.indexOf(message.author.id)) {
+                if (blacklist.indexOf(message.author.id) == -1) {
                     if (message.attachments != undefined && message.attachments.size) {
                         message.attachments.forEach(async function (attach) {
                             if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
@@ -274,7 +274,23 @@ bot.on("messageCreate", async (message) => {
                             }
                         });
                     }
+[Unit]
+Description=YaoiCute Service
+After=multi-user.target
 
+[Service]
+Type = inactif
+
+User=pi
+ExecStart=/usr/bin/node /home/pi/Desktop/Kochy-bot/index.js
+
+Restart=always
+RestartSec=0
+
+[Install]
+WantedBy=multi-user.target
+                    
+                    
                     //if the message start with a link  (only https:// links).
                     if (message.content.startsWith('https://')) {
                         //search all channel to send messages.
