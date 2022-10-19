@@ -8,9 +8,6 @@ const bot = new Discord.Client({
     ]
 });
 
-const dotenv = require('dotenv');
-dotenv.config();
-
 const fs = require('fs');
 const request = require('request');
 const {
@@ -26,11 +23,12 @@ const config = require('/home/pi/Desktop/Kochy-bot/config.js');
 const commandFiles = fs.readdirSync('/home/pi/Desktop/Kochy-bot/commands').filter(file => file.endsWith('.js'));
 const commands = [];
 
-var Token = "";
+var Token = ""
+
+
 bot.login(Token);
-var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
-settings.bot_name = bot.user.username
-fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
+
+
 
 //-----------------------------------Discord------------------------------------------------
 
@@ -51,6 +49,10 @@ bot.on("ready", async () => {
             status: "online",
             activities: [{ name: "la version " + config.bot_version }],
         })
+
+        var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+        settings.bot_name = bot.user.username
+        fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
 
         //Register all commands for the bot.
         const rest = new REST({
@@ -135,7 +137,7 @@ bot.on('interactionCreate', async interaction => {
                 .setColor('#FF0000')
                 .setTitle('**Error**')
                 .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
-            await interaction.editReply({ embeds: [text] });
+            await interaction.channel.send({ embeds: [text] });
         }
         //avoid sources of error.
     } catch (error) {
@@ -144,7 +146,7 @@ bot.on('interactionCreate', async interaction => {
             .setColor('#FF0000')
             .setTitle('**Error**')
             .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
-        await interaction.editReply({ embeds: [text] });
+        await interaction.channel.send({ embeds: [text] });
     }
 });
 
@@ -173,7 +175,7 @@ bot.on("messageCreate", async (message) => {
 
                                 if (message.content != '') {
                                     if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, message.channelId)
+                                        await create_webhook(message, link)
                                         settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
                                     }
@@ -194,7 +196,7 @@ bot.on("messageCreate", async (message) => {
                                     log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
                                 } else {
                                     if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, message.channelId)
+                                        await create_webhook(message, link)
                                         settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
                                     }
@@ -220,8 +222,9 @@ bot.on("messageCreate", async (message) => {
                 } else {
                     if (message.content != '') {
                         links_list[message.channel.id].forEach(async function (link) {
+                            console.log(!webhooks_list.hasOwnProperty(link))
                             if (!webhooks_list.hasOwnProperty(link)) {
-                                await create_webhook(message, message.channelId)
+                                await create_webhook(message, link)
                                 settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
                                 webhooks_list = eval(settings.webhooks_list);
                             }
@@ -249,7 +252,7 @@ bot.on("messageCreate", async (message) => {
                                 save_img_list[message.channel.id].forEach(async function (link) {
                                     console.log('img save detected')
                                     if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, message.channelId)
+                                        await create_webhook(message, link)
                                         settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
 
@@ -278,7 +281,7 @@ bot.on("messageCreate", async (message) => {
                         save_img_list[message.channel.id].forEach(async function (link) {
                             //find or create the webhook in the channel if it,s inexistent.
                             if (!webhooks_list.hasOwnProperty(link)) {
-                                await create_webhook(message, message.channelId)
+                                await create_webhook(message, link)
                                 settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
                                 webhooks_list = eval(settings.webhooks_list);
                             }
@@ -359,7 +362,7 @@ async function create_webhook(message, channel_id) {
      * @param {string} channel_id The ID of the channel who the webhook will be associated with.
      * @return  Return nothings, but the webhook_list has been edited.
      */
-
+    const channel = await bot.channels.fetch(channel_id);
     try {
         const channel = await bot.channels.fetch(channel_id);
         //check if the channel already have a webhook.
@@ -372,7 +375,17 @@ async function create_webhook(message, channel_id) {
         if (wbs.find(Webhook => Webhook.name === 'YaoiCute_bot')) {
 
             var webhooks_already_registered = [];
+            var no = []
+            
+            Array.from(wbs.values()).filter(Webhook => Webhook.name === 'Kochy_bot' || Webhook.name === 'KochyBot').forEach(function (webhook) { no.push(webhook.id); });
+
             Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
+
+            no.forEach(async function (id) {
+                var wb = await bot.fetchWebhook(id);
+                wb.delete('They have too much webhook :(');
+                log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
+            });
 
             if (webhooks_already_registered.length > 1) {
                 //keep the first if multiple webhooks are found.
@@ -383,7 +396,7 @@ async function create_webhook(message, channel_id) {
                 webhooks_already_registered.forEach(async function (id) {
                     var wb = await bot.fetchWebhook(id);
                     wb.delete('They have too much webhook :(');
-                    log.write('webhook ' + wbs.values().filter(Webhook => Webhook.id === id) + 'has been deleted');
+                    log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
                 });
             } else { webhooks_list[channel_id] = webhooks_already_registered[0]; }
 
@@ -424,15 +437,6 @@ async function create_webhook(message, channel_id) {
 
         log.write(`A webhook for "${channel.name}"(${channel}) was successfully registred`, message.member, message.channel);
 
-        var fresh_linked_channel = await bot.fetchWebhook(webhooks_list[channel_id]);
-
-        const text = new EmbedBuilder()
-            .setColor('#245078')
-            .setTitle('**Information**')
-            .setDescription(`This channel has been linked to ${channel} in server ${channel.guild.name}`)
-            .setFooter({ text: 'unlink to unlink this channel' })
-
-        await fresh_linked_channel.send({ embeds: [text], username: settings.bot_name });
         return;
     } catch (error) {
         //log the error message.

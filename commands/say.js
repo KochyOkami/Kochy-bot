@@ -72,7 +72,7 @@ module.exports = {
             if (user != false) {
                 await webhook.send({ content: text, username: user.username, avatarURL: user.avatarURL() });
             } else {
-                await webhook.send({ content: text, username: settings.bot_name});
+                await interaction.channel.send({ content: text})
             }
             settings.webhooks_list = webhooks_list;
             fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
