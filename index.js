@@ -28,6 +28,9 @@ const commands = [];
 
 var Token = "";
 bot.login(Token);
+var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
+settings.bot_name = bot.user.username
+fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
 
 //-----------------------------------Discord------------------------------------------------
 
@@ -313,7 +316,7 @@ bot.on("messageCreate", async (message) => {
 async function download(url, name) {
     /**
    * Download a file on the server and return the name of the downloaded file. 
-   * If the name of the file is unknown, create a new name bases on 'KochyBotImg_(randint)'
+   * If the name of the file is unknown, create a new name bases on 'YaoiCute_botImg_(randint)'
    * 
    * @param  {String} name  The original name of the file
    * @param  {String} url   The URL to download the file
@@ -321,9 +324,9 @@ async function download(url, name) {
    */
     try {
         if (name.includes('unknown')) {
-            name = ('KochyBotImg_' + Math.random().toString(36).substring(2) + '.' + name.split('.').pop(0));
+            name = ('YaoiCute_botImg_' + Math.random().toString(36).substring(2) + '.' + name.split('.').pop(0));
         }
-        var file = fs.createWriteStream('images/' + name);
+        var file = fs.createWriteStream('/home/pi/Desktop/Kochy-bot/images/' + name);
         return new Promise((resolve, reject) => {
             var responseSent = false; // flag to make sure that response is sent only once.
             request.get(url)
@@ -365,11 +368,11 @@ async function create_webhook(message, channel_id) {
         var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
         var webhooks_list = eval(settings.webhooks_list);
 
-        //find all webhooks who named KochyBot.
-        if (wbs.find(Webhook => Webhook.name === 'KochyBot')) {
+        //find all webhooks who named YaoiCute_bot.
+        if (wbs.find(Webhook => Webhook.name === 'YaoiCute_bot')) {
 
             var webhooks_already_registered = [];
-            Array.from(wbs.values()).filter(Webhook => Webhook.name === 'KochyBot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
+            Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
 
             if (webhooks_already_registered.length > 1) {
                 //keep the first if multiple webhooks are found.
@@ -391,8 +394,8 @@ async function create_webhook(message, channel_id) {
 
             try {
                 var webhook = await channel.createWebhook({
-                    name: bot.user.username,
-                    avatar: bot.user.avatar,
+                    name: 'YaoiCute_bot',
+                    avatar: config.avatar,
                     reason: 'Need a cool Webhook to send beautiful images UwU'
                 });
                 console.log(webhook, "dd")
@@ -429,7 +432,7 @@ async function create_webhook(message, channel_id) {
             .setDescription(`This channel has been linked to ${channel} in server ${channel.guild.name}`)
             .setFooter({ text: 'unlink to unlink this channel' })
 
-        await fresh_linked_channel.send({ embeds: [text] });
+        await fresh_linked_channel.send({ embeds: [text], username: settings.bot_name });
         return;
     } catch (error) {
         //log the error message.

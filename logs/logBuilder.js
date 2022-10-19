@@ -4,7 +4,7 @@ var dt = dateTime.create();
 
 
 
-fs.writeFile('logs/errors.log', "-".repeat(20) + "Start Log " + dt.format('Y-m-d H:M:S') + "-".repeat(20) + "\n", { flag: 'a+' }, (err) => {
+fs.writeFile('/home/pi/Desktop/Kochy-bot/logs/errors.log', "-".repeat(20) + "Start Log " + dt.format('Y-m-d H:M:S') + "-".repeat(20) + "\n", { flag: 'a+' }, (err) => {
     if (err) {
         console.error(err)
         return
@@ -19,7 +19,7 @@ async function write(message, author = undefined, channel = undefined) {
     }
 
     if (author === undefined && channel === undefined) {
-        await fs.appendFile('logs/errors.log', `${date}: ${message}\n`, (err) => {
+        fs.appendFile('/home/pi/Desktop/Kochy-bot/logs/errors.log', `${date}: ${message}\n`, (err) => {
             if (err) {
                 console.error(err)
                 return;
@@ -29,7 +29,7 @@ async function write(message, author = undefined, channel = undefined) {
         })
     }
     if (channel === undefined && author != undefined) {
-        await fs.appendFile('logs/errors.log', `${date}: ${message} by ${author.user.tag}(${author})\n`, (err) => {
+        fs.appendFile('/home/pi/Desktop/Kochy-bot/logs/errors.log', `${date}: ${message} by ${author.user.tag}(${author})\n`, (err) => {
             if (err) {
                 console.error(err)
                 return;
@@ -40,7 +40,7 @@ async function write(message, author = undefined, channel = undefined) {
     }
 
     if (channel != undefined && author != undefined) {
-        await fs.appendFile('logs/errors.log', `${date}: ${message} by ${author.user.tag}(${author}) in channel ${channel.name}(${channel})\n`, (err) => {
+        fs.appendFile('/home/pi/Desktop/Kochy-bot/logs/errors.log', `${date}: ${message} by ${author.user.tag}(${author}) in channel ${channel.name}(${channel})\n`, (err) => {
             if (err) {
                 console.error(err)
                 return;
@@ -59,7 +59,7 @@ async function msg(message, author = undefined, channel = undefined) {
     }
 
     if (author === undefined && channel === undefined) {
-        await fs.appendFile('logs/msg.log', `${date}: ${message}\n`, (err) => {
+        fs.appendFile('/home/pi/Desktop/Kochy-bot/logs/msg.log', `${date}: ${message}\n`, (err) => {
             if (err) {
                 console.error(err)
                 return;
@@ -69,7 +69,7 @@ async function msg(message, author = undefined, channel = undefined) {
         })
     }
     if (channel === undefined && author != undefined) {
-        await fs.appendFile('logs/msg.log', `${date}: ${message} by ${author.user.tag}(${author})\n`, (err) => {
+        fs.appendFile('/home/pi/Desktop/Kochy-bot/logs/msg.log', `${date}: ${message} by ${author.user.tag}(${author})\n`, (err) => {
             if (err) {
                 console.error(err)
                 return;
@@ -80,7 +80,7 @@ async function msg(message, author = undefined, channel = undefined) {
     }
 
     if (channel != undefined && author != undefined) {
-        await fs.appendFile('logs/msg.log', `${date}: ${message} by ${author.user.tag}(${author}) in channel ${channel.name}(${channel})\n`, (err) => {
+        fs.appendFile('/home/pi/Desktop/Kochy-bot/logs/msg.log', `${date}: ${message} by ${author.user.tag}(${author}) in channel ${channel.name}(${channel})\n`, (err) => {
             if (err) {
                 console.error(err)
                 return;

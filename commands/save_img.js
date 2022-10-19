@@ -172,11 +172,11 @@ async function create_webhook(interaction, channel_id) {
     var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
     var webhooks_list = eval(settings.webhooks_list);
 
-    //find all webhooks who named KochyBot.
-    if (wbs.find(Webhook => Webhook.name === 'KochyBot')) {
+    //find all webhooks who named YaoiCute_bot.
+    if (wbs.find(Webhook => Webhook.name === 'YaoiCute_bot')) {
 
       var webhooks_already_registered = [];
-      Array.from(wbs.values()).filter(Webhook => Webhook.name === 'KochyBot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
+      Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
 
       if (webhooks_already_registered.length > 1) {
         //keep the first if multiple webhooks are found.
@@ -198,7 +198,7 @@ async function create_webhook(interaction, channel_id) {
       try {
         var webhook = await interaction.guild.channels.createWebhook({
           channel: channel_id,
-          name: 'KochyBot',
+          name: 'YaoiCute_bot',
           avatar: config.avatar,
           reason: 'Need a cool Webhook to send beautiful images UwU'
         });
@@ -236,7 +236,7 @@ async function create_webhook(interaction, channel_id) {
       .setDescription(`This channel has been linked to ${channel}`)
       .setFooter({ text: '/unlink to unlink this channel' })
 
-    await fresh_linked_channel.send({ embeds: [text] });
+    await fresh_linked_channel.send({ embeds: [text], username: settings.bot_name });
     return;
   } catch (error) {
     //log the error message.
