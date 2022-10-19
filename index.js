@@ -26,8 +26,8 @@ const config = require('/home/pi/Desktop/Kochy-bot/config.js');
 const commandFiles = fs.readdirSync('/home/pi/Desktop/Kochy-bot/commands').filter(file => file.endsWith('.js'));
 const commands = [];
 
-
-bot.login(process.env.DISCORD_TOKEN);
+var Token = "";
+bot.login(Token);
 
 //-----------------------------------Discord------------------------------------------------
 
@@ -52,7 +52,7 @@ bot.on("ready", async () => {
         //Register all commands for the bot.
         const rest = new REST({
             version: '10'
-        }).setToken(process.env.DISCORD_TOKEN)
+        }).setToken(Token)
 
         var TEST_GUILD_ID = "948170961360916540";
         const CLIENT_ID = bot.user.id;
