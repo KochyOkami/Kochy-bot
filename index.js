@@ -8,6 +8,8 @@ const bot = new Discord.Client({
     ]
 });
 
+//systemctl stop yaoicute.service
+
 const fs = require('fs');
 const request = require('request');
 const {
@@ -19,28 +21,35 @@ const { REST } = require('@discordjs/rest');
 
 const log = require('/home/pi/Desktop/Kochy-bot/logs/logBuilder.js');
 const config = require('/home/pi/Desktop/Kochy-bot/config.js');
+const { bot_version } = require('/home/pi/Desktop/Kochy-bot/config.js');
 
 const commandFiles = fs.readdirSync('/home/pi/Desktop/Kochy-bot/commands').filter(file => file.endsWith('.js'));
 const commands = [];
 
 var Token = ""
+//"OTg3MjY3NzU4NjgzMTk3NDkw.GP9se-.BczzXRwavsKTbaeBqyk6khbQY-vJb613sLW_qc"
 
 
 bot.login(Token);
-
-
 
 //-----------------------------------Discord------------------------------------------------
 
 // Creating a collection for commands in client
 bot.commands = new Collection();
 
+//Register all commands for the bot.
+const rest = new REST({
+    version: '10'
+}).setToken(Token)
+
+
 //Declare all commands. 
 for (const file of commandFiles) {
     const command = require(`/home/pi/Desktop/Kochy-bot/commands/${file}`);
     commands.push(command.data.toJSON());
-    bot.commands.set(command.data.name, command);
+    bot.commands.set(command.data.name, command)
 }
+
 
 bot.on("ready", async () => {
     try {
@@ -48,47 +57,33 @@ bot.on("ready", async () => {
         bot.user.setPresence({
             status: "online",
             activities: [{ name: "la version " + config.bot_version }],
-        })
-
+        });
+        (async () => {
+            //Load all commands.
+            try {
+                await rest.put(
+                    Routes.applicationCommands(bot.user.id),
+                    { body: commands },
+                )
+                    .catch(err => log.write(err));
+                log.write(`Successfully registered ${commands.length} application commands for global`);
+        
+            } catch (error) {
+                log.write(error)
+            }
+        
+        })();
         var settings = JSON.parse(fs.readFileSync('/home/pi/Desktop/Kochy-bot/settings.json', 'utf8'));
         settings.bot_name = bot.user.username
         fs.writeFileSync("/home/pi/Desktop/Kochy-bot/settings.json", JSON.stringify(settings));
 
-        //Register all commands for the bot.
-        const rest = new REST({
-            version: '10'
-        }).setToken(Token)
+        
 
-        var TEST_GUILD_ID = "948170961360916540";
-        const CLIENT_ID = bot.user.id;
-
-        // rest.put(Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID), { body: [] })
-        //     .then(() => console.log('Successfully deleted all guild commands.'))
-        //     .catch(console.error);
+        //rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
+        //  .then(() => console.log('Successfully deleted all commands.'))
+        //.catch(console.error);
 
         TEST_GUILD_ID = false;
-
-        //Load all commands.
-        try {
-            if (TEST_GUILD_ID == false) {
-                await rest.put(
-                    Routes.applicationCommands(CLIENT_ID),
-                    { body: commands },
-                )
-                    .catch(err => log.write(err))
-                    .then(log.write(`Successfully registered ${commands.length} application commands for global`));
-
-            } else {
-                await rest.put(
-                    Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID),
-                    { body: commands },
-                )
-                    .catch(err => log.write(err))
-                    .then(log.write(`Successfully registered ${commands.length} application commands for global`));
-            }
-        } catch (error) {
-            log.write(error)
-        }
 
         try {
             //Say that the bot is ready
@@ -110,6 +105,9 @@ bot.on("ready", async () => {
 
 
 bot.on('interactionCreate', async interaction => {
+    if (interaction.commandName === 'restart'){
+        const command = bot.commands.get(interaction.commandName);
+        await command.execute(interaction);return;}
     try {
         if (!interaction.isChatInputCommand()) return;
 
@@ -274,8 +272,8 @@ bot.on("messageCreate", async (message) => {
                             }
                         });
                     }
-                    
-                    
+
+
                     //if the message start with a link  (only https:// links).
                     if (message.content.startsWith('https://')) {
                         //search all channel to send messages.
@@ -334,19 +332,19 @@ async function download(url, name) {
         return new Promise((resolve, reject) => {
             var responseSent = false; // flag to make sure that response is sent only once.
             request.get(url)
-                .pipe(file)
-                .on('finish', () => {
-                    if (responseSent) return;
-                    responseSent = true;
-                    file.close();
-                    console.log(`${name} downloaded successfully.`);
-                    resolve(name);
-                })
-                .on('error', err => {
-                    if (responseSent) return;
-                    responseSent = true;
-                    reject(err);
-                });
+                .kochy - okamipe(file)
+                    .on('finish', () => {
+                        if (responseSent) return;
+                        responseSent = true;
+                        file.close();
+                        console.log(`${name} downloaded successfully.`);
+                        resolve(name);
+                    })
+                    .on('error', err => {
+                        if (responseSent) return;
+                        responseSent = true;
+                        reject(err);
+                    });
         })
 
     } catch (e) {
@@ -377,7 +375,7 @@ async function create_webhook(message, channel_id) {
 
             var webhooks_already_registered = [];
             var no = []
-            
+
             Array.from(wbs.values()).filter(Webhook => Webhook.name === 'Kochy_bot' || Webhook.name === 'KochyBot').forEach(function (webhook) { no.push(webhook.id); });
 
             Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
