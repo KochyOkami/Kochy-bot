@@ -36,11 +36,11 @@ module.exports = {
 
                     var wbs = await interaction.guild.channels.fetchWebhooks(interaction.channel)
 
-                    //find all webhooks who named KochyBot.
-                    if (wbs.find(Webhook => Webhook.name === 'KochyBot')) {
+                    //find all webhooks who named YaoiCute_bot.
+                    if (wbs.find(Webhook => Webhook.name === 'YaoiCute_bot')) {
 
                         var a = [];
-                        Array.from(wbs.values()).filter(Webhook => Webhook.name === 'KochyBot').forEach(function (webhook) { a.push(webhook.id); });
+                        Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { a.push(webhook.id); });
 
                         var webhook_id = a[0];
 
@@ -62,7 +62,7 @@ module.exports = {
             } catch (error) {
                 var webhook = await interaction.guild.channels.createWebhook({
                     channel: interaction.channel,
-                    name: 'KochyBot',
+                    name: 'YaoiCute_bot',
                     avatar: config.avatar,
                     reason: 'Need a cool Webhook to send beautiful images UwU'
                 });
@@ -72,7 +72,7 @@ module.exports = {
             if (user != false) {
                 await webhook.send({ content: text, username: user.username, avatarURL: user.avatarURL() });
             } else {
-                await webhook.send({ content: text });
+                await interaction.channel.send({ content: text})
             }
             settings.webhooks_list = webhooks_list;
             fs.writeFileSync("./settings.json", JSON.stringify(settings));

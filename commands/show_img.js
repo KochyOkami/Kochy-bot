@@ -68,7 +68,7 @@ module.exports = {
                         .setColor('#245078')
                         .setTitle('**Information**')
                         .setDescription(`This channel is linked to:`)
-                        .setFooter({ text: 'KochyBot' })
+                        .setFooter({ text: 'YaoiCute_bot' })
 
                     var values = "";
 
