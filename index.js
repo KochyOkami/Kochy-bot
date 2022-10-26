@@ -8,8 +8,7 @@ const bot = new Discord.Client({
     ]
 });
 
-const dotenv = require('dotenv');
-dotenv.config();
+//systemctl stop yaoicute.service
 
 const fs = require('fs');
 const request = require('request');
@@ -22,24 +21,35 @@ const { REST } = require('@discordjs/rest');
 
 const log = require('./logs/logBuilder.js');
 const config = require('./config.js');
+const { bot_version } = require('./config.js');
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commands = [];
 
+var Token = ""
+//"OTg3MjY3NzU4NjgzMTk3NDkw.GP9se-.BczzXRwavsKTbaeBqyk6khbQY-vJb613sLW_qc"
 
-bot.login(process.env.DISCORD_TOKEN);
+
+bot.login(Token);
 
 //-----------------------------------Discord------------------------------------------------
 
 // Creating a collection for commands in client
 bot.commands = new Collection();
 
+//Register all commands for the bot.
+const rest = new REST({
+    version: '10'
+}).setToken(Token)
+
+
 //Declare all commands. 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     commands.push(command.data.toJSON());
-    bot.commands.set(command.data.name, command);
+    bot.commands.set(command.data.name, command)
 }
+
 
 bot.on("ready", async () => {
     try {
@@ -47,43 +57,33 @@ bot.on("ready", async () => {
         bot.user.setPresence({
             status: "online",
             activities: [{ name: "la version " + config.bot_version }],
-        })
+        });
+        (async () => {
+            //Load all commands.
+            try {
+                await rest.put(
+                    Routes.applicationCommands(bot.user.id),
+                    { body: commands },
+                )
+                    .catch(err => log.write(err));
+                log.write(`Successfully registered ${commands.length} application commands for global`);
+        
+            } catch (error) {
+                log.write(error)
+            }
+        
+        })();
+        var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+        settings.bot_name = bot.user.username
+        fs.writeFileSync("./settings.json", JSON.stringify(settings));
 
-        //Register all commands for the bot.
-        const rest = new REST({
-            version: '10'
-        }).setToken(process.env.DISCORD_TOKEN)
+        
 
-        var TEST_GUILD_ID = "948170961360916540";
-        const CLIENT_ID = bot.user.id;
-
-        // rest.put(Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID), { body: [] })
-        //     .then(() => console.log('Successfully deleted all guild commands.'))
-        //     .catch(console.error);
+        //rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
+        //  .then(() => console.log('Successfully deleted all commands.'))
+        //.catch(console.error);
 
         TEST_GUILD_ID = false;
-
-        //Load all commands.
-        try {
-            if (TEST_GUILD_ID == false) {
-                await rest.put(
-                    Routes.applicationCommands(CLIENT_ID),
-                    { body: commands },
-                )
-                    .catch(err => log.write(err))
-                    .then(log.write(`Successfully registered ${commands.length} application commands for global`));
-
-            } else {
-                await rest.put(
-                    Routes.applicationGuildCommands(CLIENT_ID, TEST_GUILD_ID),
-                    { body: commands },
-                )
-                    .catch(err => log.write(err))
-                    .then(log.write(`Successfully registered ${commands.length} application commands for global`));
-            }
-        } catch (error) {
-            log.write(error)
-        }
 
         try {
             //Say that the bot is ready
@@ -105,6 +105,9 @@ bot.on("ready", async () => {
 
 
 bot.on('interactionCreate', async interaction => {
+    if (interaction.commandName === 'restart'){
+        const command = bot.commands.get(interaction.commandName);
+        await command.execute(interaction);return;}
     try {
         if (!interaction.isChatInputCommand()) return;
 
@@ -132,7 +135,7 @@ bot.on('interactionCreate', async interaction => {
                 .setColor('#FF0000')
                 .setTitle('**Error**')
                 .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
-            await interaction.editReply({ embeds: [text] });
+            await interaction.channel.send({ embeds: [text] });
         }
         //avoid sources of error.
     } catch (error) {
@@ -141,7 +144,7 @@ bot.on('interactionCreate', async interaction => {
             .setColor('#FF0000')
             .setTitle('**Error**')
             .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
-        await interaction.editReply({ embeds: [text] });
+        await interaction.channel.send({ embeds: [text] });
     }
 });
 
@@ -170,7 +173,7 @@ bot.on("messageCreate", async (message) => {
 
                                 if (message.content != '') {
                                     if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, message.channelId)
+                                        await create_webhook(message, link)
                                         settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
                                     }
@@ -191,7 +194,7 @@ bot.on("messageCreate", async (message) => {
                                     log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
                                 } else {
                                     if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, message.channelId)
+                                        await create_webhook(message, link)
                                         settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
                                     }
@@ -217,8 +220,9 @@ bot.on("messageCreate", async (message) => {
                 } else {
                     if (message.content != '') {
                         links_list[message.channel.id].forEach(async function (link) {
+                            console.log(!webhooks_list.hasOwnProperty(link))
                             if (!webhooks_list.hasOwnProperty(link)) {
-                                await create_webhook(message, message.channelId)
+                                await create_webhook(message, link)
                                 settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                 webhooks_list = eval(settings.webhooks_list);
                             }
@@ -236,7 +240,7 @@ bot.on("messageCreate", async (message) => {
             }
             if (save_img_list[message.channel.id]) {
                 var blacklist = settings.blacklist;
-                if (!blacklist.indexOf(message.author.id)) {
+                if (blacklist.indexOf(message.author.id) == -1) {
                     if (message.attachments != undefined && message.attachments.size) {
                         message.attachments.forEach(async function (attach) {
                             if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
@@ -246,7 +250,7 @@ bot.on("messageCreate", async (message) => {
                                 save_img_list[message.channel.id].forEach(async function (link) {
                                     console.log('img save detected')
                                     if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, message.channelId)
+                                        await create_webhook(message, link)
                                         settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                         webhooks_list = eval(settings.webhooks_list);
 
@@ -269,13 +273,14 @@ bot.on("messageCreate", async (message) => {
                         });
                     }
 
+
                     //if the message start with a link  (only https:// links).
                     if (message.content.startsWith('https://')) {
                         //search all channel to send messages.
                         save_img_list[message.channel.id].forEach(async function (link) {
                             //find or create the webhook in the channel if it,s inexistent.
                             if (!webhooks_list.hasOwnProperty(link)) {
-                                await create_webhook(message, message.channelId)
+                                await create_webhook(message, link)
                                 settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
                                 webhooks_list = eval(settings.webhooks_list);
                             }
@@ -313,7 +318,7 @@ bot.on("messageCreate", async (message) => {
 async function download(url, name) {
     /**
    * Download a file on the server and return the name of the downloaded file. 
-   * If the name of the file is unknown, create a new name bases on 'KochyBotImg_(randint)'
+   * If the name of the file is unknown, create a new name bases on 'YaoiCute_botImg_(randint)'
    * 
    * @param  {String} name  The original name of the file
    * @param  {String} url   The URL to download the file
@@ -321,25 +326,25 @@ async function download(url, name) {
    */
     try {
         if (name.includes('unknown')) {
-            name = ('KochyBotImg_' + Math.random().toString(36).substring(2) + '.' + name.split('.').pop(0));
+            name = ('YaoiCute_botImg_' + Math.random().toString(36).substring(2) + '.' + name.split('.').pop(0));
         }
-        var file = fs.createWriteStream('images/' + name);
+        var file = fs.createWriteStream('./images/' + name);
         return new Promise((resolve, reject) => {
             var responseSent = false; // flag to make sure that response is sent only once.
             request.get(url)
-                .pipe(file)
-                .on('finish', () => {
-                    if (responseSent) return;
-                    responseSent = true;
-                    file.close();
-                    console.log(`${name} downloaded successfully.`);
-                    resolve(name);
-                })
-                .on('error', err => {
-                    if (responseSent) return;
-                    responseSent = true;
-                    reject(err);
-                });
+                .kochy - okamipe(file)
+                    .on('finish', () => {
+                        if (responseSent) return;
+                        responseSent = true;
+                        file.close();
+                        console.log(`${name} downloaded successfully.`);
+                        resolve(name);
+                    })
+                    .on('error', err => {
+                        if (responseSent) return;
+                        responseSent = true;
+                        reject(err);
+                    });
         })
 
     } catch (e) {
@@ -356,7 +361,7 @@ async function create_webhook(message, channel_id) {
      * @param {string} channel_id The ID of the channel who the webhook will be associated with.
      * @return  Return nothings, but the webhook_list has been edited.
      */
-
+    const channel = await bot.channels.fetch(channel_id);
     try {
         const channel = await bot.channels.fetch(channel_id);
         //check if the channel already have a webhook.
@@ -365,11 +370,21 @@ async function create_webhook(message, channel_id) {
         var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
         var webhooks_list = eval(settings.webhooks_list);
 
-        //find all webhooks who named KochyBot.
-        if (wbs.find(Webhook => Webhook.name === 'KochyBot')) {
+        //find all webhooks who named YaoiCute_bot.
+        if (wbs.find(Webhook => Webhook.name === 'YaoiCute_bot')) {
 
             var webhooks_already_registered = [];
-            Array.from(wbs.values()).filter(Webhook => Webhook.name === 'KochyBot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
+            var no = []
+
+            Array.from(wbs.values()).filter(Webhook => Webhook.name === 'Kochy_bot' || Webhook.name === 'KochyBot').forEach(function (webhook) { no.push(webhook.id); });
+
+            Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
+
+            no.forEach(async function (id) {
+                var wb = await bot.fetchWebhook(id);
+                wb.delete('They have too much webhook :(');
+                log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
+            });
 
             if (webhooks_already_registered.length > 1) {
                 //keep the first if multiple webhooks are found.
@@ -380,7 +395,7 @@ async function create_webhook(message, channel_id) {
                 webhooks_already_registered.forEach(async function (id) {
                     var wb = await bot.fetchWebhook(id);
                     wb.delete('They have too much webhook :(');
-                    log.write('webhook ' + wbs.values().filter(Webhook => Webhook.id === id) + 'has been deleted');
+                    log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
                 });
             } else { webhooks_list[channel_id] = webhooks_already_registered[0]; }
 
@@ -391,8 +406,8 @@ async function create_webhook(message, channel_id) {
 
             try {
                 var webhook = await channel.createWebhook({
-                    name: bot.user.username,
-                    avatar: bot.user.avatar,
+                    name: 'YaoiCute_bot',
+                    avatar: config.avatar,
                     reason: 'Need a cool Webhook to send beautiful images UwU'
                 });
                 console.log(webhook, "dd")
@@ -421,15 +436,6 @@ async function create_webhook(message, channel_id) {
 
         log.write(`A webhook for "${channel.name}"(${channel}) was successfully registred`, message.member, message.channel);
 
-        var fresh_linked_channel = await bot.fetchWebhook(webhooks_list[channel_id]);
-
-        const text = new EmbedBuilder()
-            .setColor('#245078')
-            .setTitle('**Information**')
-            .setDescription(`This channel has been linked to ${channel} in server ${channel.guild.name}`)
-            .setFooter({ text: 'unlink to unlink this channel' })
-
-        await fresh_linked_channel.send({ embeds: [text] });
         return;
     } catch (error) {
         //log the error message.
