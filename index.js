@@ -25,8 +25,10 @@ const { bot_version } = require('./config.js');
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commands = [];
+const dotenv = require('dotenv');
+dotenv.config();
 
-var Token = ""
+var Token = process.env.DISCORD_TOKEN2
 //"OTg3MjY3NzU4NjgzMTk3NDkw.GP9se-.BczzXRwavsKTbaeBqyk6khbQY-vJb613sLW_qc"
 
 
