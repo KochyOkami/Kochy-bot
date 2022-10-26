@@ -334,7 +334,7 @@ async function download(url, name) {
         return new Promise((resolve, reject) => {
             var responseSent = false; // flag to make sure that response is sent only once.
             request.get(url)
-                .kochy - okamipe(file)
+                .pipe(file)
                     .on('finish', () => {
                         if (responseSent) return;
                         responseSent = true;
