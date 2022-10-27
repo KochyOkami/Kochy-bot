@@ -184,6 +184,7 @@ async function find_webhook(interaction, channel_id) {
      * @param {string} channel_id The ID of the channel who the webhook will be associated with.
      * @return  Return nothings, but the webhook_list has been edited.
      */
+     console.log("test")
     const channel = await interaction.client.channels.fetch(channel_id);
     try {
 
