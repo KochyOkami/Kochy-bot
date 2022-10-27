@@ -85,7 +85,7 @@ module.exports = {
 
                 if (!save_img_list[link1]) {
                     save_img_list[link1] = Array(link2);
-                    var webhook = await find_webhook(interaction, link2)
+                    var webhook = await find_webhook(interaction, link2);
                     const text = new EmbedBuilder()
                       .setColor('#245078')
                       .setTitle('**Information**')

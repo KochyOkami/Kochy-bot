@@ -110,7 +110,7 @@ async function find_webhook(interaction, channel_id) {
                 console.log(webhook, "dd")
             } catch (error) {
                 //log the error message.
-                log.write(error, message.member, message.channel);
+                log.write(error);
 
                 //editReply the error message.
                 const text = new EmbedBuilder()
@@ -125,12 +125,12 @@ async function find_webhook(interaction, channel_id) {
         }
 
 
-        log.write(`A webhook for "${channel.name}"(${channel}) was successfully find`, message.member, message.channel);
+        log.write(`A webhook for "${channel.name}"(${channel}) was successfully find`);
 
         return webhook;
     } catch (error) {
         //log the error message.
-        log.write(error, message.member, message.channel);
+        log.write(error);
 
         //editReply the error message.
         const text = new EmbedBuilder()
