@@ -92,7 +92,7 @@ module.exports = {
                       .setDescription(`This channel has been linked to ${link1}`)
                       .setFooter({ text: '/unlink to unlink this channel' })
                       
-                    await webhook.send(text)
+                    await webhook.send({ embeds: [text] })
 
                 } else if (save_img_list[link1]) {
 
@@ -128,7 +128,7 @@ module.exports = {
                           .setDescription(`This channel has been linked to ${link1}`)
                           .setFooter({ text: '/unlink to unlink this channel' })
                           
-                        await webhook.send(text)
+                        await webhook.send({ embeds: [text] })
                     }
                 }
 
