@@ -367,7 +367,7 @@ async function find_webhook(message, channel_id) {
             } else { var webhook_id = webhooks_already_registered[0] }
 
             var webhook = await bot.fetchWebhook(webhook_id)
-            log.write(`A webhook has been registered for "${channel.name}" (${channel_id}).`);
+            
 
         } else {
 
@@ -378,6 +378,7 @@ async function find_webhook(message, channel_id) {
                     reason: 'Need a cool Webhook to send beautiful images UwU'
                 });
                 console.log(webhook, "dd")
+                log.write(`A webhook has been registered for "${channel.name}" (${channel_id}).`);
             } catch (error) {
                 //log the error message.
                 log.write(error, message.member, message.channel);
@@ -393,9 +394,6 @@ async function find_webhook(message, channel_id) {
                 return;
             }
         }
-
-
-        log.write(`A webhook for "${channel.name}"(${channel}) was successfully find`, message.member, message.channel);
 
         return webhook;
     } catch (error) {
