@@ -98,7 +98,7 @@ module.exports = {
           links_list[link2] = Array(link1);
           var webhook = await find_webhook(interaction, link2);
                         
-          const text = new EmbedBuilder()
+          var text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link1}`)
@@ -107,7 +107,7 @@ module.exports = {
           await webhook.send(text)
           
           var webhook = await find_webhook(interaction, link1)
-          const text = new EmbedBuilder()
+          text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link2}`)
@@ -120,7 +120,7 @@ module.exports = {
 
             var webhook = await find_webhook(interaction, link2)
 
-            const text = new EmbedBuilder()
+            var text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link1}`)
@@ -129,7 +129,7 @@ module.exports = {
           await webhook.send(text)
 
           if (links_list[link2].indexOf(link1) > -1) {
-            const text = new EmbedBuilder()
+            var text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
               .setDescription(`<#${link1}> is already linked to:`)
@@ -142,7 +142,7 @@ module.exports = {
             links_list[link2].push(link1);
             var webhook = await find_webhook(interaction, link1)
 
-            const text = new EmbedBuilder()
+            var text = new EmbedBuilder()
 
                 .setColor('#245078')
                 .setTitle('**Information**')
@@ -157,7 +157,7 @@ module.exports = {
 
             var webhook = await find_webhook(interaction, link1)
 
-            const text = new EmbedBuilder()
+            var text = new EmbedBuilder()
 
                 .setColor('#245078')
                 .setTitle('**Information**')
@@ -167,7 +167,7 @@ module.exports = {
             await webhook.send(text)
 
           if (links_list[link1].indexOf(link2) > -1) {
-            const text = new EmbedBuilder()
+            var text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
               .setDescription(`<#${link2}>  is already linked to:`)
