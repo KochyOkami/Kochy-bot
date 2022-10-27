@@ -92,7 +92,7 @@ module.exports = {
                       .setDescription(`This channel has been linked to ${link1}`)
                       .setFooter({ text: '/unlink to unlink this channel' })
                       
-                    await we hook.send(text)
+                    await webhook.send(text)
 
                 } else if (save_img_list[link1]) {
 
@@ -177,9 +177,7 @@ module.exports = {
 };
 
 async function find_webhook(interaction, channel_id) {
-
     /**
-
      * Create a webhook for the specified channel if he is not already registered to the webhook server.
      * 
      * @param {Discord.Message} message The message who the command process is associated with.
