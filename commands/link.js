@@ -24,6 +24,8 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels || PermissionFlagsBits.Administrator),
 
   async execute(interaction) {
+     var text = new EmbedBuilder();
+      
     try {
       await interaction.deferReply();
       var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
@@ -48,7 +50,7 @@ module.exports = {
         log.write(error + "3", interaction.member, interaction.channel);
 
         //editReply the error message.
-        const text = new EmbedBuilder()
+        text = new EmbedBuilder()
           .setColor('#C0392B')
           .setTitle('**Error**')
           .setDescription('The first link is not a valid channel id')
@@ -74,7 +76,7 @@ module.exports = {
         log.write(error, interaction.member, interaction.channel);
 
         //editReply the error message.
-        const text = new EmbedBuilder()
+        text = new EmbedBuilder()
           .setColor('#C0392B')
           .setTitle('**Error**')
           .setDescription('The second link is not a valid channel id')
@@ -98,7 +100,7 @@ module.exports = {
           links_list[link2] = Array(link1);
           var webhook = await find_webhook(interaction, link2);
                         
-          var text = new EmbedBuilder()
+          text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link1}`)
@@ -120,7 +122,7 @@ module.exports = {
 
             var webhook = await find_webhook(interaction, link2)
 
-            var text = new EmbedBuilder()
+            text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link1}`)
@@ -129,7 +131,7 @@ module.exports = {
           await webhook.send(text)
 
           if (links_list[link2].indexOf(link1) > -1) {
-            var text = new EmbedBuilder()
+            text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
               .setDescription(`<#${link1}> is already linked to:`)
@@ -142,8 +144,7 @@ module.exports = {
             links_list[link2].push(link1);
             var webhook = await find_webhook(interaction, link1)
 
-            var text = new EmbedBuilder()
-
+            text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link2}`)
@@ -157,8 +158,7 @@ module.exports = {
 
             var webhook = await find_webhook(interaction, link1)
 
-            var text = new EmbedBuilder()
-
+            text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link2}`)
@@ -167,7 +167,7 @@ module.exports = {
             await webhook.send(text)
 
           if (links_list[link1].indexOf(link2) > -1) {
-            var text = new EmbedBuilder()
+            text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
               .setDescription(`<#${link2}>  is already linked to:`)
@@ -192,8 +192,7 @@ module.exports = {
             links_list[link1].push(link2);
             var webhook = await find_webhook(interaction, link2)
 
-            const text = new EmbedBuilder()
-
+            text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link1}`)
@@ -205,7 +204,7 @@ module.exports = {
         } else if (links_list[link1] && links_list[link2]) {
 
           if (links_list[link1].indexOf(link2) > -1) {
-            const text = new EmbedBuilder()
+            text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
               .setDescription(`<#${link2}> is already linked to:`)
@@ -231,8 +230,7 @@ module.exports = {
 
             var webhook = await find_webhook(interaction, link2)
 
-             const text = new EmbedBuilder()
-
+             text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link1}`)
@@ -242,7 +240,7 @@ module.exports = {
           }
 
           if (links_list[link2].indexOf(link1) > -1) {
-            const text = new EmbedBuilder()
+            text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
               .setDescription(`<#${link1}> is already linked to:`)
@@ -268,8 +266,7 @@ module.exports = {
 
             var webhook = await find_webhook(interaction, link1)
 
-          const text = new EmbedBuilder()
-
+            text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link2}`)
@@ -285,8 +282,7 @@ module.exports = {
 
           var webhook = await find_webhook(interaction, link2)
 
-          const text = new EmbedBuilder()
-
+          text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link1}`)
@@ -297,7 +293,7 @@ module.exports = {
         } else if (links_list[link1]) {
 
           if (links_list[link1].indexOf(link2) > -1) {
-            const text = new EmbedBuilder()
+            text = new EmbedBuilder()
               .setColor('#F39C12')
               .setTitle('**Warning**')
               .setDescription(`<#${link1}> is already linked to:`)
@@ -322,8 +318,7 @@ module.exports = {
             links_list[link1].push(link2);
             var webhook = await find_webhook(interaction, link2)
 
-          const text = new EmbedBuilder()
-
+          text = new EmbedBuilder()
                 .setColor('#245078')
                 .setTitle('**Information**')
                 .setDescription(`This channel has been linked to ${link1}`)
@@ -340,7 +335,7 @@ module.exports = {
 
       log.write(`Command /link ${link1} ${link2} Done !`, interaction.members, interaction.channel);
 
-      const text = new EmbedBuilder()
+      text = new EmbedBuilder()
         .setColor('#2ECC71')
         .setTitle('**Validation**')
         .setDescription(`<#${link1}> has been linked to:`)
@@ -366,7 +361,7 @@ module.exports = {
       log.write(error + "1", interaction.member, interaction.channel);
 
       //editReply the error message.
-      const text = new EmbedBuilder()
+      text = new EmbedBuilder()
         .setColor('#C0392B')
         .setTitle('**Error**')
         .setDescription("error:\n`" + error + "`")
