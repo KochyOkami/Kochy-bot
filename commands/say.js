@@ -29,7 +29,7 @@ module.exports = {
                 await webhook.send({
                     content: text,
                     username: user.username,
-                    avatarURL: user.avatar
+                    avatarURL: user.avatarURL()
                 });
 
             }else{
