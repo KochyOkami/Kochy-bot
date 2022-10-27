@@ -160,7 +160,6 @@ bot.on("messageCreate", async (message) => {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var links_list = eval(settings.links_list);
             var save_img_list = eval(settings.save_img_list);
-            var webhooks_list = eval(settings.webhooks_list);
             var i_path = ""
             if (links_list[message.channel.id]) {
                 if (message.attachments != undefined && message.attachments.size) {
@@ -174,13 +173,7 @@ bot.on("messageCreate", async (message) => {
                             links_list[message.channel.id].forEach(async function (link) {
 
                                 if (message.content != '') {
-                                    if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, link)
-                                        settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-                                        webhooks_list = eval(settings.webhooks_list);
-                                    }
-                                    console.log(webhooks_list[link])
-                                    var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                                    var webhook = await find_webhook(message, link)
                                     await webhook.send({
                                         content: message.content,
                                         files: [{
@@ -195,13 +188,7 @@ bot.on("messageCreate", async (message) => {
                                     });
                                     log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
                                 } else {
-                                    if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, link)
-                                        settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-                                        webhooks_list = eval(settings.webhooks_list);
-                                    }
-                                    console.log(webhooks_list[link])
-                                    var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                                    var webhook = await find_webhook(message, link)
                                     await webhook.send({
                                         files: [{
                                             attachment: path,
@@ -222,13 +209,7 @@ bot.on("messageCreate", async (message) => {
                 } else {
                     if (message.content != '') {
                         links_list[message.channel.id].forEach(async function (link) {
-                            console.log(!webhooks_list.hasOwnProperty(link))
-                            if (!webhooks_list.hasOwnProperty(link)) {
-                                await create_webhook(message, link)
-                                settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-                                webhooks_list = eval(settings.webhooks_list);
-                            }
-                            var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                            var webhook = await find_webhook(message, link)
                             await webhook.send({
                                 content: message.content,
                                 username: message.member.displayName,
@@ -251,13 +232,7 @@ bot.on("messageCreate", async (message) => {
                                 i_path = path
                                 save_img_list[message.channel.id].forEach(async function (link) {
                                     console.log('img save detected')
-                                    if (!webhooks_list.hasOwnProperty(link)) {
-                                        await create_webhook(message, link)
-                                        settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-                                        webhooks_list = eval(settings.webhooks_list);
-
-                                    }
-                                    var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                                    var webhook = await find_webhook(message, link)
                                     await webhook.send({
                                         content: message.content,
                                         files: [{
@@ -280,15 +255,8 @@ bot.on("messageCreate", async (message) => {
                     if (message.content.startsWith('https://')) {
                         //search all channel to send messages.
                         save_img_list[message.channel.id].forEach(async function (link) {
-                            //find or create the webhook in the channel if it,s inexistent.
-                            if (!webhooks_list.hasOwnProperty(link)) {
-                                await create_webhook(message, link)
-                                settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-                                webhooks_list = eval(settings.webhooks_list);
-                            }
-
                             //send the message with the webhook.
-                            var webhook = await bot.fetchWebhook(webhooks_list[link]);
+                            var webhook = await find_webhook(message, link)
                             await webhook.send({
                                 content: message.content,
                                 username: message.member.displayName,
@@ -354,7 +322,7 @@ async function download(url, name) {
     }
 };
 
-async function create_webhook(message, channel_id) {
+async function find_webhook(message, channel_id) {
 
     /**
      * Create a webhook for the specified channel if he is not already registered to the webhook server.
@@ -365,12 +333,9 @@ async function create_webhook(message, channel_id) {
      */
     const channel = await bot.channels.fetch(channel_id);
     try {
-        const channel = await bot.channels.fetch(channel_id);
+
         //check if the channel already have a webhook.
         var wbs = await channel.fetchWebhooks()
-
-        var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-        var webhooks_list = eval(settings.webhooks_list);
 
         //find all webhooks who named YaoiCute_bot.
         if (wbs.find(Webhook => Webhook.name === 'YaoiCute_bot')) {
@@ -390,7 +355,7 @@ async function create_webhook(message, channel_id) {
 
             if (webhooks_already_registered.length > 1) {
                 //keep the first if multiple webhooks are found.
-                webhooks_list[channel_id] = webhooks_already_registered[0];
+                var webhook_id = webhooks_already_registered[0]
                 delete webhooks_already_registered[0];
 
                 //delete all the other webhooks.
@@ -399,9 +364,9 @@ async function create_webhook(message, channel_id) {
                     wb.delete('They have too much webhook :(');
                     log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
                 });
-            } else { webhooks_list[channel_id] = webhooks_already_registered[0]; }
+            } else { var webhook_id = webhooks_already_registered[0] }
 
-
+            var webhook = await bot.fetchWebhook(webhook_id)
             log.write(`A webhook has been registered for "${channel.name}" (${channel_id}).`);
 
         } else {
@@ -427,18 +392,12 @@ async function create_webhook(message, channel_id) {
                 await channel.send({ embeds: [text] });
                 return;
             }
-
-            webhooks_list[channel_id] = webhook.id;
         }
 
-        settings.webhooks_list = webhooks_list;
 
-        fs.writeFileSync("./settings.json", JSON.stringify(settings));
+        log.write(`A webhook for "${channel.name}"(${channel}) was successfully find`, message.member, message.channel);
 
-
-        log.write(`A webhook for "${channel.name}"(${channel}) was successfully registred`, message.member, message.channel);
-
-        return;
+        return webhook;
     } catch (error) {
         //log the error message.
         log.write(error, message.member, message.channel);
