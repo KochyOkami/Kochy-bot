@@ -202,7 +202,7 @@ async function find_webhook(interaction, channel_id) {
             Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
 
             no.forEach(async function (id) {
-                var wb = await bot.fetchWebhook(id);
+                var wb = await interaction.client.fetchWebhook(id);
                 wb.delete('They have too much webhook :(');
                 log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
             });
