@@ -186,7 +186,7 @@ bot.on("messageCreate", async (message) => {
                                         username: message.member.displayName,
                                         avatarURL: message.author.avatarURL()
                                     });
-                                    log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                                    log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
                                 } else {
                                     var webhook = await find_webhook(message, link)
                                     await webhook.send({
@@ -200,7 +200,7 @@ bot.on("messageCreate", async (message) => {
                                         username: message.member.displayName,
                                         avatarURL: message.author.avatarURL()
                                     });
-                                    log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                                    log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
                                 }
                             });
                         }
@@ -244,7 +244,7 @@ bot.on("messageCreate", async (message) => {
                                         username: message.member.displayName,
                                         avatarURL: message.author.avatarURL()
                                     });
-                                    log.write(`File ${name} send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                                    log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
                                 });
                             }
                         });
@@ -262,7 +262,7 @@ bot.on("messageCreate", async (message) => {
                                 username: message.member.displayName,
                                 avatarURL: message.author.avatarURL()
                             });
-                            log.write(`${message.content} was send to channel ${webhooks_list[link]}`, message.member, message.channel);
+                            log.write(`${message.content} was send to channel ${link}`, message.member, message.channel);
                         });
                     }
                 }
