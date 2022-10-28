@@ -215,6 +215,7 @@ bot.on("messageCreate", async (message) => {
 
                     })
                 } else {
+                    console.log(message, message.content)
                     if (message.content != '') {
                         links_list[message.channel.id].forEach(async function (link) {
                             var webhook = await find_webhook(message, link)
