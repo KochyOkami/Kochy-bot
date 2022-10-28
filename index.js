@@ -192,7 +192,7 @@ bot.on("messageCreate", async (message) => {
                                         .catch(err => log.write(err));
 
                                 } else {
-                                    find_webhook(message, link).catch
+                                    find_webhook(message, link)
                                         .then(
                                             async function (webhook) {
                                                 await webhook.send({
