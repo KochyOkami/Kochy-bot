@@ -162,7 +162,7 @@ bot.on("messageCreate", async (message) => {
             var save_img_list = eval(settings.save_img_list);
             var i_path = ""
             if (links_list[message.channel.id]) {
-                if (message.attachments.size > 0 && message.attachments.array()[0].url != null && message.attachments.size <= 8388000) {
+                if (message.attachments.size > 0 && message.attachments.size <= 8388000) {
                     log.write(message.attachments, message.member, message.channel)
                     message.attachments.forEach(async function (attach) {
                         if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
@@ -215,7 +215,6 @@ bot.on("messageCreate", async (message) => {
 
                     })
                 } else {
-                    console.log(message, message.content)
                     if (message.content != '') {
                         links_list[message.channel.id].forEach(async function (link) {
                             var webhook = await find_webhook(message, link)
@@ -232,7 +231,7 @@ bot.on("messageCreate", async (message) => {
             if (save_img_list[message.channel.id]) {
                 var blacklist = settings.blacklist;
                 if (blacklist.indexOf(message.author.id) == -1) {
-                    if (message.attachments.size > 0 && message.attachments.array()[0].url != null && message.attachments.size <= 8388000) {
+                    if (message.attachments.size > 0 && message.attachments.size <= 8388000) {
                         message.attachments.forEach(async function (attach) {
                             if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                                 var name = await download(attach.url, attach.name);
