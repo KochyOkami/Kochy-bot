@@ -7,7 +7,6 @@ const bot = new Discord.Client({
         "GuildWebhooks"
     ]
 });
-
 //systemctl stop yaoicute.service
 
 const fs = require('fs');
@@ -29,8 +28,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 var Token = process.env.DISCORD_TOKEN2
-//"OTg3MjY3NzU4NjgzMTk3NDkw.GP9se-.BczzXRwavsKTbaeBqyk6khbQY-vJb613sLW_qc"
-
 
 bot.login(Token);
 
@@ -69,17 +66,17 @@ bot.on("ready", async () => {
                 )
                     .catch(err => log.write(err));
                 log.write(`Successfully registered ${commands.length} application commands for global`);
-        
+
             } catch (error) {
                 log.write(error)
             }
-        
+
         })();
         var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
         settings.bot_name = bot.user.username
         fs.writeFileSync("./settings.json", JSON.stringify(settings));
 
-        
+
 
         //rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
         //  .then(() => console.log('Successfully deleted all commands.'))
@@ -107,9 +104,10 @@ bot.on("ready", async () => {
 
 
 bot.on('interactionCreate', async interaction => {
-    if (interaction.commandName === 'restart'){
+    if (interaction.commandName === 'restart') {
         const command = bot.commands.get(interaction.commandName);
-        await command.execute(interaction);return;}
+        await command.execute(interaction); return;
+    }
     try {
         if (!interaction.isChatInputCommand()) return;
 
@@ -163,7 +161,7 @@ bot.on("messageCreate", async (message) => {
             var i_path = ""
             if (links_list[message.channel.id]) {
                 if (message.attachments.size > 0 && message.attachments.size <= 8388000) {
-                    
+
                     message.attachments.forEach(async function (attach) {
                         log.write(attach, message.member, message.channel)
                         if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
@@ -175,7 +173,6 @@ bot.on("messageCreate", async (message) => {
 
                                 if (message.content != '') {
                                     var webhook = await find_webhook(message, link)
-                                    try{
                                     await webhook.send({
                                         content: message.content,
                                         files: [{
@@ -187,14 +184,12 @@ bot.on("messageCreate", async (message) => {
                                         content: message.content,
                                         username: message.member.displayName,
                                         avatarURL: message.author.avatarURL()
-                                    });
-                                    log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
-                                    }catch(e){
-                                        log.write(e)
-                                    }
+                                    })
+                                        .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                        .catch(err => log.write(err));
+
                                 } else {
                                     var webhook = await find_webhook(message, link)
-                                    try{
                                     await webhook.send({
                                         files: [{
                                             attachment: path,
@@ -205,11 +200,9 @@ bot.on("messageCreate", async (message) => {
                                         content: message.content,
                                         username: message.member.displayName,
                                         avatarURL: message.author.avatarURL()
-                                    });
-                                    log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
-                                    }catch(e){
-                                        log.write(e)
-                                    }
+                                    })
+                                        .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                        .catch(err => log.write(err));
                                 }
                             });
                         }
@@ -223,8 +216,9 @@ bot.on("messageCreate", async (message) => {
                                 content: message.content,
                                 username: message.member.displayName,
                                 avatarURL: message.author.avatarURL()
-                            });
-                            log.msg(message.content, message.member, await bot.channels.fetch(link, false))
+                            })
+                                .then(log.write(message.content, message.member, message.channel))
+                                .catch(err => log.write(err));
                         });
                     }
                 }
@@ -242,7 +236,6 @@ bot.on("messageCreate", async (message) => {
                                 save_img_list[message.channel.id].forEach(async function (link) {
                                     console.log('img save detected')
                                     var webhook = await find_webhook(message, link)
-                                    try{
                                     await webhook.send({
                                         content: message.content,
                                         files: [{
@@ -253,11 +246,9 @@ bot.on("messageCreate", async (message) => {
                                         ],
                                         username: message.member.displayName,
                                         avatarURL: message.author.avatarURL()
-                                    });
-                                    log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
-                                    }catch(e){
-                                        log.write(e)
-                                    }
+                                    })
+                                        .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                        .catch(err => log.write(err));
                                 });
                             }
                         });
@@ -274,12 +265,12 @@ bot.on("messageCreate", async (message) => {
                                 content: message.content,
                                 username: message.member.displayName,
                                 avatarURL: message.author.avatarURL()
-                            });
-                            log.write(`${message.content} was send to channel ${link}`, message.member, message.channel);
+                            })
+                                .then(log.write(`${message.content} send to channel ${link}`, message.member, message.channel))
+                                .catch(err => log.write(err));
                         });
                     }
                 }
-
             }
             //try to delete the downloaded image.
             try {
@@ -316,18 +307,18 @@ async function download(url, name) {
             var responseSent = false; // flag to make sure that response is sent only once.
             request.get(url)
                 .pipe(file)
-                    .on('finish', () => {
-                        if (responseSent) return;
-                        responseSent = true;
-                        file.close();
-                        console.log(`${name} downloaded successfully.`);
-                        resolve(name);
-                    })
-                    .on('error', err => {
-                        if (responseSent) return;
-                        responseSent = true;
-                        reject(err);
-                    });
+                .on('finish', () => {
+                    if (responseSent) return;
+                    responseSent = true;
+                    file.close();
+                    console.log(`${name} downloaded successfully.`);
+                    resolve(name);
+                })
+                .on('error', err => {
+                    if (responseSent) return;
+                    responseSent = true;
+                    reject(err);
+                });
         })
 
     } catch (e) {
@@ -336,7 +327,6 @@ async function download(url, name) {
 };
 
 async function find_webhook(message, channel_id) {
-
     /**
      * Create a webhook for the specified channel if he is not already registered to the webhook server.
      * 
@@ -380,35 +370,32 @@ async function find_webhook(message, channel_id) {
             } else { var webhook_id = webhooks_already_registered[0] }
 
             var webhook = await bot.fetchWebhook(webhook_id)
-            
+            var chan = await bot.channels.fetch(webhook.channelId)
+            console.log(webhook.name + ` has been find in #` + chan.name + `(${webhook.channelId})`)
 
         } else {
+            var webhook = await channel.createWebhook({
+                name: 'YaoiCute_bot',
+                avatar: config.avatar,
+                reason: 'Need a cool Webhook to send beautiful images UwU'
+            })
+                .then(log.write(`A webhook has been registered for #${channel.name}(${channel_id}).`))
+                .catch(async function () {
+                    log.write(error, message.member, message.channel);
 
-            try {
-                var webhook = await channel.createWebhook({
-                    name: 'YaoiCute_bot',
-                    avatar: config.avatar,
-                    reason: 'Need a cool Webhook to send beautiful images UwU'
-                });
-                console.log(webhook, "dd")
-                log.write(`A webhook has been registered for "${channel.name}" (${channel_id}).`);
-            } catch (error) {
-                //log the error message.
-                log.write(error, message.member, message.channel);
+                    //editReply the error message.
+                    const text = new EmbedBuilder()
+                        .setColor('#C0392B')
+                        .setTitle('**Error**')
+                        .setDescription("error:\n`" + error + "`")
+                        .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-                //editReply the error message.
-                const text = new EmbedBuilder()
-                    .setColor('#C0392B')
-                    .setTitle('**Error**')
-                    .setDescription("error:\n`" + error + "`")
-                    .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
-
-                await channel.send({ embeds: [text] });
-                return;
-            }
+                    await channel.send({ embeds: [text] });
+                    return;
+                })
         }
-
         return webhook;
+
     } catch (error) {
         //log the error message.
         log.write(error, message.member, message.channel);
