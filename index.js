@@ -162,7 +162,7 @@ bot.on("messageCreate", async (message) => {
             var save_img_list = eval(settings.save_img_list);
             var i_path = ""
             if (links_list[message.channel.id]) {
-                if (message.attachments != undefined && message.attachments.size) {
+                if (message.attachments != undefined && message.attachments.size <= 8388000) {
                     log.write(message.attachments, message.member, message.channel)
                     message.attachments.forEach(async function (attach) {
                         if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
@@ -174,6 +174,7 @@ bot.on("messageCreate", async (message) => {
 
                                 if (message.content != '') {
                                     var webhook = await find_webhook(message, link)
+                                    try{
                                     await webhook.send({
                                         content: message.content,
                                         files: [{
@@ -187,8 +188,12 @@ bot.on("messageCreate", async (message) => {
                                         avatarURL: message.author.avatarURL()
                                     });
                                     log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
+                                    }catch(e){
+                                        log.write(e)
+                                    }
                                 } else {
                                     var webhook = await find_webhook(message, link)
+                                    try{
                                     await webhook.send({
                                         files: [{
                                             attachment: path,
@@ -201,6 +206,9 @@ bot.on("messageCreate", async (message) => {
                                         avatarURL: message.author.avatarURL()
                                     });
                                     log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
+                                    }catch(e){
+                                        log.write(e)
+                                    }
                                 }
                             });
                         }
@@ -224,7 +232,7 @@ bot.on("messageCreate", async (message) => {
             if (save_img_list[message.channel.id]) {
                 var blacklist = settings.blacklist;
                 if (blacklist.indexOf(message.author.id) == -1) {
-                    if (message.attachments != undefined && message.attachments.size) {
+                    if (message.attachments != undefined && message.attachments.size <= 8388000) {
                         message.attachments.forEach(async function (attach) {
                             if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                                 var name = await download(attach.url, attach.name);
@@ -233,6 +241,7 @@ bot.on("messageCreate", async (message) => {
                                 save_img_list[message.channel.id].forEach(async function (link) {
                                     console.log('img save detected')
                                     var webhook = await find_webhook(message, link)
+                                    try{
                                     await webhook.send({
                                         content: message.content,
                                         files: [{
@@ -245,6 +254,9 @@ bot.on("messageCreate", async (message) => {
                                         avatarURL: message.author.avatarURL()
                                     });
                                     log.write(`File ${name} send to channel ${link}`, message.member, message.channel);
+                                    }catch(e){
+                                        log.write(e)
+                                    }
                                 });
                             }
                         });
