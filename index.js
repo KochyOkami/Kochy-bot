@@ -20,14 +20,13 @@ const { REST } = require('@discordjs/rest');
 
 const log = require('./logs/logBuilder.js');
 const config = require('./config.js');
-const { bot_version } = require('./config.js');
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const commands = [];
 const dotenv = require('dotenv');
 dotenv.config();
 
-var Token = process.env.DISCORD_TOKEN2
+var Token = process.env.DISCORD_TOKEN2;
 
 bot.login(Token);
 
@@ -57,26 +56,18 @@ bot.on("ready", async () => {
             status: "online",
             activities: [{ name: "la version " + config.bot_version }],
         });
+
         (async () => {
             //Load all commands.
-            try {
-                await rest.put(
-                    Routes.applicationCommands(bot.user.id),
-                    { body: commands },
-                )
-                    .catch(err => log.write(err));
-                log.write(`Successfully registered ${commands.length} application commands for global`);
-
-            } catch (error) {
-                log.write(error)
-            }
-
+            await rest.put(
+                Routes.applicationCommands(bot.user.id),
+                { body: commands })
+                .then(log.write(`Successfully registered ${commands.length} application commands for global`))
+                .catch(err => log.write(err));
         })();
         var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
         settings.bot_name = bot.user.username
         fs.writeFileSync("./settings.json", JSON.stringify(settings));
-
-
 
         //rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
         //  .then(() => console.log('Successfully deleted all commands.'))
@@ -127,30 +118,38 @@ bot.on('interactionCreate', async interaction => {
         }
 
         //execute the command.
-        try {
-            await command.execute(interaction);
-        } catch (error) {
-            log.write(error);
-            const text = new EmbedBuilder()
-                .setColor('#FF0000')
-                .setTitle('**Error**')
-                .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
-            await interaction.channel.send({ embeds: [text] });
-        }
-        //avoid sources of error.
+        await command.execute(interaction)
+            .catch(
+                //avoid sources of error.
+                async function (error) {
+                    log.write(error);
+                    const text = new EmbedBuilder()
+                        .setColor('#FF0000')
+                        .setTitle('**Error**')
+                        .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
+                    await interaction.channel.send({ embeds: [text] })
+                    .then(msg => {
+                        msg.delete({ timeout: 15000 })
+                      })
+
+                })
+
     } catch (error) {
         log.write(error);
         const text = new EmbedBuilder()
             .setColor('#FF0000')
             .setTitle('**Error**')
             .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
-        await interaction.channel.send({ embeds: [text] });
+        await interaction.channel.send({ embeds: [text] })
+        .then(msg => {
+            msg.delete({ timeout: 15000 })
+          })
     }
 });
 
 bot.on("messageCreate", async (message) => {
     try {
-        const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg', 'mp4');
+        const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg', 'mp4', 'mov');
 
         if (message.webhookId) return;
         if (message.member.id === bot.user.id) return;
@@ -290,11 +289,10 @@ bot.on("messageCreate", async (message) => {
                 }
             }
             //try to delete the downloaded image.
-            try {
-                if (fs.existsSync(i_path)) {
-                    fs.unlinkSync(i_path)
-                }
-            } catch (e) { log.write(e) }
+            if (fs.existsSync(i_path)) {
+                fs.unlinkSync(i_path)
+                    .catch(err => log.write(err));
+            }
 
         } catch (error) {
             log.write(error, message.member, message.channel);
@@ -407,7 +405,10 @@ async function find_webhook(message, channel_id) {
                         .setDescription("error:\n`" + error + "`")
                         .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-                    await channel.send({ embeds: [text] });
+                    await channel.send({ embeds: [text] })
+                    .then(msg => {
+                        msg.delete({ timeout: 15000 })
+                      })
                     return;
                 })
         }
@@ -424,7 +425,11 @@ async function find_webhook(message, channel_id) {
             .setDescription("error:\n`" + error + "`")
             .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-        await channel.send({ embeds: [text] });
+        await channel.send({ embeds: [text] })
+        .then(msg => {
+            msg.delete({ timeout: 15000 })
+          })
+
         return;
     }
 };
