@@ -172,52 +172,64 @@ bot.on("messageCreate", async (message) => {
                             links_list[message.channel.id].forEach(async function (link) {
 
                                 if (message.content != '') {
-                                    var webhook = await find_webhook(message, link)
-                                    await webhook.send({
-                                        content: message.content,
-                                        files: [{
-                                            attachment: path,
-                                            name: name,
-                                            description: `Image by ${message.member.displayName}`
-                                        }
-                                        ],
-                                        content: message.content,
-                                        username: message.member.displayName,
-                                        avatarURL: message.author.avatarURL()
-                                    })
-                                        .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                    find_webhook(message, link)
+                                        .then(
+                                            async function (webhook) {
+                                                await webhook.send({
+                                                    content: message.content,
+                                                    files: [{
+                                                        attachment: path,
+                                                        name: name,
+                                                        description: `Image by ${message.member.displayName}`
+                                                    }],
+                                                    content: message.content,
+                                                    username: message.member.displayName,
+                                                    avatarURL: message.author.avatarURL()
+                                                })
+                                                    .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                                    .catch(err => log.write(err));
+                                            }
+                                        )
                                         .catch(err => log.write(err));
 
                                 } else {
-                                    var webhook = await find_webhook(message, link)
-                                    await webhook.send({
-                                        files: [{
-                                            attachment: path,
-                                            name: name,
-                                            description: `Image by ${message.member.displayName}`
-                                        }
-                                        ],
-                                        content: message.content,
-                                        username: message.member.displayName,
-                                        avatarURL: message.author.avatarURL()
-                                    })
-                                        .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                    find_webhook(message, link).catch
+                                        .then(
+                                            async function (webhook) {
+                                                await webhook.send({
+                                                    files: [{
+                                                        attachment: path,
+                                                        name: name,
+                                                        description: `Image by ${message.member.displayName}`
+                                                    }],
+                                                    content: message.content,
+                                                    username: message.member.displayName,
+                                                    avatarURL: message.author.avatarURL()
+                                                })
+                                                    .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                                    .catch(err => log.write(err));
+                                            }
+                                        )
                                         .catch(err => log.write(err));
                                 }
                             });
                         }
-
                     })
                 } else {
                     if (message.content != '') {
                         links_list[message.channel.id].forEach(async function (link) {
-                            var webhook = await find_webhook(message, link)
-                            await webhook.send({
-                                content: message.content,
-                                username: message.member.displayName,
-                                avatarURL: message.author.avatarURL()
-                            })
-                                .then(log.write(message.content, message.member, message.channel))
+                            find_webhook(message, link)
+                                .then(
+                                    async function (webhook) {
+                                        await webhook.send({
+                                            content: message.content,
+                                            username: message.member.displayName,
+                                            avatarURL: message.author.avatarURL()
+                                        })
+                                            .then(log.write(message.content, message.member, message.channel))
+                                            .catch(err => log.write(err));
+                                    }
+                                )
                                 .catch(err => log.write(err));
                         });
                     }
@@ -235,25 +247,30 @@ bot.on("messageCreate", async (message) => {
                                 i_path = path
                                 save_img_list[message.channel.id].forEach(async function (link) {
                                     console.log('img save detected')
-                                    var webhook = await find_webhook(message, link)
-                                    await webhook.send({
-                                        content: message.content,
-                                        files: [{
-                                            attachment: path,
-                                            name: name,
-                                            description: `Image by ${message.member.displayName}`
-                                        }
-                                        ],
-                                        username: message.member.displayName,
-                                        avatarURL: message.author.avatarURL()
-                                    })
-                                        .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                    //find webhook
+                                    find_webhook(message, link)
+                                        .then(
+                                            //send the message
+                                            async function (webhook) {
+                                                await webhook.send({
+                                                    content: message.content,
+                                                    files: [{
+                                                        attachment: path,
+                                                        name: name,
+                                                        description: `Image by ${message.member.displayName}`
+                                                    }],
+                                                    username: message.member.displayName,
+                                                    avatarURL: message.author.avatarURL()
+                                                })
+                                                    .then(log.write(`File ${name} send to channel ${link}`, message.member, message.channel))
+                                                    .catch(err => log.write(err));
+                                            }
+                                        )
                                         .catch(err => log.write(err));
                                 });
                             }
                         });
                     }
-
 
                     //if the message start with a link  (only https:// links).
                     if (message.content.startsWith('https://')) {
