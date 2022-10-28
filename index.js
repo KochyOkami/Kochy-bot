@@ -163,8 +163,9 @@ bot.on("messageCreate", async (message) => {
             var i_path = ""
             if (links_list[message.channel.id]) {
                 if (message.attachments.size > 0 && message.attachments.size <= 8388000) {
-                    log.write(message.attachments, message.member, message.channel)
+                    
                     message.attachments.forEach(async function (attach) {
+                        log.write(attach, message.member, message.channel)
                         if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                             var name = await download(attach.url, attach.name);
                             var path = "./images/" + name.toString()
@@ -233,6 +234,7 @@ bot.on("messageCreate", async (message) => {
                 if (blacklist.indexOf(message.author.id) == -1) {
                     if (message.attachments.size > 0 && message.attachments.size <= 8388000) {
                         message.attachments.forEach(async function (attach) {
+                            log.write(attach, message.member, message.channel)
                             if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                                 var name = await download(attach.url, attach.name);
                                 var path = "./images/" + name.toString()
