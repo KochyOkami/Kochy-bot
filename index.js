@@ -162,7 +162,7 @@ bot.on("messageCreate", async (message) => {
             var save_img_list = eval(settings.save_img_list);
             var i_path = ""
             if (links_list[message.channel.id]) {
-                if (message.attachments != undefined && message.attachments.size <= 8388000) {
+                if (message.attachment && message.attachments.size <= 8388000) {
                     log.write(message.attachments, message.member, message.channel)
                     message.attachments.forEach(async function (attach) {
                         if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
@@ -226,14 +226,13 @@ bot.on("messageCreate", async (message) => {
                             });
                             log.msg(message.content, message.member, await bot.channels.fetch(link, false))
                         });
-
                     }
                 }
             }
             if (save_img_list[message.channel.id]) {
                 var blacklist = settings.blacklist;
                 if (blacklist.indexOf(message.author.id) == -1) {
-                    if (message.attachments != undefined && message.attachments.size <= 8388000) {
+                    if (message.attachments && message.attachments.size <= 8388000) {
                         message.attachments.forEach(async function (attach) {
                             if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
                                 var name = await download(attach.url, attach.name);
