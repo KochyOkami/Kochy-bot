@@ -25,17 +25,22 @@ module.exports = {
             var text = await interaction.options.getString('text', true);
             if (await interaction.options.getUser('user', false)) {
                 var user = await interaction.options.getUser('user', true);
-                var webhook = await find_webhook(interaction, interaction.channelId)
-                await webhook.send({
-                    content: text,
-                    username: user.username,
-                    avatarURL: user.avatarURL()
-                });
+                find_webhook(interaction, interaction.channelId)
+                .then(
+                    async function (webhook) {
+                        await webhook.send({
+                            content: text,
+                            username: user.username,
+                            avatarURL: user.avatarURL()
+                        });
+                    }
+                )
+                .catch(err => log.write(err));
 
             }else{
                 await interaction.channel.send(text)
             }
-            await interaction.deleteReply();
+            await interaction.deleteReply()
             return;
         } catch (error) {
             //log the error message.
@@ -45,10 +50,11 @@ module.exports = {
                 .setColor('#FF0000')
                 .setTitle('**Error**')
                 .setDescription(`There was an error executing /say ${text} : \n` + '```' + error + '```')
-            await interaction.editReply({ embeds: [texte] });
+            await interaction.editReply({ embeds: [texte] })
+            .then(msg => {
+                msg.delete({ timeout: 15000 })
+              })
             return;
-
-
         }
     }
 };
@@ -57,11 +63,12 @@ async function find_webhook(interaction, channel_id) {
     /**
      * Create a webhook for the specified channel if he is not already registered to the webhook server.
      * 
-     * @param {Discord.Message} message The message who the command process is associated with.
+     * @param {Discord.Interaction} interaction The message who the command process is associated with.
      * @param {string} channel_id The ID of the channel who the webhook will be associated with.
      * @return  Return nothings, but the webhook_list has been edited.
      */
     const channel = await interaction.client.channels.fetch(channel_id);
+
     try {
 
         //check if the channel already have a webhook.
@@ -78,7 +85,7 @@ async function find_webhook(interaction, channel_id) {
             Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
 
             no.forEach(async function (id) {
-                var wb = await bot.fetchWebhook(id);
+                var wb = await interaction.client.fetchWebhook(id);
                 wb.delete('They have too much webhook :(');
                 log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
             });
@@ -97,37 +104,34 @@ async function find_webhook(interaction, channel_id) {
             } else { var webhook_id = webhooks_already_registered[0] }
 
             var webhook = await interaction.client.fetchWebhook(webhook_id)
-            log.write(`A webhook has been registered for "${channel.name}" (${channel_id}).`);
-
+            var chan = await interaction.client.channels.fetch(webhook.channelId)
+            console.log(webhook.name + ` has been find in #` + chan.name + `(${webhook.channelId})`)
         } else {
+            var webhook = await channel.createWebhook({
+                name: 'YaoiCute_bot',
+                avatar: config.avatar,
+                reason: 'Need a cool Webhook to send beautiful images UwU'
+            })
+                .then(log.write(`A webhook has been registered for #${channel.name}(${channel_id}).`))
+                .catch(async function () {
+                    log.write(error);
 
-            try {
-                var webhook = await channel.createWebhook({
-                    name: 'YaoiCute_bot',
-                    avatar: config.avatar,
-                    reason: 'Need a cool Webhook to send beautiful images UwU'
-                });
-                console.log(webhook, "dd")
-            } catch (error) {
-                //log the error message.
-                log.write(error);
+                    //editReply the error message.
+                    const text = new EmbedBuilder()
+                        .setColor('#C0392B')
+                        .setTitle('**Error**')
+                        .setDescription("error:\n`" + error + "`")
+                        .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-                //editReply the error message.
-                const text = new EmbedBuilder()
-                    .setColor('#C0392B')
-                    .setTitle('**Error**')
-                    .setDescription("error:\n`" + error + "`")
-                    .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
-
-                await channel.send({ embeds: [text] });
-                return;
-            }
+                    await channel.send({ embeds: [text] })
+                    .then(msg => {
+                        msg.delete({ timeout: 15000 })
+                      })
+                    return;
+                })
         }
-
-
-        log.write(`A webhook for "${channel.name}"(${channel}) was successfully find`);
-
         return webhook;
+
     } catch (error) {
         //log the error message.
         log.write(error);
@@ -139,7 +143,10 @@ async function find_webhook(interaction, channel_id) {
             .setDescription("error:\n`" + error + "`")
             .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
-        await channel.send({ embeds: [text] });
+        await channel.send({ embeds: [text] })
+        .then(msg => {
+            msg.delete({ timeout: 15000 })
+          })
         return;
     }
 };
