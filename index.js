@@ -119,7 +119,7 @@ bot.on("ready", async () => {
                     description: `auto backup.`
                 }],
             });
-        }, 4 * 60 * 60 * 1000);
+        }, 2 * 60 * 60 * 1000);
     } catch (e) {
         log.write(e);
     }
