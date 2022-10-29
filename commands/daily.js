@@ -2,10 +2,6 @@ const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
-const { PermissionFlagsBits } = require('discord.js');
-const config = require('../config.js');
-var dateTime = require('node-datetime');
-
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -50,7 +46,6 @@ module.exports = {
                 }else {
                     cookie[interaction.user.id] = settings.daily
                 }
-                console.log(Math.round(Date.now()))
                 var time = Math.round(Date.now()/ 1000) + (12 * 60 * 60)
                 daily[interaction.user.id] = time
                 var toplevel = top(interaction.user.id)
