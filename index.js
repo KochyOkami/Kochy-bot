@@ -26,6 +26,9 @@ const commands = [];
 const dotenv = require('dotenv');
 dotenv.config();
 
+var dateTime = require('node-datetime');
+var dt = dateTime.create();
+
 
 var Token = process.env.DISCORD_TOKEN2;
 
@@ -89,6 +92,23 @@ bot.on("ready", async () => {
         }
 
         log.write(`${bot.user.tag} logged successfully.`);
+
+        var backup = await bot.channels.fetch('1035900999845543976')
+        var interval = setInterval (function () {
+            backup.send({
+                content:"auto backup"+dt.format('Y-m-d H:M:S'),
+                files: [{
+                    attachment: "./cookie.json",
+                    name: "cookie-backup"+dt.format('Y-m-d H:M:S')+".json",
+                    description: `auto backup.`
+                },
+                {
+                    attachment: "./settings.json",
+                    name: "settings-backup"+dt.format('Y-m-d H:M:S')+".json",
+                    description: `auto backup.`
+                }],
+            });
+          }, 8*60*60 * 1000); 
     } catch (e) {
         log.write(e);
     }
@@ -157,19 +177,18 @@ bot.on("messageCreate", async (message) => {
         try {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-            
+
             var links_list = eval(settings.links_list);
             var save_img_list = eval(settings.save_img_list);
             var i_path = ""
             console.log(cookie, message.author.id)
 
-            if (cookie[message.author.id]){
+            if (cookie[message.author.id]) {
                 cookie[message.author.id] += settings.cookie_add
-            }else{
+            } else {
                 cookie[message.author.id] = settings.cookie_add
             }
 
-            
             fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
 
             if (links_list[message.channel.id]) {
