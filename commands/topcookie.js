@@ -19,7 +19,37 @@ module.exports = {
         await interaction.deferReply();
         try {
             if (await interaction.options.getUser('user', false)) {
-                console.log("e")
+                var top = Array();
+                var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+
+                for (let i in cookie) {
+                    top.push([cookie[i], i])
+                }
+
+                top.sort(function (a, b) {
+                    return b[0] - a[0];
+                });
+                var values = "";
+
+                for (let index = 0; index < 5; index++) {
+                    try {
+                        values += "`#" + (index +1) + "` <@" + await interaction.client.users.fetch(top[index][1]) + ">\n<:vide:1035917668089352303>    ➥ "+top[index][0] +" :cookie:\n";
+                    } catch {
+                        values += "`#" + (index + 1) + "` " + top[index] + "\n";
+                    }
+                }
+                var icon = interaction.guild.iconURL()
+                if (icon == null){
+                    icon = config.avatar
+                }
+                const text = new EmbedBuilder()
+                    .setColor('#245078')
+                    .setTitle("**" + interaction.guild.name + " Classement: **")
+                    .setDescription(values)
+                    .setThumbnail(icon)
+                //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
+                await interaction.editReply({ embeds: [text] });
+                return;
 
             } else {
                 var top = Array();

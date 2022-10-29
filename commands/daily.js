@@ -69,7 +69,7 @@ module.exports = {
             const text = new EmbedBuilder()
                 .setColor('#C0392B')
                 .setTitle('**Error**')
-                .setDescription(`There was an error executing /set ${option} : \n` + '```' + error + '```')
+                .setDescription(`There was an error executing /daily : \n` + '```' + error + '```')
             await interaction.editReply({ embeds: [text] });
             return;
         }
