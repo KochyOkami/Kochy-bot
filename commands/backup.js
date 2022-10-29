@@ -3,6 +3,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const { PermissionFlagsBits } = require('discord.js');
 const config = require('../config.js');
+var dateTime = require('node-datetime');
+var dt = dateTime.create();
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,41 +15,30 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
         try {
-
-            try {
-                const text = new EmbedBuilder()
-                    .setColor('#245078')
-                    .setTitle('**Information**')
-                    .setDescription(`Backup of the server, V${config.bot_version}`)
-                    .setFooter({ text: '/backup' })
-
-                var name = 'backup_kochy_bot_v'+ config.bot_version + '.json';
-                console.log(name)
                 await interaction.editReply({
-                    embeds: [text], 
+                    content: "auto backup" + dt.format('Y-m-d H:M:S'),
                     files: [{
+                        attachment: "./cookie.json",
+                        name: "cookie-backup" + dt.format('Y-m-d H:M:S') + ".json",
+                        description: `auto backup.`
+                    },
+                    {
+                        attachment: "./daily.json",
+                        name: "daily-backup" + dt.format('Y-m-d H:M:S') + ".json",
+                        description: `auto backup.`
+                    },
+                    {
                         attachment: "./settings.json",
-                        name: name,
-                        description: `Backup wanted by ${interaction.member.displayName}`
+                        name: "settings-backup" + dt.format('Y-m-d H:M:S') + ".json",
+                        description: `auto backup.`
                     }],
                 });
                 return;
 
-                
-            } catch (error) {
-                log.write(error);
-                const text = new EmbedBuilder()
-                    .setColor('#FF0000')
-                    .setTitle('**Error**')
-                    .setDescription(`There was an error executing /backup: \n` + '```' + error + '```')
-                await interaction.editReply({ embeds: [text] });
-                return;
-            }
-
         } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()
-                .setColor('#FF0000')
+                .setColor('#C0392B')
                 .setTitle('**Error**')
                 .setDescription(`There was an error executing /backup: \n` + '```' + error + '```')
             await interaction.editReply({ embeds: [text] });

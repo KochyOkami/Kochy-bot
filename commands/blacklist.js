@@ -53,7 +53,7 @@ module.exports = {
                         } else {
                             log.write(user + ' is not in the blacklist');
                             const text = new EmbedBuilder()
-                                .setColor('#FF0000')
+                                .setColor('#F39C12')
                                 .setTitle('**Warrning**')
                                 .setDescription(`${user} is not in the blacklist`)
                             await interaction.editReply({ embeds: [text] })
@@ -88,7 +88,7 @@ module.exports = {
                 } catch (error) {
                     log.write(error);
                     const text = new EmbedBuilder()
-                        .setColor('#FF0000')
+                        .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription(`There was an error executing /blacklist: \n` + '```' + error + '```')
                     await interaction.editReply({ embeds: [text] });
@@ -130,7 +130,7 @@ module.exports = {
                 } catch (error) {
                     log.write(error);
                     const text = new EmbedBuilder()
-                        .setColor('#FF0000')
+                        .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription(`There was an error executing /blacklist : \n` + '```' + error + '```')
                     await interaction.editReply({ embeds: [text] });
@@ -141,7 +141,7 @@ module.exports = {
         } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()
-                .setColor('#FF0000')
+                .setColor('#C0392B')
                 .setTitle('**Error**')
                 .setDescription(`There was an error executing /blacklist : \n` + '```' + error + '```')
             await interaction.editReply({ embeds: [text] });

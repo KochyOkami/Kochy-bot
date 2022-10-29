@@ -52,7 +52,7 @@ module.exports = {
                 } catch (error) {
                     log.write(error);
                     const text = new EmbedBuilder()
-                        .setColor('#FF0000')
+                        .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription(`There was an error executing /set ${option} : \n` + '```' + error + '```')
                     await interaction.editReply({ embeds: [text] });
@@ -86,7 +86,7 @@ module.exports = {
                 } catch (error) {
                     log.write(error);
                     const text = new EmbedBuilder()
-                        .setColor('#FF0000')
+                        .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription(`There was an error executing /set ${option} : \n` + '```' + error + '```')
                     await interaction.editReply({ embeds: [text] });
@@ -96,7 +96,7 @@ module.exports = {
         } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()
-                .setColor('#FF0000')
+                .setColor('#C0392B')
                 .setTitle('**Error**')
                 .setDescription(`There was an error executing /set ${option} : \n` + '```' + error + '```')
             await interaction.editReply({ embeds: [text] });

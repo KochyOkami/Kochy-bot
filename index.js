@@ -14,7 +14,13 @@ const request = require('request');
 const {
     Collection,
     EmbedBuilder,
-    Routes } = require('discord.js');
+    Routes,
+    ActionRowBuilder,
+    SelectMenuBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    GuildMemberRoleManager,
+} = require('discord.js');
 
 const { REST } = require('@discordjs/rest');
 
@@ -50,8 +56,8 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     commands.push(command.data.toJSON());
     bot.commands.set(command.data.name, command)
+    console.log(command.data.name)
 }
-
 
 bot.on("ready", async () => {
     try {
@@ -94,21 +100,26 @@ bot.on("ready", async () => {
         log.write(`${bot.user.tag} logged successfully.`);
 
         var backup = await bot.channels.fetch('1035900999845543976')
-        var interval = setInterval (function () {
+        var interval = setInterval(function () {
             backup.send({
-                content:"auto backup"+dt.format('Y-m-d H:M:S'),
+                content: "auto backup" + dt.format('Y-m-d H:M:S'),
                 files: [{
                     attachment: "./cookie.json",
-                    name: "cookie-backup"+dt.format('Y-m-d H:M:S')+".json",
+                    name: "cookie-backup" + dt.format('Y-m-d H:M:S') + ".json",
+                    description: `auto backup.`
+                },
+                {
+                    attachment: "./daily.json",
+                    name: "daily-backup" + dt.format('Y-m-d H:M:S') + ".json",
                     description: `auto backup.`
                 },
                 {
                     attachment: "./settings.json",
-                    name: "settings-backup"+dt.format('Y-m-d H:M:S')+".json",
+                    name: "settings-backup" + dt.format('Y-m-d H:M:S') + ".json",
                     description: `auto backup.`
                 }],
             });
-          }, 8*60*60 * 1000); 
+        }, 4 * 60 * 60 * 1000);
     } catch (e) {
         log.write(e);
     }
@@ -116,11 +127,109 @@ bot.on("ready", async () => {
 
 
 bot.on('interactionCreate', async interaction => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
     if (interaction.commandName === 'restart') {
         const command = bot.commands.get(interaction.commandName);
         await command.execute(interaction); return;
     }
     try {
+        if (interaction.isSelectMenu()) {
+            if (interaction.customId === 'shop_select') {
+                const text = new EmbedBuilder()
+                    .setColor('#52be80')
+                    .setTitle('**Validation**')
+                    .setDescription(`Are you sure you want to buy ${interaction.values} ?`)
+
+                const row = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`yes_${interaction.values}`)
+                            .setLabel('Yes')
+                            .setStyle(ButtonStyle.Success),
+                        new ButtonBuilder()
+                            .setCustomId('no')
+                            .setLabel('No')
+                            .setStyle(ButtonStyle.Danger),
+                    );
+
+                await interaction.update({ embeds: [text], components: [row] });
+
+                //settings.shop_role.find(obj => { return obj.name === settings.shop_select[index].value; })
+            }
+        } else if (interaction.isButton()) {
+
+            if (interaction.customId === 'no') {
+                const text = new EmbedBuilder()
+                    .setColor('#245078')
+                    .setTitle('**Information**')
+                    .setDescription(`Command canceled !`)
+
+                await interaction.update({ embeds: [text], components: [] });
+
+            }
+            else if (interaction.customId === 'cancel_shop') {
+                var values = ""
+                for (let index = 0; index < settings.shop_select.length; index++) {
+                    var object = settings.shop_role.find(obj => { return obj.name === settings.shop_select[index].value; })
+
+                    values += `**Role ${object.name} (${object.price} :cookie:)**\n`
+                    values += `You buy the role ${object.name}\n`
+                }
+
+                const text = new EmbedBuilder()
+                    .setColor('#245078')
+                    .setTitle('Shop')
+                    .setDescription(values)
+                await interaction.update({ embeds: [text], components: [] });
+            }
+            else if (interaction.customId.includes('yes_')) {
+                //console.log(interaction)
+                var value = interaction.customId.replace('yes_', '');
+                var object = settings.shop_role.find(obj => { return obj.name === value; })
+                var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+
+                if (cookie[interaction.user.id] >= object.price) {
+                    var map = await interaction.member.roles.cache;
+                    if (!map.find(obj => { return obj.id == object.id })) {
+                        await interaction.member.roles.add(object.id)
+                            .then(async function () {
+                                log.write(`${object.name}(${object.id}) was add to ${interaction.user.username}}`)
+                                cookie[interaction.user.id] -= object.price
+
+                                fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
+                                const text = new EmbedBuilder()
+                                    .setColor('#245078')
+                                    .setTitle('**Congratulation 🥳**')
+                                    .setDescription(`You have bought the role <@&${object.id}>`)
+                                    .setFooter({ iconURL: interaction.user.avatarURL(), text: `You have ${cookie[interaction.user.id]} 🍪` })
+
+                                await interaction.update({ embeds: [text], components: [] });
+                            })
+                            .catch(async err => await interaction.update({ content: err, embeds: [], components: [] }));
+
+                    } else {
+                        const text = new EmbedBuilder()
+                            .setColor('#F39C12')
+                            .setTitle('**Warrning**')
+                            .setDescription(`You already have the role <@&${object.id}>`)
+                            .setFooter({ iconURL: interaction.user.avatarURL(), text: `You have ${cookie[interaction.user.id]} 🍪` })
+
+                        await interaction.update({ embeds: [text], components: [] });
+                    }
+
+                } else {
+                    const text = new EmbedBuilder()
+                        .setColor('#F39C12')
+                        .setTitle('**Warrning**')
+                        .setDescription(`You don't have enought cookie to buy <@&${object.id}>!`)
+                        .setFooter({ iconURL: interaction.user.avatarURL(), text: `You have ${cookie[interaction.user.id]} 🍪` })
+
+                    await interaction.update({ embeds: [text], components: [] });
+                }
+
+            }
+        }
+
         if (!interaction.isChatInputCommand()) return;
 
         const command = bot.commands.get(interaction.commandName);
@@ -145,7 +254,7 @@ bot.on('interactionCreate', async interaction => {
                 async function (error) {
                     log.write(error);
                     const text = new EmbedBuilder()
-                        .setColor('#FF0000')
+                        .setColor('#C0392B')
                         .setTitle('**Error**')
                         .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
                     await interaction.channel.send({ embeds: [text] })
@@ -158,7 +267,7 @@ bot.on('interactionCreate', async interaction => {
     } catch (error) {
         log.write(error);
         const text = new EmbedBuilder()
-            .setColor('#FF0000')
+            .setColor('#C0392B')
             .setTitle('**Error**')
             .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
         await interaction.channel.send({ embeds: [text] })
@@ -181,7 +290,6 @@ bot.on("messageCreate", async (message) => {
             var links_list = eval(settings.links_list);
             var save_img_list = eval(settings.save_img_list);
             var i_path = ""
-            console.log(cookie, message.author.id)
 
             if (cookie[message.author.id]) {
                 cookie[message.author.id] += settings.cookie_add

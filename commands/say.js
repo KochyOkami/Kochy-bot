@@ -47,7 +47,7 @@ module.exports = {
 
             log.write(error, interaction.member, interaction.channel);
             const texte = new EmbedBuilder()
-                .setColor('#FF0000')
+                .setColor('#C0392B')
                 .setTitle('**Error**')
                 .setDescription(`There was an error executing /say ${text} : \n` + '```' + error + '```')
             await interaction.editReply({ embeds: [texte] })
