@@ -20,7 +20,7 @@ module.exports = {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var save_img_list = eval(settings.save_img_list);
             var channel = interaction.channelId;
-            
+
             if (await interaction.options.getBoolean('all', false)) {
 
                 const text = new EmbedBuilder()
@@ -29,14 +29,14 @@ module.exports = {
                     .setDescription(`List of all channels and their associated channels:`)
 
                 await interaction.channel.send({ embeds: [text] });
-                
+
                 for (let links in save_img_list) {
                     var values = "";
                     for (let index = 0; index < save_img_list[links].length; index++) {
                         try {
                             var channel_rep = await interaction.client.channels.fetch(save_img_list[links][index])
                             values += "  * <#" + save_img_list[links][index] + `> in server ${channel_rep.guild.name} \n`;
-                        } catch (e){
+                        } catch (e) {
                             console.log(e)
                             values += "  * `" + save_img_list[links][index] + "`\n";
                         }

@@ -7,10 +7,10 @@ const { PermissionFlagsBits } = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("blacklist")
-        .setDescription("To set a specific channel, for books.")
+        .setDescription("For put a user in the blocklist")
         .addUserOption(option =>
             option.setName('user')
-                .setDescription('the user')
+                .setDescription('The user')
                 .setRequired(false))
         .addStringOption(option =>
             option.setName('add')
