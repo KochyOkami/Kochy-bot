@@ -26,6 +26,7 @@ const commands = [];
 const dotenv = require('dotenv');
 dotenv.config();
 
+
 var Token = process.env.DISCORD_TOKEN2;
 
 bot.login(Token);
@@ -128,9 +129,9 @@ bot.on('interactionCreate', async interaction => {
                         .setTitle('**Error**')
                         .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
                     await interaction.channel.send({ embeds: [text] })
-                    .then(msg => {
-                        msg.delete({ timeout: 15000 })
-                      })
+                        .then(msg => {
+                            msg.delete({ timeout: 15000 })
+                        })
 
                 })
 
@@ -141,9 +142,9 @@ bot.on('interactionCreate', async interaction => {
             .setTitle('**Error**')
             .setDescription(`There was an error executing /` + interaction.commandName + ` : \n` + '```' + error + '```')
         await interaction.channel.send({ embeds: [text] })
-        .then(msg => {
-            msg.delete({ timeout: 15000 })
-          })
+            .then(msg => {
+                msg.delete({ timeout: 15000 })
+            })
     }
 });
 
@@ -152,12 +153,25 @@ bot.on("messageCreate", async (message) => {
         const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg', 'mp4', 'mov');
 
         if (message.webhookId) return;
-        if (message.member.id === bot.user.id) return;
+        if (message.author.id == bot.user.id || message.author.id == '967727996834287647') return;
         try {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+            var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+            
             var links_list = eval(settings.links_list);
             var save_img_list = eval(settings.save_img_list);
             var i_path = ""
+            console.log(cookie, message.author.id)
+
+            if (cookie[message.author.id]){
+                cookie[message.author.id] += settings.cookie_add
+            }else{
+                cookie[message.author.id] = settings.cookie_add
+            }
+
+            
+            fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
+
             if (links_list[message.channel.id]) {
                 if (message.attachments.size > 0 && message.attachments.size <= 8388000) {
 
@@ -406,9 +420,9 @@ async function find_webhook(message, channel_id) {
                         .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
                     await channel.send({ embeds: [text] })
-                    .then(msg => {
-                        msg.delete({ timeout: 15000 })
-                      })
+                        .then(msg => {
+                            msg.delete({ timeout: 15000 })
+                        })
                     return;
                 })
         }
@@ -426,9 +440,9 @@ async function find_webhook(message, channel_id) {
             .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
 
         await channel.send({ embeds: [text] })
-        .then(msg => {
-            msg.delete({ timeout: 15000 })
-          })
+            .then(msg => {
+                msg.delete({ timeout: 15000 })
+            })
 
         return;
     }
