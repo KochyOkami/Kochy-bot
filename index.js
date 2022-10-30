@@ -191,7 +191,7 @@ bot.on('interactionCreate', async interaction => {
 
                 if (aleatoire <= settings.box_gain) {
                     const file = new AttachmentBuilder("./images/obj/box1cookie.png");
-                    var cookie_win = Math.floor(Math.random() * (5_000))
+                    var cookie_win = Math.floor(Math.random() * (2_000))
                     cookie[interaction.user.id] += cookie_win
                     fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
 
@@ -205,7 +205,7 @@ bot.on('interactionCreate', async interaction => {
                     await interaction.update({ embeds: [text], files: [file], components: [] })
                 } else {
                     const file = new AttachmentBuilder("./images/obj/box1cat.png");
-                    var cookie_lost = Math.floor(Math.random() * (5_000))
+                    var cookie_lost = Math.floor(Math.random() * (2_000))
 
                     if (cookie_lost > cookie[interaction.user.id]) {
                         cookie[interaction.user.id] = 0
