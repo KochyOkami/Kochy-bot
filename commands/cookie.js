@@ -97,7 +97,7 @@ module.exports = {
 
                 const cookie_img = await Canvas.loadImage('./cookie.png');
                 // This uses the canvas dimensions to stretch the image onto the entire canvas
-                context.drawImage(cookie_img, canvas.width / 3.3 + (23 * cookie[user.id].toString().length), canvas.height - 79, cookie_img.width / 2, cookie_img.height / 2);
+                context.drawImage(cookie_img, canvas.width / 3.3 + (19 * cookie[user.id].toString().length), canvas.height - 79, cookie_img.width / 2, cookie_img.height / 2);
 
                 context.font = `35px Revue`;
                 context.fillStyle = '#7b8e91';

@@ -20,6 +20,7 @@ const {
     ButtonBuilder,
     ButtonStyle,
     GuildMemberRoleManager,
+    AttachmentBuilder
 } = require('discord.js');
 
 const { REST } = require('@discordjs/rest');
@@ -182,6 +183,49 @@ bot.on('interactionCreate', async interaction => {
                     .setDescription(values)
                 await interaction.update({ embeds: [text], components: [] });
             }
+            else if (interaction.customId === 'open_box') {
+                var aleatoire = Math.floor(Math.random() * (100))
+                var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+                var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+                console.log(aleatoire)
+
+                if (aleatoire <= settings.box_gain) {
+                    const file = new AttachmentBuilder("./images/obj/box1cookie.png");
+                    var cookie_win = Math.floor(Math.random() * (5_000))
+                    cookie[interaction.user.id] += cookie_win
+                    fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
+
+                    const text = new EmbedBuilder()
+                        .setColor('#6c3483 ')
+                        .setTitle('**Win**')
+                        .setDescription("Beautiful it's a big cookie jar with " + cookie_win + " cookies :cookie:")
+                        .setImage(url = "attachment://box1cookie.png")
+                        .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.tag + " | " + cookie[interaction.user.id] + '🍪 remained' })
+
+                    await interaction.update({ embeds: [text], files: [file], components: [] })
+                } else {
+                    const file = new AttachmentBuilder("./images/obj/box1cat.png");
+                    var cookie_lost = Math.floor(Math.random() * (5_000))
+
+                    if (cookie_lost > cookie[interaction.user.id]) {
+                        cookie[interaction.user.id] = 0
+                    } else {
+                        cookie[interaction.user.id] -= cookie_lost
+                    }
+
+                    fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
+
+                    const text = new EmbedBuilder()
+                        .setColor('#6c3483 ')
+                        .setTitle('**Losed**')
+                        .setDescription("Warrning a cat exit of the box\nand steal you " + cookie_lost + " cookies :cookie:")
+                        .setImage(url = "attachment://box1cat.png")
+                        .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.tag + " | " + cookie[interaction.user.id] + '🍪 remained' })
+
+                    await interaction.update({ embeds: [text], files: [file], components: [] })
+                }
+
+            }
             else if (interaction.customId.includes('yes_')) {
                 //console.log(interaction)
                 var value = interaction.customId.replace('yes_', '');
@@ -279,10 +323,32 @@ bot.on('interactionCreate', async interaction => {
 
 bot.on("messageCreate", async (message) => {
     try {
+
+
         const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg', 'mp4', 'mov');
 
         if (message.webhookId) return;
         if (message.author.id == bot.user.id || message.author.id == '967727996834287647') return;
+        var aleatoir = Math.floor(Math.random() * (10_000))
+        var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+        console.log(aleatoir)
+        if (aleatoir <= settings.box_chance) {
+            const button = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`open_box`)
+                        .setLabel('Open')
+                        .setStyle(ButtonStyle.Success),
+                );
+            const file = new AttachmentBuilder("./images/obj/box1.png");
+            const text = new EmbedBuilder()
+                .setColor('#6c3483 ')
+                .setTitle('**A misterious box appeare**')
+                .setDescription("Do you want to open it :thinking:")
+                .setImage(url = "attachment://box1.png")
+
+            await message.channel.send({ embeds: [text], files: [file], components: [button] })
+        }
         try {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));

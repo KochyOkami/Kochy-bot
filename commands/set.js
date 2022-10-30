@@ -14,34 +14,51 @@ module.exports = {
                 .setDescription('the setting that will be set')
                 .addChoices(
                     { name: 'Book Light', value: 'book light' },
-                    { name: 'Book Hard', value: 'book hard' },)
+                    { name: 'Book Hard', value: 'book hard' },
+                    { name: 'Box chance', value: 'box chance' },
+                    { name: 'Box winning', value: 'box winning' },
+                    { name: 'Cookie message', value: 'cookie' },
+                    { name: 'Daily', value: 'daily' },)
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('id')
-                .setDescription("the id of the channel who that been set, by defaul take the current channel")
+            option.setName('value')
+                .setDescription("the value for the current value")
                 .setRequired(false))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply();
         try {
-            if (await interaction.options.getString('id', false)) {
+            if (await interaction.options.getString('value', false)) {
                 try {
                     var option = await interaction.options.getString('option', true);
                     let settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
 
                     if (option === 'book hard') {
-                        settings.hard_book = await interaction.client.channels.fetch(await interaction.options.getString('id', true));
+                        settings.hard_book = await interaction.client.channels.fetch(await interaction.options.getString('value', true));
 
                     } else if (option === 'book light') {
-                        settings.light_book = await interaction.client.channels.fetch(await interaction.options.getString('id', true));
+                        settings.light_book = await interaction.client.channels.fetch(await interaction.options.getString('value', true));
 
+                    }else if (option === 'box chance') {
+                        settings.box_chance = parseInt(await interaction.options.getString('value', false))
+                    
+                    }else if (option === 'box winning') {
+                        settings.box_gain = parseInt(await interaction.options.getString('value', false))
+                    
+                    }else if (option === 'cookie') {
+                        settings.cookie_add = parseInt(await interaction.options.getString('value', false))
+                    
+                    }else if (option === 'daily') {
+                        settings.daily = parseInt(await interaction.options.getString('value', false))
+                    
                     }
+                    
 
                     const text = new EmbedBuilder()
                         .setColor('#245078')
                         .setTitle('**Information**')
-                        .setDescription(`This channel are now the channel for the ${option} !`)
+                        .setDescription(`The value for ${option} know is ${await interaction.options.getString('value', false)}`)
                         .setFooter({ text: '/set `option`' })
 
 
