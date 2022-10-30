@@ -191,7 +191,7 @@ bot.on('interactionCreate', async interaction => {
 
                 if (aleatoire <= settings.box_gain) {
                     const file = new AttachmentBuilder("./images/obj/box1cookie.png");
-                    var cookie_win = Math.floor(Math.random() * (2_000))
+                    var cookie_win = Math.floor(Math.random() * (5_000))
                     cookie[interaction.user.id] += cookie_win
                     fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
 
@@ -203,9 +203,12 @@ bot.on('interactionCreate', async interaction => {
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.tag + " | " + cookie[interaction.user.id] + '🍪 remained' })
 
                     await interaction.update({ embeds: [text], files: [file], components: [] })
+                    
+                    var deleted = setTimeout(async () => await interaction.deleteReply(), 60 * 1000)
+                      
                 } else {
                     const file = new AttachmentBuilder("./images/obj/box1cat.png");
-                    var cookie_lost = Math.floor(Math.random() * (2_000))
+                    var cookie_lost = Math.floor(Math.random() * (5_000))
 
                     if (cookie_lost > cookie[interaction.user.id]) {
                         cookie[interaction.user.id] = 0
@@ -223,6 +226,7 @@ bot.on('interactionCreate', async interaction => {
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.tag + " | " + cookie[interaction.user.id] + '🍪 remained' })
 
                     await interaction.update({ embeds: [text], files: [file], components: [] })
+                    var deleted = setTimeout(async () => await interaction.deleteReply(), 60 * 1000)
                 }
 
             }
@@ -343,7 +347,7 @@ bot.on("messageCreate", async (message) => {
             const file = new AttachmentBuilder("./images/obj/box1.png");
             const text = new EmbedBuilder()
                 .setColor('#6c3483 ')
-                .setTitle('**A misterious box appeare**')
+                .setTitle('**A misterious box appear**')
                 .setDescription("Do you want to open it :thinking:")
                 .setImage(url = "attachment://box1.png")
 

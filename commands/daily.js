@@ -13,20 +13,24 @@ module.exports = {
         try {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-            var daily = JSON.parse(fs.readFileSync('./daily.json', 'utf8'));
-
-            if (daily[interaction.user.id]) {
+            var daily = eval(JSON.parse(fs.readFileSync('./daily.json', 'utf8')));
+            
+            if (Object.hasOwn(daily, interaction.user.id)) {
                 if (Math.round(Date.now() / 1000) >= daily[interaction.user.id]) {
                     cookie[interaction.user.id] += settings.daily
                     var time = Math.round(Date.now()/ 1000) + (12 * 60 * 60)
+
                     daily[interaction.user.id] = time
                     var toplevel = top(interaction.user.id)
+
                     const text = new EmbedBuilder()
                         .setColor('#245078')
                         .setTitle(`**You have win ${settings.daily} 🍪**`)
                         .setDescription(`Come back in <t:${time}:R>`)
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: 'Place: #' + toplevel })
                     await interaction.editReply({ embeds: [text] });
+                    fs.writeFileSync("./daily.json", JSON.stringify(daily)) 
+                    fs.writeFileSync("./cookie.json", JSON.stringify(cookie)) 
                     return
                 } else {
                     var toplevel = top(interaction.user.id)
