@@ -70,7 +70,7 @@ module.exports = {
                     var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
                     console.log(cookie[user.id])
 
-                    if (!isNull(cookie[user.id])) {
+                    if (isNull(cookie[user.id])) {
                         cookie[user.id] = 0
                         fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
                     }
