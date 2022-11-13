@@ -11,7 +11,13 @@ module.exports = {
 
     async execute(interaction) {
         await interaction.deferReply();
-        var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+        const text = new EmbedBuilder()
+        .setColor('#C0392B')
+        .setTitle(`**Sorry**`)
+        .setDescription(`Cookie system is in maintenance mode,  please wait for the next update.`)
+        .setThumbnail('attachment://dead-cat.png')
+    await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`]  });
+        /*var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
 
         try {
             if (settings.shop_select.length < 1) {
@@ -55,7 +61,7 @@ module.exports = {
                 .setDescription(`There was an error executing /shop : \n` + '```' + error + '```')
             await interaction.editReply({ embeds: [text] });
             return;
-        }
+        }*/
 
     }
 };

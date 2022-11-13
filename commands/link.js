@@ -106,7 +106,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link1}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-          await webhook.send(text)
+          await webhook.send({ embeds: [text] })
           
           var webhook = await find_webhook(interaction, link1)
           text = new EmbedBuilder()
@@ -115,7 +115,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link2}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-          await webhook.send(text)
+          await webhook.send({ embeds: [text] })
 
         } else if (!links_list[link1] && links_list[link2]) {
             links_list[link1] = Array(link2);
@@ -128,7 +128,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link1}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-          await webhook.send(text)
+          await webhook.send({ embeds: [text] })
 
           if (links_list[link2].indexOf(link1) > -1) {
             text = new EmbedBuilder()
@@ -150,7 +150,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link2}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-            await webhook.send(text)
+            await webhook.send({ embeds: [text] })
           }
 
         } else if (links_list[link1] && !links_list[link2]) {
@@ -164,7 +164,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link2}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-            await webhook.send(text)
+            await webhook.send({ embeds: [text] })
 
           if (links_list[link1].indexOf(link2) > -1) {
             text = new EmbedBuilder()
@@ -198,7 +198,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link1}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-            await webhook.send(text)
+            await webhook.send({ embeds: [text] })
           }
 
         } else if (links_list[link1] && links_list[link2]) {
@@ -236,7 +236,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link1}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-             await webhook.send(text)
+             await webhook.send({ embeds: [text] })
           }
 
           if (links_list[link2].indexOf(link1) > -1) {
@@ -272,7 +272,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link2}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-          await webhook.send(text)
+          await webhook.send({ embeds: [text] })
           }
 
         }
@@ -288,7 +288,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link1}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-          await webhook.send(text)
+          await webhook.send({ embeds: [text] })
 
         } else if (links_list[link1]) {
 
@@ -324,7 +324,7 @@ module.exports = {
                 .setDescription(`This channel has been linked to ${link1}`)
                 .setFooter({ text: '/unlink to unlink this channel' })
                           
-          await webhook.send(text)
+          await webhook.send({ embeds: [text] })
           }
         }
       }
@@ -370,5 +370,96 @@ module.exports = {
       await interaction.editReply({ embeds: [text] });
       return;
     }
+  }
+};
+
+async function find_webhook(interaction, channel_id) {
+  /**
+   * Create a webhook for the specified channel if he is not already registered to the webhook server.
+   * 
+   * @param {Discord.Message} message The message who the command process is associated with.
+   * @param {string} channel_id The ID of the channel who the webhook will be associated with.
+   * @return  Return nothings, but the webhook_list has been edited.
+   */
+  const channel = await interaction.client.channels.fetch(channel_id);
+  try {
+
+      //check if the channel already have a webhook.
+      var wbs = await channel.fetchWebhooks()
+
+      //find all webhooks who named YaoiCute_bot.
+      if (wbs.find(Webhook => Webhook.name === 'YaoiCute_bot')) {
+
+          var webhooks_already_registered = [];
+          var no = []
+
+          Array.from(wbs.values()).filter(Webhook => Webhook.name === 'Kochy_bot' || Webhook.name === 'KochyBot').forEach(function (webhook) { no.push(webhook.id); });
+
+          Array.from(wbs.values()).filter(Webhook => Webhook.name === 'YaoiCute_bot').forEach(function (webhook) { webhooks_already_registered.push(webhook.id); });
+
+          no.forEach(async function (id) {
+              var wb = await interaction.client.fetchWebhook(id);
+              wb.delete('They have too much webhook :(');
+              log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
+          });
+
+          if (webhooks_already_registered.length > 1) {
+              //keep the first if multiple webhooks are found.
+              var webhook_id = webhooks_already_registered[0]
+              delete webhooks_already_registered[0];
+
+              //delete all the other webhooks.
+              webhooks_already_registered.forEach(async function (id) {
+                  var wb = await interaction.client.fetchWebhook(id);
+                  wb.delete('They have too much webhook :(');
+                  log.write('webhook ' + Array.from(wbs.values()).filter(Webhook => Webhook.id === id) + 'has been deleted');
+              });
+          } else { var webhook_id = webhooks_already_registered[0] }
+
+          var webhook = await interaction.client.fetchWebhook(webhook_id)
+          log.write(`A webhook has been registered for "${channel.name}" (${channel_id}).`);
+
+      } else {
+
+          try {
+              var webhook = await channel.createWebhook({
+                  name: 'YaoiCute_bot',
+                  avatar: config.avatar,
+                  reason: 'Need a cool Webhook to send beautiful images UwU'
+              });
+              console.log(webhook, "dd")
+          } catch (error) {
+              //log the error message.
+              log.write(error);
+
+              //editReply the error message.
+              const text = new EmbedBuilder()
+                  .setColor('#C0392B')
+                  .setTitle('**Error**')
+                  .setDescription("error:\n`" + error + "`")
+                  .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
+
+              await channel.send({ embeds: [text] });
+              return;
+          }
+      }
+
+
+      log.write(`A webhook for "${channel.name}"(${channel}) was successfully find`);
+
+      return webhook;
+  } catch (error) {
+      //log the error message.
+      log.write(error);
+
+      //editReply the error message.
+      const text = new EmbedBuilder()
+          .setColor('#C0392B')
+          .setTitle('**Error**')
+          .setDescription("error:\n`" + error + "`")
+          .setFooter({ text: 'link `arg1` `arg2`  arg* must be a channel id' })
+
+      await channel.send({ embeds: [text] });
+      return;
   }
 };

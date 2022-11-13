@@ -18,7 +18,13 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
         try {
-            if (await interaction.options.getUser('user', false)) {
+            const text = new EmbedBuilder()
+                .setColor('#C0392B')
+                .setTitle(`**Sorry**`)
+                .setDescription(`Cookie system is in maintenance mode,  please wait for the next update.`)
+                .setThumbnail('attachment://dead-cat.png')
+            await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
+            /*if (await interaction.options.getUser('user', false)) {
                 var top = Array();
                 var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
 
@@ -83,7 +89,7 @@ module.exports = {
                 //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
                 await interaction.editReply({ embeds: [text] });
                 return;
-            }
+            }*/
         } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()

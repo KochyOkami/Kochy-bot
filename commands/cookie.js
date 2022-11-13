@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, MessageAttachment } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
@@ -50,7 +50,13 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
         try {
-            var user = interaction.user;
+            const text = new EmbedBuilder()
+                .setColor('#C0392B')
+                .setTitle(`**Sorry**`)
+                .setDescription(`Cookie system is in maintenance mode,  please wait for the next update.`)
+                .setThumbnail('attachment://dead-cat.png')
+            await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
+            /*var user = interaction.user;
             if (await interaction.options.getUser('user', false)) {
                 user = await interaction.options.getUser('user', true);
             }
@@ -87,9 +93,9 @@ module.exports = {
                 context.fillStyle = '#FFF';
                 context.fillText('Cookie Jar', canvas.width / 2 - 70, 75);
 
-                context.font = applyText(canvas, user.tag.replace(/[^a-zA-Z0-9&\/\\#,+()$~%.'":*?<>{} ]/g, ''));
+                context.font = applyText(canvas, user.tag.replace(/[^a-zA-Z0-9&\/\\#,+()$~%.'":*?<>{}-_ |]/g, ''));
                 context.fillStyle = '#245078';
-                context.fillText(user.tag.replace(/[^a-zA-Z0-9&\/\\#,+()$~%.'":*?<>{} ]/g, ''), canvas.width / 3.3, canvas.height / 1.6);
+                context.fillText(user.tag.replace(/[^a-zA-Z0-9&\/\\#,+()$~%.'":*?<>{}-_ |]/g, ''), canvas.width / 3.3, canvas.height / 1.6);
 
                 context.font = `35px Revue`;
                 context.fillStyle = '#7b8e91';
@@ -97,7 +103,7 @@ module.exports = {
 
                 const cookie_img = await Canvas.loadImage('./cookie.png');
                 // This uses the canvas dimensions to stretch the image onto the entire canvas
-                context.drawImage(cookie_img, canvas.width / 3.3 + (19 * cookie[user.id].toString().length), canvas.height - 79, cookie_img.width / 2, cookie_img.height / 2);
+                context.drawImage(cookie_img, canvas.width / 3.3 + (24 * cookie[user.id].toString().length), canvas.height - 79, cookie_img.width / 2, cookie_img.height / 2);
 
                 context.font = `35px Revue`;
                 context.fillStyle = '#7b8e91';
@@ -140,7 +146,7 @@ module.exports = {
                     .setDescription(`There was an error executing /cookie : \n` + '```' + error + '```')
                 await interaction.editReply({ embeds: [text] });
                 return;
-            }
+            }*/
 
         } catch (error) {
             log.write(error);

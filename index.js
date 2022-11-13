@@ -333,9 +333,9 @@ bot.on("messageCreate", async (message) => {
 
         if (message.webhookId) return;
         if (message.author.id == bot.user.id || message.author.id == '967727996834287647') return;
-        var aleatoir = Math.floor(Math.random() * (10_000))
+        var aleatoir = null
+        //Math.floor(Math.random() * (10_000))
         var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-        console.log(aleatoir)
         if (aleatoir <= settings.box_chance) {
             const button = new ActionRowBuilder()
                 .addComponents(

@@ -11,7 +11,13 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
         try {
-            var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+            const text = new EmbedBuilder()
+                .setColor('#C0392B')
+                .setTitle(`**Sorry**`)
+                .setDescription(`Cookie system is in maintenance mode,  please wait for the next update.`)
+                .setThumbnail('attachment://dead-cat.png')
+            await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
+            /* var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
             var daily = eval(JSON.parse(fs.readFileSync('./daily.json', 'utf8')));
             
@@ -62,7 +68,7 @@ module.exports = {
                 fs.writeFileSync("./daily.json", JSON.stringify(daily)) 
                 fs.writeFileSync("./cookie.json", JSON.stringify(cookie)) 
                 return
-            }
+            } */
         } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()

@@ -69,17 +69,14 @@ module.exports = {
                         var user = await interaction.options.getUser('user', true);
                         var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
 
-                        if (settings.blacklist.indexOf(user.id) != -1) {
-                            delete blacklist[settings.blacklist.indexOf(user.id)]
-                        } else {
-                            settings.blacklist.push(user.id);
-                            log.write(user.id + 'has been add to the blacklist');
-                            const text = new EmbedBuilder()
-                                .setColor('#245078')
-                                .setTitle('**Information**')
-                                .setDescription(`${user} has been add to the blacklist`)
-                            await interaction.editReply({ embeds: [text] });
-                        }
+                        settings.blacklist.push(user.id);
+                        log.write(user.id + 'has been add to the blacklist');
+                        const text = new EmbedBuilder()
+                            .setColor('#245078')
+                            .setTitle('**Information**')
+                            .setDescription(`${user} has been add to the blacklist`)
+                        await interaction.editReply({ embeds: [text] });
+
 
                         fs.writeFileSync("./settings.json", JSON.stringify(settings));
                         return;
