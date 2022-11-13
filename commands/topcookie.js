@@ -4,6 +4,7 @@ const log = require('../logs/logBuilder.js');
 const fs = require('fs');
 const config = require('../config');
 const { PermissionFlagsBits } = require('discord.js');
+var requests = require('request');
 
 
 module.exports = {
@@ -18,78 +19,118 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
         try {
-            const text = new EmbedBuilder()
-                .setColor('#C0392B')
-                .setTitle(`**Sorry**`)
-                .setDescription(`Cookie system is in maintenance mode,  please wait for the next update.`)
-                .setThumbnail('attachment://dead-cat.png')
-            await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
-            /*if (await interaction.options.getUser('user', false)) {
-                var top = Array();
-                var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-
-                for (let i in cookie) {
-                    top.push([cookie[i], i])
-                }
-
-                top.sort(function (a, b) {
-                    return b[0] - a[0];
-                });
-                var values = "";
-
-                for (let index = 0; index < 5; index++) {
-                    try {
-                        values += "`#" + (index +1) + "` <@" + await interaction.client.users.fetch(top[index][1]) + ">\n<:vide:1035917668089352303>    ➥ "+top[index][0] +" :cookie:\n";
-                    } catch {
-                        values += "`#" + (index + 1) + "` " + top[index] + "\n";
-                    }
-                }
-                var icon = interaction.guild.iconURL()
-                if (icon == null){
-                    icon = config.avatar
-                }
+            var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+            if (settings.cookie_status == "off") {
                 const text = new EmbedBuilder()
-                    .setColor('#245078')
-                    .setTitle("**" + interaction.guild.name + " Classement: **")
-                    .setDescription(values)
-                    .setThumbnail(icon)
-                //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
-                await interaction.editReply({ embeds: [text] });
-                return;
+                    .setColor('#C0392B')
+                    .setTitle(`**Sorry**`)
+                    .setDescription(`Cookie system is in maintenance mode,  please wait for the next update.`)
+                    .setThumbnail('attachment://dead-cat.png')
+                await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
+            }
+            else {
+                if (await interaction.options.getUser('user', false)) {
+                    var top = Array();
+                    var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
 
-            } else {
-                var top = Array();
-                var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-
-                for (let i in cookie) {
-                    top.push([cookie[i], i])
-                }
-
-                top.sort(function (a, b) {
-                    return b[0] - a[0];
-                });
-                var values = "";
-
-                for (let index = 0; index < 5; index++) {
-                    try {
-                        values += "`#" + (index +1) + "` <@" + await interaction.client.users.fetch(top[index][1]) + ">\n<:vide:1035917668089352303>    ➥ "+top[index][0] +" :cookie:\n";
-                    } catch {
-                        values += "`#" + (index + 1) + "` " + top[index] + "\n";
+                    for (let i in cookie) {
+                        top.push([cookie[i], i])
                     }
+
+                    top.sort(function (a, b) {
+                        return b[0] - a[0];
+                    });
+                    var values = "";
+
+                    for (let index = 0; index < 5; index++) {
+                        try {
+                            values += "`#" + (index + 1) + "` <@" + await interaction.client.users.fetch(top[index][1]) + ">\n<:vide:1035917668089352303>    ➥ " + top[index][0] + " :cookie:\n";
+                        } catch {
+                            values += "`#" + (index + 1) + "` " + top[index] + "\n";
+                        }
+                    }
+                    var icon = interaction.guild.iconURL()
+                    if (icon == null) {
+                        icon = config.avatar
+                    }
+                    const text = new EmbedBuilder()
+                        .setColor('#245078')
+                        .setTitle("**" + interaction.guild.name + " Classement: **")
+                        .setDescription(values)
+                        .setThumbnail(icon)
+                    //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
+                    var myJSONObject = { 'cookie': cookie };
+
+                    //Custom Header pass
+                    var headersOpt = {
+                        "content-type": "application/json",
+                    };
+                    requests(
+                        {
+                            method: 'post',
+                            url: settings.cookie_serv + 'cookie_post.php',
+                            form: myJSONObject,
+                            headers: headersOpt,
+                            json: true,
+                        }, function (error, response, body) {
+                            //Print the Response
+                            log.write('cookie send')
+                        });
+                    await interaction.editReply({ embeds: [text] });
+                    return;
+
+                } else {
+                    var top = Array();
+                    var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+
+                    for (let i in cookie) {
+                        top.push([cookie[i], i])
+                    }
+
+                    top.sort(function (a, b) {
+                        return b[0] - a[0];
+                    });
+                    var values = "";
+
+                    for (let index = 0; index < 5; index++) {
+                        try {
+                            values += "`#" + (index + 1) + "` <@" + await interaction.client.users.fetch(top[index][1]) + ">\n<:vide:1035917668089352303>    ➥ " + top[index][0] + " :cookie:\n";
+                        } catch {
+                            values += "`#" + (index + 1) + "` " + top[index] + "\n";
+                        }
+                    }
+                    var icon = interaction.guild.iconURL()
+                    if (icon == null) {
+                        icon = config.avatar
+                    }
+                    const text = new EmbedBuilder()
+                        .setColor('#245078')
+                        .setTitle("**" + interaction.guild.name + " Classement: **")
+                        .setDescription(values)
+                        .setThumbnail(icon)
+                    //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
+                    var myJSONObject = { 'cookie': cookie };
+
+                    //Custom Header pass
+                    var headersOpt = {
+                        "content-type": "application/json",
+                    };
+                    requests(
+                        {
+                            method: 'post',
+                            url: settings.cookie_serv + 'cookie_post.php',
+                            form: myJSONObject,
+                            headers: headersOpt,
+                            json: true,
+                        }, function (error, response, body) {
+                            //Print the Response
+                            log.write('cookie send')
+                        });
+                    
+                    await interaction.editReply({ embeds: [text] });
+                    return;
                 }
-                var icon = interaction.guild.iconURL()
-                if (icon == null){
-                    icon = config.avatar
-                }
-                const text = new EmbedBuilder()
-                    .setColor('#245078')
-                    .setTitle("**" + interaction.guild.name + " Classement: **")
-                    .setDescription(values)
-                    .setThumbnail(icon)
-                //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
-                await interaction.editReply({ embeds: [text] });
-                return;
-            }*/
+            }
         } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()

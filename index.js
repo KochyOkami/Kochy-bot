@@ -148,7 +148,7 @@ bot.on("ready", async () => {
                 });
 
 
-        }, 5 * 60 * 1000);
+        }, 1 * 60 * 1000);
     } catch (e) {
         log.write(e);
     }

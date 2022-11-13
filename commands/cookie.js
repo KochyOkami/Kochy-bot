@@ -7,6 +7,7 @@ const Canvas = require('@napi-rs/canvas');
 var requests = require('request');
 const { request } = require('undici');
 const { type } = require('os');
+const { isNull } = require('util');
 
 // Warn if overriding existing method
 if (Array.prototype.equals)
@@ -68,8 +69,8 @@ module.exports = {
                 try {
                     var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
                     console.log(cookie[user.id])
-                    
-                    if (!cookie[user.id]) {
+
+                    if (!isNull(cookie[user.id])) {
                         cookie[user.id] = 0
                         fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
                     }
@@ -139,6 +140,23 @@ module.exports = {
                     // Use the helpful Attachment class structure to process the file for you
                     const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
 
+                    var myJSONObject = { 'cookie': cookie };
+
+                    //Custom Header pass
+                    var headersOpt = {
+                        "content-type": "application/json",
+                    };
+                    requests(
+                        {
+                            method: 'post',
+                            url: settings.cookie_serv + 'cookie_post.php',
+                            form: myJSONObject,
+                            headers: headersOpt,
+                            json: true,
+                        }, function (error, response, body) {
+                            //Print the Response
+                            log.write('cookie send')
+                        });
                     //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
                     await interaction.editReply({ files: [attachment] });
                     return;
