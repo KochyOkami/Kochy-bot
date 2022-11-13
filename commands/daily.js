@@ -28,7 +28,7 @@ module.exports = {
 
                 if (Object.hasOwn(daily, interaction.user.id)) {
                     if (Math.round(Date.now() / 1000) >= daily[interaction.user.id]) {
-                        cookie[interaction.user.id] += settings.daily
+                        cookie[interaction.user.id] = parseInt(cookie[interaction.user.id]) + settings.daily
                         var time = Math.round(Date.now() / 1000) + (12 * 60 * 60)
 
                         daily[interaction.user.id] = time
@@ -59,7 +59,7 @@ module.exports = {
 
                 } else {
                     if (cookie[interaction.user.id]) {
-                        cookie[interaction.user.id] += settings.daily
+                        cookie[interaction.user.id] = parseInt(cookie[interaction.user.id]) + settings.daily
                     } else {
                         cookie[interaction.user.id] = settings.daily
                     }
