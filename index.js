@@ -10,7 +10,7 @@ const bot = new Discord.Client({
 //systemctl stop yaoicute.service
 
 const fs = require('fs');
-const request = require('request');
+const requests = require('request');
 const {
     Collection,
     EmbedBuilder,
@@ -79,6 +79,12 @@ bot.on("ready", async () => {
         var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
         settings.bot_name = bot.user.username
         fs.writeFileSync("./settings.json", JSON.stringify(settings));
+        requests.get(settings.cookie_serv + 'cookie_get.php', function (err, res, body) {
+            if (err) console.log(err)
+            if (res.statusCode === 200) //etc
+                var cookie = res.body
+            fs.writeFileSync("./cookie.json", cookie)
+        });
 
         //rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
         //  .then(() => console.log('Successfully deleted all commands.'))
@@ -121,11 +127,38 @@ bot.on("ready", async () => {
                 }],
             });
         }, 2 * 60 * 60 * 1000);
+        var interval = setInterval(function () {
+            var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+            var myJSONObject = { 'cookie': cookie };
+
+            //Custom Header pass
+            var headersOpt = {
+                "content-type": "application/json",
+            };
+            requests(
+                {
+                    method: 'post',
+                    url: settings.cookie_serv + 'cookie_post.php',
+                    form: myJSONObject,
+                    headers: headersOpt,
+                    json: true,
+                }, function (error, response, body) {
+                    //Print the Response
+                    log.write('cookie send')
+                });
+
+
+        }, 5 * 60 * 1000);
     } catch (e) {
         log.write(e);
     }
 });
-
+/* 
+request.get('cookie_serv', function (err, res, body) {
+                if (err) console.log(err)
+                if (res.statusCode === 200) //etc
+                    console.log(res.body)
+            }); */
 
 bot.on('interactionCreate', async interaction => {
     var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
@@ -186,15 +219,36 @@ bot.on('interactionCreate', async interaction => {
             else if (interaction.customId === 'open_box') {
                 var aleatoire = Math.floor(Math.random() * (100))
                 var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+                /* requests.get(settings.cookie_serv + 'cookie_get.php', function (err, res, body) {
+                    if (err) console.log(err)
+                    if (res.statusCode === 200) //etc
+                        var cookie = res.body
+                    fs.writeFileSync("./cookie.json", cookie)
+                }); */
                 var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-                console.log(aleatoire)
 
                 if (aleatoire <= settings.box_gain) {
                     const file = new AttachmentBuilder("./images/obj/box1cookie.png");
                     var cookie_win = Math.floor(Math.random() * (5_000))
-                    cookie[interaction.user.id] += cookie_win
+                    cookie[interaction.user.id] = parseInt(cookie[interaction.user.id]) + cookie_win
                     fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
+                    var myJSONObject = { 'cookie': cookie };
 
+                    //Custom Header pass
+                    var headersOpt = {
+                        "content-type": "application/json",
+                    };
+                    requests(
+                        {
+                            method: 'post',
+                            url: settings.cookie_serv + 'cookie_post.php',
+                            form: myJSONObject,
+                            headers: headersOpt,
+                            json: true,
+                        }, function (error, response, body) {
+                            //Print the Response
+                            log.write('cookie send')
+                        });
                     const text = new EmbedBuilder()
                         .setColor('#6c3483 ')
                         .setTitle('**Win**')
@@ -203,21 +257,37 @@ bot.on('interactionCreate', async interaction => {
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.tag + " | " + cookie[interaction.user.id] + '🍪 remained' })
 
                     await interaction.update({ embeds: [text], files: [file], components: [] })
-                    
+
                     var deleted = setTimeout(async () => await interaction.deleteReply(), 60 * 1000)
-                      
+
                 } else {
                     const file = new AttachmentBuilder("./images/obj/box1cat.png");
-                    var cookie_lost = Math.floor(Math.random() * (5_000))
+                    var cookie_lost = Math.floor(Math.random() * (2_000))
 
                     if (cookie_lost > cookie[interaction.user.id]) {
                         cookie[interaction.user.id] = 0
                     } else {
-                        cookie[interaction.user.id] -= cookie_lost
+                        cookie[interaction.user.id] = parseInt(cookie[interaction.user.id]) - cookie_lost
                     }
 
                     fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
+                    var myJSONObject = { 'cookie': cookie };
 
+                    //Custom Header pass
+                    var headersOpt = {
+                        "content-type": "application/json",
+                    };
+                    requests(
+                        {
+                            method: 'post',
+                            url: settings.cookie_serv + 'cookie_post.php',
+                            form: myJSONObject,
+                            headers: headersOpt,
+                            json: true,
+                        }, function (error, response, body) {
+                            //Print the Response
+                            log.write('cookie send')
+                        });
                     const text = new EmbedBuilder()
                         .setColor('#6c3483 ')
                         .setTitle('**Losed**')
@@ -242,7 +312,7 @@ bot.on('interactionCreate', async interaction => {
                         await interaction.member.roles.add(object.id)
                             .then(async function () {
                                 log.write(`${object.name}(${object.id}) was add to ${interaction.user.username}}`)
-                                cookie[interaction.user.id] -= object.price
+                                cookie[interaction.user.id] = parseInt(cookie[interaction.user.id]) - object.price
 
                                 fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
                                 const text = new EmbedBuilder()
@@ -253,7 +323,7 @@ bot.on('interactionCreate', async interaction => {
 
                                 await interaction.update({ embeds: [text], components: [] });
                             })
-                            .catch(async err => await interaction.update({ content: err, embeds: [], components: [] }));
+                            .catch(async err => await interaction.update({ content: err.toString(), embeds: [], components: [] }));
 
                     } else {
                         const text = new EmbedBuilder()
@@ -265,6 +335,23 @@ bot.on('interactionCreate', async interaction => {
                         await interaction.update({ embeds: [text], components: [] });
                     }
 
+                    var myJSONObject = { 'cookie': cookie };
+
+                    //Custom Header pass
+                    var headersOpt = {
+                        "content-type": "application/json",
+                    };
+                    requests(
+                        {
+                            method: 'post',
+                            url: settings.cookie_serv + 'cookie_post.php',
+                            form: myJSONObject,
+                            headers: headersOpt,
+                            json: true,
+                        }, function (error, response, body) {
+                            //Print the Response
+                            log.write('cookie send')
+                        });
                 } else {
                     const text = new EmbedBuilder()
                         .setColor('#F39C12')
@@ -335,8 +422,9 @@ bot.on("messageCreate", async (message) => {
         if (message.author.id == bot.user.id || message.author.id == '967727996834287647') return;
         var aleatoir = Math.floor(Math.random() * (10_000))
         var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-        if (false) {
-        //(aleatoir <= settings.box_chance) {
+        if ((aleatoir <= settings.box_chance)) {
+
+            //(aleatoir <= settings.box_chance) {
             const button = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
@@ -356,13 +444,12 @@ bot.on("messageCreate", async (message) => {
         try {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-
             var links_list = eval(settings.links_list);
             var save_img_list = eval(settings.save_img_list);
             var i_path = ""
 
             if (cookie[message.author.id]) {
-                cookie[message.author.id] += settings.cookie_add
+                cookie[message.author.id] = parseInt(cookie[message.author.id]) + settings.cookie_add
             } else {
                 cookie[message.author.id] = settings.cookie_add
             }

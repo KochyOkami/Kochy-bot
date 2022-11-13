@@ -3,6 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
 const { PermissionFlagsBits } = require('discord.js');
+var requests = require('request');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -21,7 +22,7 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: true });
         try {
-
+            var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var user = await interaction.options.getUser('user');
             var cookies = await interaction.options.getInteger('amount')
 
@@ -32,13 +33,31 @@ module.exports = {
 
                 } else {
                     if (cookie[user.id] >= parseInt(cookies)) {
-                        cookie[user.id] -= parseInt(cookies)
+                        cookie[user.id] = parseInt(cookie[user.id]) - parseInt(cookies)
                     } else {
                         cookie[user.id] = 0
                     }
 
                 }
                 fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
+                var myJSONObject = { 'cookie': cookie };
+
+                //Custom Header pass
+                var headersOpt = {
+                    "content-type": "application/json",
+                };
+                requests(
+                    {
+                        method: 'post',
+                        url: settings.cookie_serv + 'cookie_post.php',
+                        form: myJSONObject,
+                        headers: headersOpt,
+                        json: true,
+                    }, function (error, response, body) {
+                        //Print the Response
+                        log.write('cookie send' + response)
+                    });
+
                 const text = new EmbedBuilder()
                     .setColor('#245078')
                     .setDescription('`' + cookies + '` :cookie: was removed to <@' + user + '>')

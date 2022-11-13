@@ -3,6 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
 const { PermissionFlagsBits } = require('discord.js');
+var requests = require('request');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,7 +20,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
-        await interaction.deferReply({ephemeral: true});
+        await interaction.deferReply({ ephemeral: true });
         try {
 
             var user = await interaction.options.getUser('user');
@@ -32,13 +33,31 @@ module.exports = {
                     cookie[user.id] = parseInt(cookies)
 
                 } else {
-                    cookie[user.id] += parseInt(cookies)
+                    cookie[user.id] = parseInt(cookie[user.id]) + parseInt(cookies)
                 }
                 fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
+                var myJSONObject = { 'cookie': cookie };
+
+                //Custom Header pass
+                var headersOpt = {
+                    "content-type": "application/json",
+                };
+                requests(
+                    {
+                        method: 'post',
+                        url: settings.cookie_serv + 'cookie_post.php',
+                        form: myJSONObject,
+                        headers: headersOpt,
+                        json: true,
+                    }, function (error, response, body) {
+                        //Print the Response
+                        log.write('cookie send')
+                    });
+
                 const text = new EmbedBuilder()
                     .setColor('#245078')
                     .setDescription('`' + cookies + '` :cookie: was had to <@' + user + '>')
-                    .setFooter({ iconURL: user.avatarURL(), text: 'Cookie box : ' + cookie[user.id] + ' 🍪'})
+                    .setFooter({ iconURL: user.avatarURL(), text: 'Cookie box : ' + cookie[user.id] + ' 🍪' })
                 await interaction.editReply({ embeds: [text], ephemeral: true });
                 return;
 

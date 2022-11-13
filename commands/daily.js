@@ -2,6 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
+var requests = require('request');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,64 +12,90 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
         try {
-            const text = new EmbedBuilder()
-                .setColor('#C0392B')
-                .setTitle(`**Sorry**`)
-                .setDescription(`Cookie system is in maintenance mode,  please wait for the next update.`)
-                .setThumbnail('attachment://dead-cat.png')
-            await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
-            /* var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-            var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-            var daily = eval(JSON.parse(fs.readFileSync('./daily.json', 'utf8')));
-            
-            if (Object.hasOwn(daily, interaction.user.id)) {
-                if (Math.round(Date.now() / 1000) >= daily[interaction.user.id]) {
-                    cookie[interaction.user.id] += settings.daily
-                    var time = Math.round(Date.now()/ 1000) + (12 * 60 * 60)
+            var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
 
+            if (settings.cookie_status == 'off') {
+                const text = new EmbedBuilder()
+                    .setColor('#C0392B')
+                    .setTitle(`**Sorry**`)
+                    .setDescription(`Cookie system is in maintenance mode,  please wait for the next update.`)
+                    .setThumbnail('attachment://dead-cat.png')
+                await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
+            } else {
+                
+                var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+                var daily = eval(JSON.parse(fs.readFileSync('./daily.json', 'utf8')));
+
+                if (Object.hasOwn(daily, interaction.user.id)) {
+                    if (Math.round(Date.now() / 1000) >= daily[interaction.user.id]) {
+                        cookie[interaction.user.id] += settings.daily
+                        var time = Math.round(Date.now() / 1000) + (12 * 60 * 60)
+
+                        daily[interaction.user.id] = time
+                        var toplevel = top(interaction.user.id)
+
+                        const text = new EmbedBuilder()
+                            .setColor('#245078')
+                            .setTitle(`**You have win ${settings.daily} 🍪**`)
+                            .setDescription(`Come back in <t:${time}:R>`)
+                            .setFooter({ iconURL: interaction.user.avatarURL(), text: 'Place: #' + toplevel })
+                        await interaction.editReply({ embeds: [text] });
+                        fs.writeFileSync("./daily.json", JSON.stringify(daily))
+                        fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
+
+
+                    } else {
+                        var toplevel = top(interaction.user.id)
+                        const text = new EmbedBuilder()
+                            .setColor('#C0392B')
+                            .setTitle(`**Error**`)
+                            .setDescription(`You already have take your daily, come back in <t:${daily[interaction.user.id]}:R>`)
+                            .setFooter({ iconURL: interaction.user.avatarURL(), text: 'Place: #' + toplevel })
+                        await interaction.editReply({ embeds: [text] });
+                        fs.writeFileSync("./daily.json", JSON.stringify(daily))
+                        fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
+
+                    }
+
+                } else {
+                    if (cookie[interaction.user.id]) {
+                        cookie[interaction.user.id] += settings.daily
+                    } else {
+                        cookie[interaction.user.id] = settings.daily
+                    }
+                    var time = Math.round(Date.now() / 1000) + (12 * 60 * 60)
                     daily[interaction.user.id] = time
                     var toplevel = top(interaction.user.id)
-
                     const text = new EmbedBuilder()
                         .setColor('#245078')
                         .setTitle(`**You have win ${settings.daily} 🍪**`)
                         .setDescription(`Come back in <t:${time}:R>`)
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: 'Place: #' + toplevel })
                     await interaction.editReply({ embeds: [text] });
-                    fs.writeFileSync("./daily.json", JSON.stringify(daily)) 
-                    fs.writeFileSync("./cookie.json", JSON.stringify(cookie)) 
-                    return
-                } else {
-                    var toplevel = top(interaction.user.id)
-                    const text = new EmbedBuilder()
-                        .setColor('#C0392B')
-                        .setTitle(`**Error**`)
-                        .setDescription(`You already have take your daily, come back in <t:${daily[interaction.user.id]}:R>`)
-                        .setFooter({ iconURL: interaction.user.avatarURL(), text: 'Place: #' + toplevel })
-                    await interaction.editReply({ embeds: [text] });
-                    fs.writeFileSync("./daily.json", JSON.stringify(daily)) 
-                    fs.writeFileSync("./cookie.json", JSON.stringify(cookie)) 
-                    return
+                    fs.writeFileSync("./daily.json", JSON.stringify(daily))
+                    fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
                 }
-            } else {
-                if (cookie[interaction.user.id]){
-                    cookie[interaction.user.id] += settings.daily
-                }else {
-                    cookie[interaction.user.id] = settings.daily
-                }
-                var time = Math.round(Date.now()/ 1000) + (12 * 60 * 60)
-                daily[interaction.user.id] = time
-                var toplevel = top(interaction.user.id)
-                const text = new EmbedBuilder()
-                    .setColor('#245078')
-                    .setTitle(`**You have win ${settings.daily} 🍪**`)
-                    .setDescription(`Come back in <t:${time}:R>`)
-                    .setFooter({ iconURL: interaction.user.avatarURL(), text: 'Place: #' + toplevel })
-                await interaction.editReply({ embeds: [text] });
-                fs.writeFileSync("./daily.json", JSON.stringify(daily)) 
-                fs.writeFileSync("./cookie.json", JSON.stringify(cookie)) 
-                return
-            } */
+
+                var myJSONObject = { 'cookie': cookie };
+
+                //Custom Header pass
+                var headersOpt = {
+                    "content-type": "application/json",
+                };
+                requests(
+                    {
+                        method: 'post',
+                        url: settings.cookie_serv + 'cookie_post.php',
+                        form: myJSONObject,
+                        headers: headersOpt,
+                        json: true,
+                    }, function (error, response, body) {
+                        //Print the Response
+                        log.write('cookie send')
+                    });
+
+
+            }
         } catch (error) {
             log.write(error);
             const text = new EmbedBuilder()
