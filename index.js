@@ -258,7 +258,7 @@ bot.on('interactionCreate', async interaction => {
 
                     await interaction.update({ embeds: [text], files: [file], components: [] })
 
-                    var deleted = setTimeout(async () => await interaction.deleteReply(), 60 * 1000)
+                    var deleted = setTimeout(async () => {try{await interaction.deleteReply()}catch{}}, 60 * 1000)
 
                 } else {
                     const file = new AttachmentBuilder("./images/obj/box1cat.png");
@@ -296,7 +296,8 @@ bot.on('interactionCreate', async interaction => {
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.tag + " | " + cookie[interaction.user.id] + '🍪 remained' })
 
                     await interaction.update({ embeds: [text], files: [file], components: [] })
-                    var deleted = setTimeout(async () => await interaction.deleteReply(), 60 * 1000)
+                    var deleted = setTimeout(async () => {try{await interaction.deleteReply()}catch{}}, 60 * 1000)
+
                 }
 
             }
