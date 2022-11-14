@@ -619,7 +619,7 @@ async function download(url, name) {
         var file = fs.createWriteStream('./images/' + name);
         return new Promise((resolve, reject) => {
             var responseSent = false; // flag to make sure that response is sent only once.
-            request.get(url)
+            requests.get(url)
                 .pipe(file)
                 .on('finish', () => {
                     if (responseSent) return;
