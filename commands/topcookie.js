@@ -86,8 +86,9 @@ module.exports = {
 
                 var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
                 var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-                for (let index = 0; index < cookie.length; index++) {
-                    var user = await bot.client.users.fetch(cookie[index]);
+
+                for (let id in cookie) {
+                    var user = await interaction.client.users.fetch(id);
                     var user_name = user.tag;
                     var user_avatar = user.displayAvatarURL();
                     cookie_user[user.id] = { 'name': user_name, 'avatar': user_avatar }
