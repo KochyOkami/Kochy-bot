@@ -318,7 +318,7 @@ bot.on('interactionCreate', async interaction => {
                     var deleted = setTimeout(async () => { try { await interaction.deleteReply() } catch { } }, 60 * 1000)
 
                 }
-
+/home/kochy-okami/serv/
             }
             else if (interaction.customId.includes('yes_')) {
                 //console.log(interaction)
