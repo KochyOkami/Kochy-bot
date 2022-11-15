@@ -68,12 +68,25 @@ module.exports = {
                 }
                 try {
                     var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
-                    console.log(cookie[user.id])
-
-                    if (isNull(cookie[user.id])) {
+                    console.log(cookie.hasOwnProperty(user.id))
+                    if (!cookie.hasOwnProperty(user.id)) {
                         cookie[user.id] = 0
                         fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
+                        var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+                        var user_name = user.tag;
+                        var user_avatar = user.displayAvatarURL();
+                        console.log(cookie_user)
+                        cookie_user[user.id] = { 'name': user_name, 'avatar': user_avatar }
+                        fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
                     }
+
+                    var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+                    var user_name = user.tag;
+                    var user_avatar = user.displayAvatarURL();
+                    console.log(cookie_user)
+                    cookie_user[user.id] = { 'name': user_name, 'avatar': user_avatar }
+                    /home/kochy-okami/Desktop/serv/
+                    fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
                     var toplevel = top(user.id)
                     console.log(cookie[user.id].toString().length)
                     // Create a 700x250 pixel canvas and get its context
@@ -140,7 +153,7 @@ module.exports = {
                     // Use the helpful Attachment class structure to process the file for you
                     const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
 
-                    var myJSONObject = { 'cookie': cookie };
+                    var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
 
                     //Custom Header pass
                     var headersOpt = {
@@ -156,6 +169,23 @@ module.exports = {
                         }, function (error, response, body) {
                             //Print the Response
                             log.write('cookie send')
+                        });
+                    var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+                    var myJSONObject = { 'users': cookie_user, 'password': '91784SK8325k0r0lev' };
+                    //Custom Header pass
+                    var headersOpt = {
+                        "content-type": "application/json",
+                    };
+                    requests(
+                        {
+                            method: 'post',
+                            url: settings.cookie_serv + 'user_post.php',
+                            form: myJSONObject,
+                            headers: headersOpt,
+                            json: true,
+                        }, function (error, response, body) {
+                            //Print the Response
+                            log.write('user send')
                         });
                     //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
                     await interaction.editReply({ files: [attachment] });

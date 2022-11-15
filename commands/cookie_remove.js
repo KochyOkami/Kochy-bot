@@ -40,7 +40,7 @@ module.exports = {
 
                 }
                 fs.writeFileSync("./cookie.json", JSON.stringify(cookie))
-                var myJSONObject = { 'cookie': cookie };
+                var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
 
                 //Custom Header pass
                 var headersOpt = {
