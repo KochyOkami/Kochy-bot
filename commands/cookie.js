@@ -85,7 +85,7 @@ module.exports = {
                     var user_avatar = user.displayAvatarURL();
                     console.log(cookie_user)
                     cookie_user[user.id] = { 'name': user_name, 'avatar': user_avatar }
-                    /home/kochy-okami/Desktop/serv/
+    
                     fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
                     var toplevel = top(user.id)
                     console.log(cookie[user.id].toString().length)
