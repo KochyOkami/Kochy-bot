@@ -262,7 +262,7 @@ bot.on('interactionCreate', async interaction => {
 
                 if (aleatoire <= settings.box_gain) {
                     const file = new AttachmentBuilder("./images/obj/box1cookie.png");
-                    var cookie_win = Math.floor(Math.random() * (5_000))
+                    var cookie_win = Math.floor(Math.random() * (1_500))
                     cookie[interaction.user.id] = parseInt(cookie[interaction.user.id]) + cookie_win
                     fs.writeFileSync("./cookie.json", JSON.stringify(cookie));
                     var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
@@ -295,7 +295,7 @@ bot.on('interactionCreate', async interaction => {
 
                 } else {
                     const file = new AttachmentBuilder("./images/obj/box1cat.png");
-                    var cookie_lost = Math.floor(Math.random() * (2_000))
+                    var cookie_lost = Math.floor(Math.random() * (1_000))
 
                     if (cookie_lost > cookie[interaction.user.id]) {
                         cookie[interaction.user.id] = 0
