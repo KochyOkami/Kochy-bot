@@ -52,12 +52,12 @@ module.exports = {
                 const button = new ActionRowBuilder()
                     .addComponents(
                         new ButtonBuilder()
-                            .setURL('http://yaoicute.fr/cookie_top.php') 
+                            .setURL('http://yaoicute.fr/cookie_top.php')
                             .setLabel('See all the top')
                             .setStyle(ButtonStyle.Link),
                     );
 
-               
+
                 const text = new EmbedBuilder()
                     .setColor('#245078')
                     .setTitle("**" + interaction.guild.name + " Classement: **")
@@ -82,7 +82,37 @@ module.exports = {
                         log.write('cookie send')
                     });
 
-                await interaction.editReply({ embeds: [text], components: [button]});
+                await interaction.editReply({ embeds: [text], components: [button] });
+
+                var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+                var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+                for (let index = 0; index < cookie.length; index++) {
+                    var user = await bot.client.users.fetch(cookie[index]);
+                    var user_name = user.tag;
+                    var user_avatar = user.displayAvatarURL();
+                    cookie_user[user.id] = { 'name': user_name, 'avatar': user_avatar }
+
+                }
+                console.log(cookie_user)
+                fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
+
+                var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+                var myJSONObject = { 'users': cookie_user, 'password': '91784SK8325k0r0lev' };
+                //Custom Header pass
+                var headersOpt = {
+                    "content-type": "application/json",
+                };
+                requests(
+                    {
+                        method: 'post',
+                        url: settings.cookie_serv + 'user_post.php',
+                        form: myJSONObject,
+                        headers: headersOpt,
+                        json: true,
+                    }, function (error, response, body) {
+                        //Print the Response
+                        log.write('user send')
+                    });
                 return;
 
             }

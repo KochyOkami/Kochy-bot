@@ -141,7 +141,7 @@ module.exports = {
                     context.clip();
 
                     // Using undici to make HTTP requests for better performance
-                    const avatar = await Canvas.loadImage(interaction.user.displayAvatarURL({ extension: 'jpg' }));
+                    const avatar = await Canvas.loadImage(user.displayAvatarURL({ extension: 'jpg' }));
 
                     // Compute aspectration
                     const aspect = avatar.height / avatar.width;
