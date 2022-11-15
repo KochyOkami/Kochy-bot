@@ -67,6 +67,9 @@ bot.on("ready", async () => {
             status: "online",
             activities: [{ name: "la version " + config.bot_version }],
         });
+        rest.put(Routes.applicationCommands(bot.user.id), { body: [] })
+            .then(() => console.log('Successfully deleted all commands.'))
+            .catch(console.error);
 
         (async () => {
             //Load all commands.
@@ -86,12 +89,6 @@ bot.on("ready", async () => {
             fs.writeFileSync("./cookie.json", cookie)
         });
 
-        //rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
-        //  .then(() => console.log('Successfully deleted all commands.'))
-        //.catch(console.error);
-
-        TEST_GUILD_ID = false;
-
         try {
             //Say that the bot is ready
             var channel = await bot.channels.fetch('988784456959672350');
@@ -105,7 +102,7 @@ bot.on("ready", async () => {
         }
 
         log.write(`${bot.user.tag} logged successfully.`);
-        
+
         var backup = await bot.channels.fetch('1035900999845543976')
         var interval = setInterval(function () {
             backup.send({
@@ -113,6 +110,11 @@ bot.on("ready", async () => {
                 files: [{
                     attachment: "./cookie.json",
                     name: "cookie-backup" + dt.format('Y-m-d H:M:S') + ".json",
+                    description: `auto backup.`
+                },
+                {
+                    attachment: "./cookie_user.json",
+                    name: "user-backup" + dt.format('Y-m-d H:M:S') + ".json",
                     description: `auto backup.`
                 },
                 {
@@ -127,6 +129,7 @@ bot.on("ready", async () => {
                 }],
             });
         }, 2 * 60 * 60 * 1000);
+
         var interval = setInterval(function () {
             var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
             var myJSONObject = { 'cookie': cookie, 'password': '91784SK8325k0r0lev' };
@@ -168,6 +171,17 @@ bot.on("ready", async () => {
                 });
         }, 5 * 60 * 1000);
 
+        var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
+        var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
+        for (let index = 0; index < cookie.length; index++) {
+            var user = await bot.client.users.fetch(cookie[index]);
+            var user_name = user.tag;
+            var user_avatar = user.displayAvatarURL();
+            cookie_user[user.id] = { 'name': user_name, 'avatar': user_avatar }
+
+        }
+    
+        fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
     } catch (e) {
         log.write(e);
     }
