@@ -180,8 +180,9 @@ bot.on("ready", async () => {
             cookie_user[user.id] = { 'name': user_name, 'avatar': user_avatar }
 
         }
-    
+
         fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
+
     } catch (e) {
         log.write(e);
     }
@@ -510,6 +511,39 @@ bot.on("messageCreate", async (message) => {
                             var name = await download(attach.url, attach.name);
                             var path = "./images/" + name.toString()
                             i_path = path
+                            var name_i = attach.name;
+                            var author_i = message.author.tag;
+                            console.log(settings.category[message.channel.id]);
+                            if (settings.category[message.channel.id]) {
+                                var category = settings.category[message.channel.id];
+                                var myJSONObject = { 'url': attach.url, 'name': name_i.normalize('NFC'), 'category': category, 'author': author_i.normalize('NFC'), 'password': '91784SK8325k0r0lev' };
+                                console.log(myJSONObject);
+                                //Custom Header pass
+                                // home/kochy-okami/Desktop/serv/
+                                var headersOpt = {
+                                    "content-type": "application/json",
+                                };
+                                requests(
+                                    {
+                                        method: 'post',
+                                        url: settings.cookie_serv + '/pavlovitch/upload_image.php',
+                                        form: myJSONObject,
+                                        headers: headersOpt,
+                                        json: true,
+                                    }, function (error, response, body) {
+                                        //Print the Response
+                                        try {
+                                            if (body.startsWith('wrong category')) {
+                                                log.write(body)
+                                            } else if (body.startsWith('wrong password')) {
+                                                log.write('wrong password')
+                                            }
+                                            else { log.write(body) }
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
+                                    });
+                            }
 
                             links_list[message.channel.id].forEach(async function (link) {
 
