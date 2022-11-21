@@ -84,9 +84,14 @@ bot.on("ready", async () => {
         fs.writeFileSync("./settings.json", JSON.stringify(settings));
         requests.get(settings.cookie_serv + 'cookie_get.php', function (err, res, body) {
             if (err) console.log(err)
-            if (res.statusCode === 200) //etc
-                var cookie = res.body
-            fs.writeFileSync("./cookie.json", cookie)
+            try {
+                if (res.statusCode === 200) //etc
+                    var cookie = res.body
+                fs.writeFileSync("./cookie.json", cookie)
+
+            } catch (e) {
+                log.write(e)
+            }
         });
 
         try {
