@@ -35,30 +35,21 @@ module.exports = {
             try {
                 //Custom Header pass
                 console.log('fr')
-                var option = {
-                    count: 80,
-                    q: yaoi,
-                    t: images,
-                    safesearch: 0,
-                    locale: en_us,
-                    offset: 0,
-                    device: desktop
-                }
 
+                var offset =Math.floor(Math.random() * (100))
                 var headersOpt = {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-                    'Content-Type': 'application/x-www-form-urlencoded'
+
                 };
                 requests(
                     {
                         method: 'get',
-                        url: 'https://api.qwant.com/V3/search/images',
-                        qs: option,
+                        url: 'https://api.qwant.com/V3/search/images/?count=1&q=yaoi&safesearch=0&locale=en_us&offset='+offset.toString(),
                         headers: headersOpt,
                     }, async function (error, response, body) {
                         //Print the Response
                         console.log(body)
-                        await interaction.editReply('ok')
+                        await interaction.editReply(body)
                     });
 
                 //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
