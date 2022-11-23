@@ -24,7 +24,7 @@ module.exports = {
         .setRequired(false)),
 
     async execute(interaction) {
-        await interaction.deferReply();
+        //await interaction.deferReply();
         try {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
 
@@ -51,7 +51,7 @@ module.exports = {
                 };
                 requests(
                     {
-                        method: 'POST',
+                        method: 'get',
                         url: 'https://api.qwant.com/V3/search/images',
                         form: option,
                         headers: headersOpt,
