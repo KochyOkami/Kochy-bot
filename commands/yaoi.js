@@ -49,8 +49,9 @@ module.exports = {
                     }, async function (error, response, body) {
                         //Print the Response
                         //console.log(body)
-                        console.log(body["data"]["result"])
-                        console.log(body["data"]["result"]["items"][0]["media_fulsize"])
+                        var img = JSON.parse(body)
+                        console.log(img.data.result)
+                        console.log(img.data.result.items[0].media)
                     });
 
                 //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
