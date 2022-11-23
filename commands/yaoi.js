@@ -30,7 +30,11 @@ module.exports = {
 
             var searchtext = 'yaoi'
             if (await interaction.options.getString('option', false)) {
-                searchtext = await interaction.options.getString('option', true);
+                searchtext = "yaoi " + await interaction.options.getString('option', true);
+                searchtext.replace(/[\u0080-\u024F]/g,
+                      function(a) {
+                        return '&#'+a.charCodeAt(0)+';';
+                      });
             }
             try {
                 //Custom Header pass
