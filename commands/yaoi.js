@@ -34,15 +34,15 @@ module.exports = {
             }
             try {
                 //Custom Header pass
-                console.log('good')
+                console.log('fr')
                 var option = {
-                    'count': 80,
-                    'q': 'yaoi',
-                    't': 'images',
-                    'safesearch': 0,
-                    'locale': 'en_us',
-                    'offset': 0,
-                    'device': 'desktop'
+                    count: 80,
+                    q: yaoi,
+                    t: images,
+                    safesearch: 0,
+                    locale: en_us,
+                    offset: 0,
+                    device: desktop
                 }
 
                 var headersOpt = {
@@ -53,7 +53,7 @@ module.exports = {
                     {
                         method: 'get',
                         url: 'https://api.qwant.com/V3/search/images',
-                        form: option,
+                        qs: option,
                         headers: headersOpt,
                     }, async function (error, response, body) {
                         //Print the Response
