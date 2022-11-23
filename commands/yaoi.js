@@ -61,7 +61,7 @@ module.exports = {
                         url: 'https://api.qwant.com/V3/search/images',
                         query: "yaoi",
                         headers: headersOpt,
-                    }, function (error, response, body) {
+                    }, async function (error, response, body) {
                         //Print the Response
                         console.log(body)
                         await interaction.editReply(body)
