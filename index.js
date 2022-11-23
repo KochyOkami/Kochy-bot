@@ -70,7 +70,7 @@ bot.on("ready", async () => {
         rest.put(Routes.applicationCommands(bot.user.id), { body: [] })
             .then(() => console.log('Successfully deleted all commands.'))
             .catch(console.log("error")); 
-        console.log(bot.user)
+  
         (async () => {
             //Load all commands.
             await rest.put(
