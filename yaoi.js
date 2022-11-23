@@ -53,13 +53,12 @@ module.exports = {
                     {
                         method: 'get',
                         url: 'https://api.qwant.com/V3/search/images',
-                        form: option,
+                        qs: option,
                         headers: headersOpt,
-                        json: true,
                     }, async function (error, response, body) {
                         //Print the Response
                         console.log(body)
-                        //await interaction.editReply(body)
+                        await interaction.editReply('ok')
                     });
 
                 //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
