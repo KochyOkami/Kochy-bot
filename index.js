@@ -67,9 +67,9 @@ bot.on("ready", async () => {
             status: "online",
             activities: [{ name: "la version " + config.bot_version }],
         });
-        rest.put(Routes.applicationCommands(bot.user.id), { body: [] })
+        /*rest.put(Routes.applicationCommands(bot.user.id), { body: [] })
             .then(() => console.log('Successfully deleted all commands.'))
-            .catch(console.log("error")); 
+            .catch(console.log("error")); */
   
         (async () => {
             //Load all commands.
