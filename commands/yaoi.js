@@ -40,27 +40,36 @@ module.exports = {
                     'q': 'yaoi',
                     't': 'images',
                     'safesearch': 0,
-                    'locale': 'en_US',
+                    'locale': 'en_us',
                     'offset': 0,
                     'device': 'desktop'
                 }
 
                 var headersOpt = {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+                    'count': 80,
+                    'q': 'yaoi',
+                    't': 'images',
+                    'safesearch': 0,
+                    'locale': 'en_us',
+                    'offset': 0,
+                    'device': 'desktop'
                 };
                 requests(
                     {
                         method: 'get',
                         url: 'https://api.qwant.com/V3/search/images',
-                        query: option,
+                        query: "yaoi",
                         headers: headersOpt,
                     }, function (error, response, body) {
                         //Print the Response
                         console.log(body)
+                        await interaction.editReply(body)
                     });
 
                 //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
                 // await interaction.editReply({ files: [attachment] });
+                //await interaction.editReply('finished')
                 return;
 
             } catch (error) {
