@@ -67,10 +67,10 @@ bot.on("ready", async () => {
             status: "online",
             activities: [{ name: "la version " + config.bot_version }],
         });
-        /* rest.put(Routes.applicationCommands(bot.user.id), { body: [] })
+        rest.put(Routes.applicationCommands(bot.user.id), { body: [] })
             .then(() => console.log('Successfully deleted all commands.'))
-            .catch(console.error); */
-
+            .catch(console.error); 
+        console.log(bot.user)
         (async () => {
             //Load all commands.
             await rest.put(
@@ -187,30 +187,18 @@ bot.on("ready", async () => {
         }
 
         fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
-        bot.emit("guildMemberAdd", bot.users.fetch("415881207901978624"));
+        //bot.emit("guildMemberAdd", bot.users.fetch("415881207901978624"));
     } catch (e) {
         log.write(e);
     }
 });
-/* 
+/*
 request.get('cookie_serv', function (err, res, body) {
                 if (err) console.log(err)
                 if (res.statusCode === 200) //etc
                     console.log(res.body)
-            }); */
-
-bot.on('guildMemberAdd', async function (member) {
-    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-    try {
-        console.log(member)
-        await member.roles.add(settings.waiting_img)
-        var interval = setInterval(async function () {
-            await member.roles.remove(settings.waiting_img, "end of verif time")
-        }, settings.waiting_time * 1000);
-    } catch (error) {
-        log.write(error)
-    }
-
+            }); 
+*/
 })
 
 bot.on('interactionCreate', async interaction => {
