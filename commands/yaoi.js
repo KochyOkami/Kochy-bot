@@ -44,11 +44,11 @@ module.exports = {
                     var body = requests(
                         {
                             method: 'get',
-                            url: 'https://api.qwant.com/search/images/?count=80&q='+encodeURI(searchtext)+'&safesearch=0&t=images&locale=en_us&offset='+offset.toString(),
+                            url: 'https://api.qwant.com/V3/search/images/?count=80&q='+encodeURI(searchtext)+'&safesearch=0&t=images&locale=en_us&offset='+offset.toString(),
                             headers: headersOpt,
                         }, function (error, response, body) {
                             //Print the Response
-                            console.log(error, body, response)
+                            log.write(body+error)
                             return body
                         });
 
