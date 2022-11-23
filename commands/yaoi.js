@@ -48,8 +48,9 @@ module.exports = {
                         headers: headersOpt,
                     }, async function (error, response, body) {
                         //Print the Response
-                        console.log(body)
-                        await interaction.editReply(body)
+                        //console.log(body)
+                        console.log(body["data"]["result"])
+                        console.log(body["data"]["result"]["items"][0]["media_fulsize"])
                     });
 
                 //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
