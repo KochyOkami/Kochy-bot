@@ -59,7 +59,7 @@ module.exports = {
                     }, async function (error, response, body) {
                         //Print the Response
                         console.log(body)
-                        await interaction.editReply(body)
+                        //await interaction.editReply(body)
                     });
 
                 //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
