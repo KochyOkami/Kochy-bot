@@ -199,7 +199,6 @@ request.get('cookie_serv', function (err, res, body) {
                     console.log(res.body)
             }); 
 */
-})
 
 bot.on('interactionCreate', async interaction => {
     var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
