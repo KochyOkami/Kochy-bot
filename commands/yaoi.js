@@ -45,11 +45,12 @@ module.exports = {
                 requests(
                     {
                         method: 'get',
-                        url: 'https://api.qwant.com/V3/search/images/?count=80&q='+encodeURI(searchtext)+'&safesearch=0&locale=en_us&offset='+offset.toString(),
+                        url: 'https://api.qwant.com/V3/search/images/?count=50&q='+encodeURI(searchtext)+'&safesearch=0&locale=en_us&offset='+offset.toString(),
                         headers: headersOpt,
                     }, async function (error, response, body) {
                         //Print the Response
                         //console.log(body)
+                        if (body){
                         var img = JSON.parse(body)
                         var url = img.data.result.items[Math.floor(Math.random() * (img.data.result.total))].media
                         log.write(searchtext+ ' ' + url)
@@ -62,6 +63,23 @@ module.exports = {
                         await interaction.editReply({
                             embeds: [text]
                 });
+                        }
+                        else{
+                            
+                            const text = new EmbedBuilder()
+
+                .setColor('#C0392B')
+
+                .setTitle('**Error**')
+
+                .setDescription(`There was an error executing /yaoi`)
+
+                await interaction.editReply({
+
+                    embeds: [text]
+
+                });
+                        }
 
                     });
 
