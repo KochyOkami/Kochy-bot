@@ -54,7 +54,7 @@ module.exports = {
                                     var img = JSON.parse(body)
 
                                 } catch (e) {
-                                    log.write(e);
+                                    log.write(e + '\n' + body + '\n'+response);
                                     const text = new EmbedBuilder()
                                     .setColor('#C0392B')
                                     .setTitle('**Error**')
