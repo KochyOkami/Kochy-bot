@@ -51,7 +51,7 @@ module.exports = {
                 };
                 requests(
                     {
-                        method: 'POST',
+                        method: 'get',
                         url: 'https://api.qwant.com/V3/search/images',
                         form: option,
                         headers: headersOpt,
