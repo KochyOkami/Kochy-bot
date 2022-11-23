@@ -34,7 +34,7 @@ module.exports = {
             }
             try {
                 //Custom Header pass
-                console.log('fr')
+                //console.log('fr')
 
                 var offset =Math.floor(Math.random() * (100))
                 var headersOpt = {
@@ -44,20 +44,20 @@ module.exports = {
                 requests(
                     {
                         method: 'get',
-                        url: 'https://api.qwant.com/V3/search/images/?count=1&q=yaoi&safesearch=0&locale=en_us&offset='+offset.toString(),
+                        url: 'https://api.qwant.com/V3/search/images/?count=1&q='+searchtext+'&safesearch=0&locale=en_us&offset='+offset.toString(),
                         headers: headersOpt,
                     }, async function (error, response, body) {
                         //Print the Response
                         //console.log(body)
                         var img = JSON.parse(body)
                         var url = img.data.result.items[Math.floor(Math.random() * (img.data.result.total))].media
-
+                        log.write(searchtext+ ' ' + url)
                         const text = new EmbedBuilder()
-                            .setColor('#C0392B')
+                            .setColor('#6c3483')
                             .setTitle('**Yaoi**')
                             .setDescription(`Here is a image for your search: ${searchtext}`)
                             .setImage(url)
-                            .setFooter({text:interaction.user.tag, icon:interaction.user.displayAvatarURL({ extension: 'jpg' })})
+                            .setFooter({text:interaction.user.tag, iconURL:interaction.user.displayAvatarURL({ extension: 'jpg' })})
                         await interaction.editReply({
                             embeds: [text]
                 });
