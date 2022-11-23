@@ -46,20 +46,14 @@ module.exports = {
                 }
 
                 var headersOpt = {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-                    'count': 80,
-                    'q': 'yaoi',
-                    't': 'images',
-                    'safesearch': 0,
-                    'locale': 'en_us',
-                    'offset': 0,
-                    'device': 'desktop'
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
                 };
                 requests(
                     {
                         method: 'get',
                         url: 'https://api.qwant.com/V3/search/images',
-                        query: "yaoi",
+                        form: option,
+                        Jason: true,
                         headers: headersOpt,
                     }, async function (error, response, body) {
                         //Print the Response
