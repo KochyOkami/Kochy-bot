@@ -51,75 +51,75 @@ module.exports = {
                             console.log(error, body, response)
                             return body
                         });
+
                     try {
-                        try {
-                            var img = JSON.parse(body)
+                        var img = JSON.parse(body)
 
-                        } catch (e) {
-                            log.write(error + '\n' + body + '\n'+response);
-                            const text = new EmbedBuilder()
-                            .setColor('#C0392B')
-                            .setTitle('**Error**')
-                            .setDescription(`Nothings found 😕`)
-                            await interaction.editReply({
-                                embeds: [text]
-                            });
-                            return;
-                        }
-
-                        var url = img.data.result.items[Math.floor(Math.random() * (img.data.result.total))].media
-                        log.write(searchtext+ ' ' + url)
-                        const text = new EmbedBuilder()
-                        .setColor('#6c3483')
-                        .setTitle('**Yaoi**')
-                        .setDescription(`Here is a image for your search: ${searchtext}`)
-                        .setImage(url)
-                        .setFooter({
-                            text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({
-                                extension: 'jpg'
-                            })})
-                        await interaction.editReply({
-                            embeds: [text]
-                        });
-
-                    }catch (e) {
-                        log.write(e);
+                    } catch (e) {
+                        log.write(error + '\n' + body + '\n'+response);
                         const text = new EmbedBuilder()
                         .setColor('#C0392B')
                         .setTitle('**Error**')
-                        .setDescription(`There was an error executing /yaoi : 1 \n` + '```' + e + '```')
+                        .setDescription(`Nothings found 😕`)
                         await interaction.editReply({
                             embeds: [text]
                         });
                         return;
                     }
-                    return;
 
-                } catch (error) {
-                    log.write(error);
+                    var url = img.data.result.items[Math.floor(Math.random() * (img.data.result.total))].media
+                    log.write(searchtext+ ' ' + url)
+                    const text = new EmbedBuilder()
+                    .setColor('#6c3483')
+                    .setTitle('**Yaoi**')
+                    .setDescription(`Here is a image for your search: ${searchtext}`)
+                    .setImage(url)
+                    .setFooter({
+                        text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({
+                            extension: 'jpg'
+                        })})
+                    await interaction.editReply({
+                        embeds: [text]
+                    });
+
+                }catch (e) {
+                    log.write(e);
                     const text = new EmbedBuilder()
                     .setColor('#C0392B')
                     .setTitle('**Error**')
-                    .setDescription(`There was an error executing /yaoi : 2\n` + '```' + error + '```')
+                    .setDescription(`There was an error executing /yaoi : 1 \n` + '```' + e + '```')
                     await interaction.editReply({
                         embeds: [text]
                     });
                     return;
                 }
-
-
+                return;
 
             } catch (error) {
                 log.write(error);
                 const text = new EmbedBuilder()
                 .setColor('#C0392B')
                 .setTitle('**Error**')
-                .setDescription(`There was an error executing /yaoi : \n` + '```' + error + '```')
+                .setDescription(`There was an error executing /yaoi : 2\n` + '```' + error + '```')
                 await interaction.editReply({
                     embeds: [text]
                 });
                 return;
             }
 
+
+
+        } catch (error) {
+            log.write(error);
+            const text = new EmbedBuilder()
+            .setColor('#C0392B')
+            .setTitle('**Error**')
+            .setDescription(`There was an error executing /yaoi : \n` + '```' + error + '```')
+            await interaction.editReply({
+                embeds: [text]
+            });
+            return;
+
         }
-    };
+    }
+};
