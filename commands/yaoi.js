@@ -54,7 +54,7 @@ module.exports = {
 
                         const text = new EmbedBuilder()
                             .setColor('#C0392B')
-                            .setTisetTYaoi'**Yaoi**')
+                            .setTisetTYaoi('**Yaoi**')
                             .setDescription(`Here is a image for your search: ${searchtext}`)
                             .setImage(url)
                             .setFooter({text:interaction.user.tag, icon:interaction.user.displayAvatarURL({ extension: 'jpg' })})
