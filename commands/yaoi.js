@@ -50,8 +50,18 @@ module.exports = {
                         //Print the Response
                         //console.log(body)
                         var img = JSON.parse(body)
-                        console.log(img.data.result)
-                        console.log(img.data.result.items[0].media)
+                        var url = img.data.result.items[Math.floor(Math.random() * (img.data.result.total))].media
+
+                        const text = new EmbedBuilder()
+                            .setColor('#C0392B')
+                            .setTisetTYaoi'**Yaoi**')
+                            .setDescription(`Here is a image for your search: ${searchtext}`)
+                            .setImage(url)
+                            .setFooter({text:interaction.user.tag, icon:interaction.user.displayAvatarURL({ extension: 'jpg' })})
+                        await interaction.editReply({
+                            embeds: [text]
+                });
+
                     });
 
                 //.setAuthor({ name: `${interaction.user.username}`, iconURL: `${interaction.user.avatarURL({ dynamic: true, size: 512 })}` })
