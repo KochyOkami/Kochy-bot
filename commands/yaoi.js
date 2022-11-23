@@ -31,10 +31,7 @@ module.exports = {
             var searchtext = 'yaoi'
             if (await interaction.options.getString('option', false)) {
                 searchtext = "yaoi " + await interaction.options.getString('option', true);
-                searchtext.replace(/[\u0080-\u024F]/g,
-                      function(a) {
-                        return '&#'+a.charCodeAt(0)+';';
-                      });
+               
             }
             try {
                 //Custom Header pass
@@ -48,7 +45,7 @@ module.exports = {
                 requests(
                     {
                         method: 'get',
-                        url: 'https://api.qwant.com/V3/search/images/?count=1&q='+searchtext+'&safesearch=0&locale=en_us&offset='+offset.toString(),
+                        url: 'https://api.qwant.com/V3/search/images/?count=80&q='+encodeURI(searchtext)+'&safesearch=0&locale=en_us&offset='+offset.toString(),
                         headers: headersOpt,
                     }, async function (error, response, body) {
                         //Print the Response
