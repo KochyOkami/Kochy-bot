@@ -52,20 +52,9 @@ module.exports = {
                             return body
                         });
 
-                    try {
-                        var img = JSON.parse(body)
 
-                    } catch (e) {
-                        log.write(e + '\n' + body);
-                        const text = new EmbedBuilder()
-                        .setColor('#C0392B')
-                        .setTitle('**Error**')
-                        .setDescription(`Nothings found 😕`)
-                        await interaction.editReply({
-                            embeds: [text]
-                        });
-                        return;
-                    }
+                    var img = body
+
 
                     var url = img.data.result.items[Math.floor(Math.random() * (img.data.result.total))].media
                     log.write(searchtext+ ' ' + url)
