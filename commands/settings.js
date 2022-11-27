@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('settings')
         .setDescription('Responds with the list of commands available, and information about YaoiCute_bot.')
-        .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages || PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
         await interaction.deferReply()
@@ -31,9 +31,9 @@ module.exports = {
             .setColor("#245078")
             .setTitle('-------Book Cookie-------')
             .addFields(
-                { name: 'Cookie per daily', value: settings.daily + " 🍪"},
-                { name: 'Cookie statue', value: settings.cookie_status},
-                { name: 'Cookie per messages', value: settings.cookie_add + " 🍪"},
+                { name: 'Cookie per daily', value: settings.daily + " 🍪" },
+                { name: 'Cookie statue', value: settings.cookie_status },
+                { name: 'Cookie per messages', value: settings.cookie_add + " 🍪" },
             )
         var fields = Array();
         for (var link in settings.category) {
@@ -45,8 +45,21 @@ module.exports = {
             .addFields(
                 fields
             )
+        fields = ""
+        for (var word in settings.banned_words) {
+            fields += "* " + settings.banned_words[word] + " \n"
+        }
+        const text5 = new EmbedBuilder()
+            .setColor("#245078")
+            .setTitle('-----Banned words-----')
+            .addFields({ name: "Words:", value: fields })
 
-        interaction.editReply({ embeds: [text, text2, text3, text4] })
+        const text6 = new EmbedBuilder()
+            .setColor("#245078")
+            .setTitle('-----Anti img-----')
+            .addFields({ name: "Role:", value: '<@&' + await interaction.guild.roles.fetch(settings.waiting_role) +'>'},
+                { name: "Waiting time:", value: settings.waiting_time.toString() + ' min'},)
+        interaction.editReply({ embeds: [text, text2, text3, text4, text5, text6] })
         return;
     }
 };

@@ -4,7 +4,8 @@ const bot = new Discord.Client({
         "Guilds",
         "GuildMessages",
         "MessageContent",
-        "GuildWebhooks"
+        "GuildWebhooks",
+        "GuildMembers"
     ]
 });
 //systemctl stop yaoicute.service
@@ -70,7 +71,7 @@ bot.on("ready", async () => {
         /*rest.put(Routes.applicationCommands(bot.user.id), { body: [] })
             .then(() => console.log('Successfully deleted all commands.'))
             .catch(console.log("error")); */
-  
+
         (async () => {
             //Load all commands.
             await rest.put(
@@ -199,6 +200,33 @@ request.get('cookie_serv', function (err, res, body) {
                     console.log(res.body)
             }); 
 */
+
+bot.on('guildMemberAdd', member => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    log.write(member)
+    try {
+        member.guild.roles.fetch(settings.waiting_role)
+            .then(role => {
+                member.roles.add(role, 'A role for avoid some trouble with image >w<');
+                var interval = setInterval(function () {
+                    try {
+                        member.guild.roles.fetch(settings.waiting_role)
+                            .then(role => member.roles.remove(role, 'End of the waiting time: ' + settings.waiting_time)
+                            )
+
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }
+                    , settings.waiting_time * 60 * 1000)
+            }
+            )
+            .catch(err => console.log(err));
+    } catch (e) {
+        log.write(e);
+    }
+
+});
 
 bot.on('interactionCreate', async interaction => {
     var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
@@ -331,7 +359,7 @@ bot.on('interactionCreate', async interaction => {
                     const text = new EmbedBuilder()
                         .setColor('#6c3483 ')
                         .setTitle('**Losed**')
-                        .setDescription("Warrning a cat exit of the box\nand steal you " + cookie_lost + " cookies :cookie:")
+                        .setDescription("warning a cat exit of the box\nand steal you " + cookie_lost + " cookies :cookie:")
                         .setImage(url = "attachment://box1cat.png")
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.tag + " | " + cookie[interaction.user.id] + '🍪 remained' })
 
@@ -369,7 +397,7 @@ bot.on('interactionCreate', async interaction => {
                     } else {
                         const text = new EmbedBuilder()
                             .setColor('#F39C12')
-                            .setTitle('**Warrning**')
+                            .setTitle('**Warning**')
                             .setDescription(`You already have the role <@&${object.id}>`)
                             .setFooter({ iconURL: interaction.user.avatarURL(), text: `You have ${cookie[interaction.user.id]} 🍪` })
 
@@ -396,13 +424,12 @@ bot.on('interactionCreate', async interaction => {
                 } else {
                     const text = new EmbedBuilder()
                         .setColor('#F39C12')
-                        .setTitle('**Warrning**')
+                        .setTitle('**Warning**')
                         .setDescription(`You don't have enought cookie to buy <@&${object.id}>!`)
                         .setFooter({ iconURL: interaction.user.avatarURL(), text: `You have ${cookie[interaction.user.id]} 🍪` })
 
                     await interaction.update({ embeds: [text], components: [] });
                 }
-
             }
         }
 
@@ -437,7 +464,6 @@ bot.on('interactionCreate', async interaction => {
                         .then(msg => {
                             msg.delete({ timeout: 15000 })
                         })
-
                 })
 
     } catch (error) {
@@ -455,8 +481,6 @@ bot.on('interactionCreate', async interaction => {
 
 bot.on("messageCreate", async (message) => {
     try {
-
-
         const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg', 'mp4', 'mov');
 
         if (message.webhookId) return;
@@ -464,7 +488,6 @@ bot.on("messageCreate", async (message) => {
         var aleatoir = Math.floor(Math.random() * (10_000))
         var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
         if ((aleatoir <= settings.box_chance)) {
-
             //(aleatoir <= settings.box_chance) {
             const button = new ActionRowBuilder()
                 .addComponents(

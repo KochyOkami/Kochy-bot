@@ -30,7 +30,7 @@ module.exports = {
                 var object = settings.shop_role.find(obj => { return obj.id === role.id })
                 const text = new EmbedBuilder()
                     .setColor('#F39C12')
-                    .setTitle('**Warrning**')
+                    .setTitle('**Warning**')
                     .setDescription(`<@&${role.id}> was already in the shop to the price of  ` + '`' + object.price + '` 🍪')
                     .setFooter({ iconURL: interaction.user.avatarURL(), text: interaction.user.username})
 

@@ -44,7 +44,7 @@ module.exports = {
                 { name: '/log :', value: 'Send the bot log.' },
 
             )
-        interaction.editReply({ embeds: [text] })
+        await interaction.editReply({ embeds: [text] })
         return;
     }
 };

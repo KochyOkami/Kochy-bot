@@ -18,7 +18,9 @@ module.exports = {
                     { name: 'Box chance', value: 'box chance' },
                     { name: 'Box winning', value: 'box winning' },
                     { name: 'Cookie message', value: 'cookie' },
-                    { name: 'Daily', value: 'daily' },)
+                    { name: 'Daily', value: 'daily' },
+                    { name: 'Waiting time', value: 'waiting' },
+                    { name: 'Waiting Role', value: 'role' },)
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('value')
@@ -40,25 +42,56 @@ module.exports = {
                     } else if (option === 'book light') {
                         settings.light_book = await interaction.client.channels.fetch(await interaction.options.getString('value', true));
 
-                    }else if (option === 'box chance') {
+                    } else if (option === 'box chance') {
                         settings.box_chance = parseInt(await interaction.options.getString('value', false))
-                    
-                    }else if (option === 'box winning') {
+
+                    } else if (option === 'box winning') {
                         settings.box_gain = parseInt(await interaction.options.getString('value', false))
-                    
-                    }else if (option === 'cookie') {
+
+                    } else if (option === 'cookie') {
                         settings.cookie_add = parseInt(await interaction.options.getString('value', false))
-                    
-                    }else if (option === 'daily') {
+
+                    } else if (option === 'daily') {
                         settings.daily = parseInt(await interaction.options.getString('value', false))
-                    
+
+                    } else if (option === 'waiting') {
+                        settings.waiting_time = parseInt(await interaction.options.getString('value', false))
+
                     }
-                    
+                    else if (option === 'role') {
+
+                        if (await interaction.guild.roles.fetch(await interaction.options.getString('value'))) {
+                            settings.waiting_role = await interaction.options.getString('value')
+                            const text = new EmbedBuilder()
+                                .setColor('#245078')
+                                .setTitle('**Information**')
+                                .setDescription(`The value for ${option} is now ${await interaction.guild.roles.fetch(await interaction.options.getString('value'))}`)
+                                .setFooter({ text: '/set `option`' })
+
+
+                            await interaction.editReply({ embeds: [text] });
+                            fs.writeFileSync("./settings.json", JSON.stringify(settings));
+                            return;
+                        } else {
+                            const text = new EmbedBuilder()
+                                .setColor('#F39C12')
+                                .setTitle('**Warning**')
+                                .setDescription(`Invalid role id, please give a role id.`)
+                                .setFooter({ text: '/set `option`' })
+
+
+                            await interaction.editReply({ embeds: [text] });
+                            return
+                        }
+
+                    }
+
+
 
                     const text = new EmbedBuilder()
                         .setColor('#245078')
                         .setTitle('**Information**')
-                        .setDescription(`The value for ${option} know is ${await interaction.options.getString('value', false)}`)
+                        .setDescription(`The value for ${option} is now ${await interaction.options.getString('value', false)}`)
                         .setFooter({ text: '/set `option`' })
 
 

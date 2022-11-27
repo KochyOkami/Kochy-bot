@@ -54,7 +54,7 @@ module.exports = {
                             log.write(user + ' is not in the blacklist');
                             const text = new EmbedBuilder()
                                 .setColor('#F39C12')
-                                .setTitle('**Warrning**')
+                                .setTitle('**Warning**')
                                 .setDescription(`${user} is not in the blacklist`)
                             await interaction.editReply({ embeds: [text] })
                                 .catch(err => log.write(err));
