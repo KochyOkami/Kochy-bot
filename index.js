@@ -227,7 +227,7 @@ bot.on('guildMemberAdd', member => {
                         console.log(e)
                     }
                 }
-                    , settings.waiting_time * 1000)
+                    , settings.waiting_time * 60 * 1000)
             }
             )
             .catch(err => console.log(err));
