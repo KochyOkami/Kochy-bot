@@ -204,21 +204,30 @@ request.get('cookie_serv', function (err, res, body) {
 bot.on('guildMemberAdd', member => {
     var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
     log.write(member)
+    var guild = member.guild;
+    var id = member.id;
     try {
         member.guild.roles.fetch(settings.waiting_role)
             .then(role => {
                 member.roles.add(role, 'A role for avoid some trouble with image >w<');
-                var interval = setInterval(function () {
+                var interval = setTimeout(function () {
                     try {
-                        member.guild.roles.fetch(settings.waiting_role)
-                            .then(role => member.roles.remove(role, 'End of the waiting time: ' + settings.waiting_time)
-                            )
+                        guild.members.fetch(id)
+                            .then(mem => {
+                                mem.guild.roles.fetch(settings.waiting_role)
+                                    .then(role => {
+                                        mem.roles.remove(role, 'End of the waiting time: ' + settings.waiting_time)
+                                            .then(console.log('validation'))
+                                            .catch(err =>console.log('error removing role'))
+                                    })
+                            })
+                            .catch(err => console.log('unknow member'))
 
                     } catch (e) {
                         console.log(e)
                     }
                 }
-                    , settings.waiting_time * 60 * 1000)
+                    , settings.waiting_time * 1000)
             }
             )
             .catch(err => console.log(err));
