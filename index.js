@@ -209,33 +209,36 @@ bot.on('guildMemberAdd', member => {
     try {
         member.guild.roles.fetch(settings.waiting_role)
             .then(role => {
-                member.roles.add(role, 'A role for avoid some trouble with image >w<');
-                var interval = setTimeout(function () {
-                    try {
-                        guild.members.fetch(id)
-                            .then(mem => {
-                                mem.guild.roles.fetch(settings.waiting_role)
-                                    .then(role => {
-                                        mem.roles.remove(role, 'End of the waiting time: ' + settings.waiting_time)
-                                            .then(console.log('validation'))
-                                            .catch(err =>console.log('error removing role'))
+                member.roles.add(role, 'A role for avoid some trouble with image >w<')
+                    .then(() => {
+                        var interval = setTimeout(function () {
+                            try {
+                                guild.members.fetch(id)
+                                    .then(mem => {
+                                        mem.guild.roles.fetch(settings.waiting_role)
+                                            .then(role => {
+                                                mem.roles.remove(role, 'End of the waiting time: ' + settings.waiting_time)
+                                                    .then(console.log('validation'))
+                                                    .catch(err => console.log('error removing role'))
+                                            })
                                     })
-                            })
-                            .catch(err => console.log('unknow member'))
+                                    .catch(err => console.log('unknow member'))
 
-                    } catch (e) {
-                        console.log(e)
-                    }
-                }
-                    , settings.waiting_time * 60 * 1000)
-            }
-            )
+                            } catch (e) {
+                                console.log(e)
+                            }
+                        }
+                            , settings.waiting_time * 1000)
+                    })
+                    .catch(err => log.write(err));
+            })
             .catch(err => console.log(err));
     } catch (e) {
         log.write(e);
     }
 
 });
+
 
 bot.on('interactionCreate', async interaction => {
     var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
