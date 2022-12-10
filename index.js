@@ -521,6 +521,7 @@ bot.on("messageCreate", async (message) => {
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
             var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
             var links_list = eval(settings.links_list);
+            var anonym_link = eval(settings.anonym_link);
             var save_img_list = eval(settings.save_img_list);
             var i_path = ""
 
@@ -630,6 +631,8 @@ bot.on("messageCreate", async (message) => {
                                         .catch(err => log.write(err));
                                 }
                             });
+
+
                         }
                     })
                 } else {
@@ -704,6 +707,39 @@ bot.on("messageCreate", async (message) => {
                                 .catch(err => log.write(err));
                         });
                     }
+                }
+            }
+
+            if (anonym_link[message.channel.id]) {
+                if (message.attachments.size > 0 && message.attachments.size <= 8388000) {
+                    message.attachments.forEach(async function (attach) {
+                        log.write(attach, message.member, message.channel)
+                        if (accept.indexOf(attach.name.split('.')[-1] != -1)) {
+                            var name = await download(attach.url, attach.name);
+                            var path = "./images/" + name.toString()
+                            i_path = path
+                            anonym_link[message.channel.id].forEach(async function (link) {
+                                console.log('img anony save detected')
+                                //find webhook
+                                find_webhook(message, link)
+                                    .then(
+                                        //send the message
+                                        async function (webhook) {
+                                            await webhook.send({
+                                                content: message.content,
+                                                files: [{
+                                                    attachment: path,
+                                                    name: name,
+                                                }]
+                                            })
+                                                .then(log.write(`Anonyme file ${name} send to channel ${link}`, message.member, message.channel))
+                                                .catch(err => log.write(err));
+                                        }
+                                    )
+                                    .catch(err => log.write(err));
+                            });
+                        }
+                    });
                 }
             }
             //try to delete the downloaded image.

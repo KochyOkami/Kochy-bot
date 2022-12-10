@@ -17,6 +17,10 @@ module.exports = {
             option.setName('delete')
                 .setDescription('if you want to unlink only a specifique channel. Use channel id.')
                 .setRequired(false))
+        .addBooleanOption(option =>
+            option.setName('anonym')
+                .setDescription('"true" for sending image anymously (false in defaultValue)')
+                .setRequired(false))
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels || PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
@@ -24,7 +28,15 @@ module.exports = {
         try {
 
             var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-            var links_list = eval(settings.links_list);
+            var anonym = false
+            if (await interaction.options.getBoolean('anonym', false)) {
+                var links_list = eval(settings.anonym_link);
+                anonym = true
+            }
+            else {
+                var links_list = eval(settings.links_list);
+                anonym = false
+            }
 
             //Use the default channel if a specific channel is not specified.
             if (await interaction.options.getString('channel', false)) {
@@ -73,7 +85,7 @@ module.exports = {
                                 values += "`" + links_list[channel][index] + "`\n";
                             }
 
-                            
+
 
                         }
                         text.setDescription(`<#${deleted}> has been successfully unlink. Remain links:`)
@@ -82,7 +94,7 @@ module.exports = {
                         delete links_list[channel];
                         text.setDescription(`<#${deleted}> has been successfully unlink. No links remainig.`)
                     }
-                    
+
                     log.write(`Channel: ${deleted} has been unlink to ${channel}`, interaction.member, interaction.channel);
 
                 } else {
@@ -133,8 +145,11 @@ module.exports = {
 
                 log.write(`Channel: ${save_list} has been unlink to ${channel}`, interaction.member, interaction.channel);
                 await interaction.editReply({ embeds: [text] });
-
+                if (anonym) {
+                    settings.anonym_link = links_list;
+                }else {
                 settings.links_list = links_list;
+                }
                 fs.writeFileSync("./settings.json", JSON.stringify(settings));
                 return;
             }
