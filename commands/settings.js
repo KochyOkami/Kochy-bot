@@ -57,9 +57,17 @@ module.exports = {
         const text6 = new EmbedBuilder()
             .setColor("#245078")
             .setTitle('-----Anti img-----')
-            .addFields({ name: "Role:", value: '<@&' + await interaction.guild.roles.fetch(settings.waiting_role) +'>'},
-                { name: "Waiting time:", value: settings.waiting_time.toString() + ' min'},)
-        interaction.editReply({ embeds: [text, text2, text3, text4, text5, text6] })
+            .addFields({ name: "Role:", value: '<@&' + await interaction.guild.roles.fetch(settings.waiting_role) + '>' },
+                { name: "Waiting time:", value: settings.waiting_time.toString() + ' min' },)
+
+        const text7 = new EmbedBuilder()
+            .setColor("#245078")
+            .setTitle('-----Status-----')
+            .addFields({ name: "Yaoi:", value: settings.yaoi_status.toString() },
+                       { name: "Cookie:", value: settings.cookie_status.toString() }
+            )
+
+        interaction.editReply({ embeds: [text, text2, text3, text4, text5, text6, text7] })
         return;
     }
 };

@@ -228,7 +228,7 @@ bot.on('guildMemberAdd', member => {
                                 console.log(e)
                             }
                         }
-                            , settings.waiting_time * 1000)
+                            , settings.waiting_time * 60 * 1000)
                     })
                     .catch(err => log.write(err));
             })
@@ -721,24 +721,29 @@ bot.on("messageCreate", async (message) => {
                             anonym_link[message.channel.id].forEach(async function (link) {
                                 console.log('img anony save detected')
                                 //find webhook
-                                find_webhook(message, link)
-                                    .then(
-                                        //send the message
-                                        async function (webhook) {
-                                            await webhook.send({
-                                                content: message.content,
-                                                files: [{
-                                                    attachment: path,
-                                                    name: name,
-                                                }]
-                                            })
-                                                .then(log.write(`Anonyme file ${name} send to channel ${link}`, message.member, message.channel))
-                                                .catch(err => log.write(err));
-                                        }
-                                    )
+                                const channel = await bot.channels.fetch(link)
+                                await channel.send({
+                                    files: [{
+                                        attachment: path,
+                                        name: name,
+                                    }]
+                                })
+                                    .then(log.write(`Anonyme file ${name} send to channel ${link}`, message.member, message.channel))
                                     .catch(err => log.write(err));
                             });
                         }
+                    });
+                }
+                if (message.content.startsWith('https://')) {
+                    //search all channel to send messages.
+                    anonym_link[message.channel.id].forEach(async function (link) {
+                        //send the message with the bot.
+                        const channel = await bot.channels.fetch(link)
+                        await channel.send({
+                            content: message.content
+                        })
+                            .then(log.write(`Anonyme ${message.content} send to channel ${link}`, message.member, message.channel))
+                            .catch(err => log.write(err));
                     });
                 }
             }

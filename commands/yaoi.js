@@ -158,7 +158,7 @@ module.exports = {
                     .setTitle('**Yaoi**')
                     .setDescription(`Sorry but the command /yaoi is disabled.`)
                     .setImage('attachment://sad.png')
-                    .setFooter({text: '/staus `Yaoi Status` `On` to enable it.'})
+                    .setFooter({text: '/set `Yaoi Status` `on` to enable it.'})
                 await interaction.editReply({
                     embeds: [text],
                     files: [attachment]

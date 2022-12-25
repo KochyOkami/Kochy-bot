@@ -19,6 +19,9 @@ module.exports = {
                     { name: 'Box winning', value: 'box winning' },
                     { name: 'Cookie message', value: 'cookie' },
                     { name: 'Daily', value: 'daily' },
+                    { name: 'Weekly', value: 'weekly' },
+                    { name: 'Weekly status', value: 'cookie status' },
+                    { name: 'Yaoi status', value: 'yaoi status' },
                     { name: 'Waiting time', value: 'waiting' },
                     { name: 'Waiting Role', value: 'role' },)
                 .setRequired(true))
@@ -54,6 +57,24 @@ module.exports = {
                     } else if (option === 'daily') {
                         settings.daily = parseInt(await interaction.options.getString('value', false))
 
+                    } else if (option === 'weekly') {
+                        settings.weekly = parseInt(await interaction.options.getString('value', false))
+                        
+                    } else if (option === 'cookie status') {
+                        value = await interaction.options.getString('value', false)
+                        if (value === 'on'){
+                            settings.cookie_status = "on"
+                        }else if (value === 'off'){
+                            settings.cookie_status = "off"
+                        }
+
+                    } else if (option === 'yaoi status') {
+                        value = await interaction.options.getString('value', false)
+                        if (value === 'on'){
+                            settings.yaoi_status = "on"
+                        }else if (value === 'off'){
+                            settings.yaoi_status = "off"
+                        }
                     } else if (option === 'waiting') {
                         settings.waiting_time = parseInt(await interaction.options.getString('value', false))
 

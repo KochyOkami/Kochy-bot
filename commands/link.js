@@ -358,7 +358,7 @@ module.exports = {
 
       }
 
-      
+      console.log(settings.anonym_link)
       var values = "";
 
       for (let index = 0; index < links_list[link1].length; index++) {

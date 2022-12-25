@@ -93,8 +93,11 @@
         "1028753588010369214": [
             "1028753878658854912"
         ],
-        "988784456959672350": [
-            "1015653134921642065"
+        "963228395049713684": [
+            "988756646849310770"
+        ],
+        "1050477955148677180": [
+            "1050479173879206009"
         ]
     },
     "save_img_list": {
@@ -112,12 +115,19 @@
             "988735879277322240"
         ]
     },
+    "anonym_link": {
+        "988784456959672350": [
+            "988735879277322240"
+        ]
+    },
     "blacklist": [],
     "hard_book": "973430502906265600",
     "light_book": "988784456959672350",
     "bot_name": "test_bot",
     "cookie_add": 5,
     "daily": 1000,
+    "weekly": 4000,
+    "yaoi_status": "off",
     "shop_role": [
         {
             "name": "Vous gagnez un 『Bonbon Gay』",
@@ -215,7 +225,7 @@
     "box_chance": 70,
     "box_gain": 75,
     "cookie_status": "on",
-    "cookie_serv": "http://yaoicute.fr/",
+    "cookie_serv": "https://yaoicute.com/",
     "category": {
         "963228395049713684": "Yaoi light",
         "963228435159867472": "Yaoi hard",
