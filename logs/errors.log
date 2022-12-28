@@ -778,3 +778,294 @@
 2022-11-15 23:09:22: user send
 --------------------Start Log 2022-11-15 23:14:48--------------------
 2022-11-15 23:14:48: Successfully registered 22 application commands for global
+--------------------Start Log 2022-12-28 17:57:35--------------------
+2022-12-28 17:57:35: Successfully registered 28 application commands for global
+2022-12-28 17:57:35: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 17:57:35: test_bot#9176 logged successfully.
+2022-12-28 17:57:35: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 18:00:19--------------------
+2022-12-28 18:00:19: Successfully registered 28 application commands for global
+2022-12-28 18:00:19: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:00:19: test_bot#9176 logged successfully.
+2022-12-28 18:00:19: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 18:02:46--------------------
+2022-12-28 18:02:46: Successfully registered 28 application commands for global
+2022-12-28 18:02:46: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:02:46: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 18:03:49--------------------
+2022-12-28 18:03:49: Successfully registered 28 application commands for global
+2022-12-28 18:03:49: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:03:49: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 18:04:40--------------------
+2022-12-28 18:04:40: Successfully registered 28 application commands for global
+2022-12-28 18:04:40: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:04:40: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 18:05:14--------------------
+2022-12-28 18:05:14: Successfully registered 28 application commands for global
+2022-12-28 18:05:14: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:05:14: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 18:06:02--------------------
+2022-12-28 18:06:02: Successfully registered 28 application commands for global
+2022-12-28 18:06:02: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:06:02: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 18:06:27--------------------
+2022-12-28 18:06:27: Successfully registered 28 application commands for global
+2022-12-28 18:06:27: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:06:27: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 18:07:05--------------------
+2022-12-28 18:07:05: Successfully registered 28 application commands for global
+2022-12-28 18:07:05: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:07:05: test_bot#9176 logged successfully.
+2022-12-28 18:07:05: TypeError: interaction.client.stringify is not a function
+--------------------Start Log 2022-12-28 18:07:56--------------------
+2022-12-28 18:07:56: Successfully registered 28 application commands for global
+2022-12-28 18:07:56: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:07:56: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 18:08:28--------------------
+2022-12-28 18:08:28: Successfully registered 28 application commands for global
+2022-12-28 18:08:28: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:08:28: test_bot#9176 logged successfully.
+2022-12-28 18:08:28: user send
+2022-12-28 18:08:28: cookie send
+2022-12-28 18:08:28: user send
+2022-12-28 18:08:28: cookie send
+--------------------Start Log 2022-12-28 18:23:05--------------------
+2022-12-28 18:23:05: Successfully registered 28 application commands for global
+2022-12-28 18:23:05: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:23:05: test_bot#9176 logged successfully.
+2022-12-28 18:23:05: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 18:23:05: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 18:23:05: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 18:23:05: user send
+2022-12-28 18:23:05: cookie send
+--------------------Start Log 2022-12-28 18:50:38--------------------
+2022-12-28 18:50:38: Successfully registered 28 application commands for global
+2022-12-28 18:50:38: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:50:38: test_bot#9176 logged successfully.
+2022-12-28 18:50:38: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 18:51:41--------------------
+2022-12-28 18:51:41: Successfully registered 28 application commands for global
+2022-12-28 18:51:41: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:51:41: test_bot#9176 logged successfully.
+2022-12-28 18:51:41: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 18:51:41: TypeError: Cannot read properties of undefined (reading 'tag')
+--------------------Start Log 2022-12-28 18:52:04--------------------
+2022-12-28 18:52:04: Successfully registered 28 application commands for global
+2022-12-28 18:52:04: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:52:04: test_bot#9176 logged successfully.
+2022-12-28 18:52:04: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 18:54:52--------------------
+2022-12-28 18:54:52: Successfully registered 28 application commands for global
+2022-12-28 18:54:52: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 18:54:52: test_bot#9176 logged successfully.
+2022-12-28 18:54:52: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 18:54:52: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 18:54:52: user send
+2022-12-28 18:54:52: cookie send
+--------------------Start Log 2022-12-28 19:01:05--------------------
+2022-12-28 19:01:05: Successfully registered 28 application commands for global
+2022-12-28 19:01:05: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:01:05: test_bot#9176 logged successfully.
+2022-12-28 19:01:05: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:01:59--------------------
+2022-12-28 19:01:59: Successfully registered 28 application commands for global
+2022-12-28 19:01:59: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:01:59: test_bot#9176 logged successfully.
+2022-12-28 19:01:59: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:01:59: TypeError: Cannot read properties of undefined (reading 'fetchReply')
+2022-12-28 19:01:59: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:01:59: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:01:59: TypeError: Cannot read properties of undefined (reading 'fetchReply')
+--------------------Start Log 2022-12-28 19:03:13--------------------
+2022-12-28 19:03:13: Successfully registered 28 application commands for global
+2022-12-28 19:03:13: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:03:13: test_bot#9176 logged successfully.
+2022-12-28 19:03:13: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:03:13: user send
+2022-12-28 19:03:13: cookie send
+--------------------Start Log 2022-12-28 19:09:45--------------------
+2022-12-28 19:09:45: Successfully registered 28 application commands for global
+2022-12-28 19:09:45: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:09:45: test_bot#9176 logged successfully.
+2022-12-28 19:09:45: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:09:45: Command: /say '<🎟️>'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:09:45: Command: /link '1015653134921642065'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:09:45: A webhook has been registered for "commands" (1015653134921642065).
+2022-12-28 19:09:45: A webhook for "commands"(<#1015653134921642065>) was successfully find
+2022-12-28 19:09:45: 🎟️ by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:11:47--------------------
+2022-12-28 19:11:47: Successfully registered 28 application commands for global
+2022-12-28 19:11:47: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:11:47: test_bot#9176 logged successfully.
+2022-12-28 19:11:47: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:11:47: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:12:45--------------------
+2022-12-28 19:12:45: Successfully registered 28 application commands for global
+2022-12-28 19:12:45: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:12:45: test_bot#9176 logged successfully.
+2022-12-28 19:12:45: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:12:45: user send
+2022-12-28 19:12:45: cookie send
+--------------------Start Log 2022-12-28 19:17:55--------------------
+2022-12-28 19:17:55: Successfully registered 28 application commands for global
+2022-12-28 19:17:55: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:17:55: test_bot#9176 logged successfully.
+2022-12-28 19:17:55: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:19:14--------------------
+2022-12-28 19:19:14: Successfully registered 28 application commands for global
+2022-12-28 19:19:14: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:19:14: test_bot#9176 logged successfully.
+2022-12-28 19:19:14: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:19:14: \🎟️ by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:19:14: 🎟️ by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:19:14: \🎟️ by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:21:22--------------------
+2022-12-28 19:21:22: Successfully registered 28 application commands for global
+2022-12-28 19:21:22: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:21:22: test_bot#9176 logged successfully.
+2022-12-28 19:21:22: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:22:10--------------------
+2022-12-28 19:22:10: Successfully registered 28 application commands for global
+2022-12-28 19:22:10: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:22:10: test_bot#9176 logged successfully.
+2022-12-28 19:22:10: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 19:22:10: DiscordAPIError[10062]: Unknown interaction
+--------------------Start Log 2022-12-28 19:23:09--------------------
+2022-12-28 19:23:09: Successfully registered 28 application commands for global
+2022-12-28 19:23:09: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:23:09: test_bot#9176 logged successfully.
+2022-12-28 19:23:09: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:24:49--------------------
+2022-12-28 19:24:49: Successfully registered 28 application commands for global
+2022-12-28 19:24:49: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:24:49: test_bot#9176 logged successfully.
+2022-12-28 19:24:49: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:34:58--------------------
+2022-12-28 19:34:58: Successfully registered 28 application commands for global
+2022-12-28 19:34:58: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:34:58: test_bot#9176 logged successfully.
+2022-12-28 19:34:58: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:39:21--------------------
+2022-12-28 19:39:21: Successfully registered 28 application commands for global
+2022-12-28 19:39:21: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:39:21: test_bot#9176 logged successfully.
+2022-12-28 19:39:21: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 19:40:05--------------------
+2022-12-28 19:40:05: Successfully registered 28 application commands for global
+2022-12-28 19:40:05: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 19:40:05: test_bot#9176 logged successfully.
+2022-12-28 19:40:05: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 20:00:50--------------------
+2022-12-28 20:00:50: Successfully registered 28 application commands for global
+2022-12-28 20:00:50: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:00:50: test_bot#9176 logged successfully.
+2022-12-28 20:00:50: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 20:00:50: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 20:00:50: TypeError: interaction.member.permissions is not a function
+--------------------Start Log 2022-12-28 20:01:44--------------------
+2022-12-28 20:01:44: Successfully registered 28 application commands for global
+2022-12-28 20:01:44: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:01:44: test_bot#9176 logged successfully.
+2022-12-28 20:01:44: Error [GuildChannelResolve]: Could not resolve channel to a guild channel.
+--------------------Start Log 2022-12-28 20:04:40--------------------
+2022-12-28 20:04:40: Successfully registered 28 application commands for global
+2022-12-28 20:04:40: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:04:40: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 20:06:25--------------------
+2022-12-28 20:06:25: Successfully registered 28 application commands for global
+2022-12-28 20:06:25: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:06:25: test_bot#9176 logged successfully.
+2022-12-28 20:06:25: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 20:07:18--------------------
+2022-12-28 20:07:18: Successfully registered 28 application commands for global
+2022-12-28 20:07:18: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:07:18: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 20:10:17--------------------
+2022-12-28 20:10:17: Successfully registered 28 application commands for global
+2022-12-28 20:10:17: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:10:17: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 20:12:44--------------------
+2022-12-28 20:12:44: Successfully registered 28 application commands for global
+2022-12-28 20:12:44: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:12:44: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 20:22:26--------------------
+2022-12-28 20:22:26: Successfully registered 28 application commands for global
+2022-12-28 20:22:26: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:22:26: test_bot#9176 logged successfully.
+2022-12-28 20:22:26: TypeError: channel.send is not a function
+--------------------Start Log 2022-12-28 20:24:08--------------------
+2022-12-28 20:24:08: Successfully registered 28 application commands for global
+2022-12-28 20:24:08: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:24:08: test_bot#9176 logged successfully.
+2022-12-28 20:24:08: TypeError: messages.forEach is not a function
+--------------------Start Log 2022-12-28 20:26:51--------------------
+2022-12-28 20:26:51: Successfully registered 28 application commands for global
+2022-12-28 20:26:51: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:26:51: test_bot#9176 logged successfully.
+2022-12-28 20:26:51: TypeError: log is not a function
+--------------------Start Log 2022-12-28 20:27:45--------------------
+2022-12-28 20:27:45: Successfully registered 28 application commands for global
+2022-12-28 20:27:45: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:27:45: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 20:31:07--------------------
+2022-12-28 20:31:07: Successfully registered 28 application commands for global
+2022-12-28 20:31:07: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:31:07: test_bot#9176 logged successfully.
+2022-12-28 20:31:07: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 20:33:10--------------------
+2022-12-28 20:33:10: Successfully registered 28 application commands for global
+2022-12-28 20:33:10: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:33:10: test_bot#9176 logged successfully.
+2022-12-28 20:33:10: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 20:34:27--------------------
+2022-12-28 20:34:27: Successfully registered 28 application commands for global
+2022-12-28 20:34:27: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:34:27: test_bot#9176 logged successfully.
+2022-12-28 20:34:27: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 20:39:00--------------------
+2022-12-28 20:39:00: Successfully registered 28 application commands for global
+2022-12-28 20:39:00: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:39:00: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 20:39:11--------------------
+2022-12-28 20:39:11: Successfully registered 28 application commands for global
+2022-12-28 20:39:11: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:39:11: test_bot#9176 logged successfully.
+2022-12-28 20:39:11: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 20:40:50--------------------
+2022-12-28 20:40:50: Successfully registered 28 application commands for global
+2022-12-28 20:40:50: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:40:50: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-28 20:44:31--------------------
+2022-12-28 20:44:31: Successfully registered 28 application commands for global
+2022-12-28 20:44:31: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:44:31: test_bot#9176 logged successfully.
+2022-12-28 20:44:31: End the ticket byundefined
+--------------------Start Log 2022-12-28 20:45:12--------------------
+2022-12-28 20:45:12: Successfully registered 28 application commands for global
+2022-12-28 20:45:12: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:45:12: test_bot#9176 logged successfully.
+2022-12-28 20:45:12: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 20:45:12: End the ticket
+--------------------Start Log 2022-12-28 20:49:10--------------------
+2022-12-28 20:49:10: Successfully registered 28 application commands for global
+2022-12-28 20:49:10: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:49:10: test_bot#9176 logged successfully.
+2022-12-28 20:49:10: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 20:49:10: TypeError: Cannot read properties of undefined (reading 'username')
+--------------------Start Log 2022-12-28 20:50:32--------------------
+2022-12-28 20:50:32: Successfully registered 28 application commands for global
+2022-12-28 20:50:32: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:50:32: test_bot#9176 logged successfully.
+2022-12-28 20:50:32: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 20:51:30--------------------
+2022-12-28 20:51:30: Successfully registered 28 application commands for global
+2022-12-28 20:51:30: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:51:30: test_bot#9176 logged successfully.
+2022-12-28 20:51:30: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+--------------------Start Log 2022-12-28 20:52:00--------------------
+2022-12-28 20:52:00: Successfully registered 28 application commands for global
+2022-12-28 20:52:00: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-28 20:52:00: test_bot#9176 logged successfully.
+2022-12-28 20:52:00: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-28 20:52:00: user send
+2022-12-28 20:52:00: cookie send

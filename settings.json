@@ -98,6 +98,9 @@
         ],
         "1050477955148677180": [
             "1050479173879206009"
+        ],
+        "988784456959672350": [
+            "1015653134921642065"
         ]
     },
     "save_img_list": {
@@ -127,7 +130,8 @@
     "cookie_add": 5,
     "daily": 1000,
     "weekly": 4000,
-    "yaoi_status": "off",
+    "yaoi_status": "on",
+    "ticket_status": "on",
     "shop_role": [
         {
             "name": "Vous gagnez un 『Bonbon Gay』",
@@ -239,5 +243,7 @@
         "enfant",
         "kid",
         "poop"
-    ]
+    ],
+    "ticket_number": 28,
+    "ticket_log_channel": "1057738227743739946"
 }

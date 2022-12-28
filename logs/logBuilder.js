@@ -1,3 +1,4 @@
+const { GuildMember, Channel } = require('discord.js');
 const fs = require('fs');
 var dateTime = require('node-datetime');
 var dt = dateTime.create();
@@ -9,8 +10,17 @@ fs.writeFile('logs/errors.log', "-".repeat(20) + "Start Log " + dt.format('Y-m-d
     }
 })
 
-
+/**
+ * Log the message passed with the actual time.
+ * 
+ * @param  {String} message     The message to log
+ * @param  {GuildMember} author The author of the message
+ * @param  {Channel} channel    The channel
+ * @returns {void} Nothing
+ */
 function write(message, author = undefined, channel = undefined) {
+   
+
     var date = dt.format('Y-m-d H:M:S');
     if (typeof message === 'object' && message !== null && 'toString' in message) {
         var message = message.toString();

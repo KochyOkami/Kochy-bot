@@ -20,7 +20,7 @@ const {
     SelectMenuBuilder,
     ButtonBuilder,
     ButtonStyle,
-    GuildMemberRoleManager,
+    PermissionsBitField,
     AttachmentBuilder
 } = require('discord.js');
 
@@ -239,14 +239,18 @@ bot.on('guildMemberAdd', member => {
 
 });
 
-
+/*--------------------------------Interaction--------------------------------*/
 bot.on('interactionCreate', async interaction => {
-    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-    if (interaction.commandName === 'restart') {
-        const command = bot.commands.get(interaction.commandName);
-        await command.execute(interaction); return;
-    }
     try {
+        if (config.debug) {
+            console.log(`name: ${interaction.customId},\nuser: `, interaction.user)
+        }
+        var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+        if (interaction.commandName === 'restart') {
+            const command = bot.commands.get(interaction.commandName);
+            await command.execute(interaction); return;
+        }
+
         if (interaction.isSelectMenu()) {
             if (interaction.customId === 'shop_select') {
                 const text = new EmbedBuilder()
@@ -442,6 +446,104 @@ bot.on('interactionCreate', async interaction => {
 
                     await interaction.update({ embeds: [text], components: [] });
                 }
+            } else if (interaction.customId === 'create_ticket') {
+                log.write("A ticket has been created.", interaction.member, interaction.channel)
+                var user = interaction.member
+
+                //create the channel
+                var channel = await interaction.guild.channels.create({
+                    name: '❘-🎟️-Ticket-' + settings.ticket_number,
+                    type: 0,
+                    position: 0,
+                    topic: `Ticket create by ${interaction.member} (${interaction.member.id}) at ${dt.format('Y-m-d H:M:S')}`
+                })
+
+                //First message in the ticket channel
+                const text = new EmbedBuilder()
+                    .setColor('#6c3483 ')
+                    .setTitle(`**Tickets #${settings.ticket_number}**`)
+                    .setThumbnail('attachment://tickets-icon.png')
+                    .setDescription("You have create a new tickets, please explain \
+                                    your problems and a @Modérateur or a @Divinités \
+                                    will be comme to help you. Thanks to not ping the \
+                                    staff, and be pacient.")
+                //button for deleting tickets.
+                const row = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setLabel(`Close Ticket`)
+                            .setCustomId('close_ticket')
+                            .setStyle(ButtonStyle.Danger),
+                    );
+
+                channel.send({
+                    embeds: [text],
+                    files: [{
+                        attachment: `./images/obj/tickets-parts/tickets-icon.png`,
+                        name: 'tickets-icon.png'
+                    }],
+                    components: [row]
+                })
+                settings.ticket_number = settings.ticket_number + 1
+                fs.writeFileSync("./settings.json", JSON.stringify(settings));
+
+                await interaction.update({ fetchReply: false });
+
+            } else if (interaction.customId === 'close_ticket') {
+
+                //close the ticket if the user has the permission.
+                if (interaction.member.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
+                    var channel = await bot.channels.fetch(settings.ticket_log_channel)
+
+                    //send the message with the name ans topic.
+                    channel.send({
+                        embeds: [
+                            {
+                                color: 0x6c3483,
+                                title: interaction.channel.name,
+                                description: interaction.channel.topic
+                            }
+                        ]
+                    })
+
+                    var messages = interaction.channel.messages.cache
+
+                    //log all messages.
+                    messages.forEach(function (message) {
+                        console.log(message)
+                        if (message.content) {
+
+                            channel.send({
+                                embeds: [{
+                                    color: 0x6c3483,
+                                    author: {
+                                        name: `${message.author.username} (${message.author.id})`,
+                                        icon_url: "https://cdn.discordapp.com/avatars/" + message.author.id + "/" + message.author.avatar + ".webp"
+                                    },
+                                    description: message.content
+                                }]
+                            })
+                        }
+
+                    });
+
+                    //delete the channel.
+                    log.write('End the ticket', interaction.author, interaction.channel)
+                    interaction.channel.delete()
+
+                } else {
+
+                    //send a message if the user dosent have the permission.
+                    const text = new EmbedBuilder()
+                        .setColor('#C0392B')
+                        .setTitle('**Error**')
+                        .setDescription('You dont have the permission to close the ticket.')
+                    var error = await interaction.channel.send({ embeds: [text] })
+                    await interaction.update({ fetchReply: false });
+                    var interval = setTimeout(async () => { try { await error.delete() } catch { } }, 10 * 1000)
+
+                }
+
             }
         }
 
@@ -491,6 +593,7 @@ bot.on('interactionCreate', async interaction => {
     }
 });
 
+/*----------------------------------Messages---------------------------------*/
 bot.on("messageCreate", async (message) => {
     try {
         const accept = Array('jpg', 'png', 'gif', 'jpeg', 'webp', 'jpg', 'mp4', 'mov');
@@ -763,15 +866,19 @@ bot.on("messageCreate", async (message) => {
 
 });
 
+/*----------------------------------Functions--------------------------------*/
+
+
+/**
+ * Download a file on the server and return the name of the downloaded file. 
+ * If the name of the file is unknown, create a new name bases on 'YaoiCute_botImg_(randint)'
+ * 
+ * @param  {String} name  The original name of the file
+ * @param  {String} url   The URL to download the file
+ * @return {String}       The name of the downloaded file
+ */
 async function download(url, name) {
-    /**
-   * Download a file on the server and return the name of the downloaded file. 
-   * If the name of the file is unknown, create a new name bases on 'YaoiCute_botImg_(randint)'
-   * 
-   * @param  {String} name  The original name of the file
-   * @param  {String} url   The URL to download the file
-   * @return {String}       The name of the downloaded file
-   */
+
     try {
         if (name.includes('unknown')) {
             name = ('YaoiCute_botImg_' + Math.random().toString(36).substring(2) + '.' + name.split('.').pop(0));
@@ -800,14 +907,16 @@ async function download(url, name) {
     }
 };
 
+
+/**
+ * Create a webhook for the specified channel if he is not already registered to the webhook server.
+ * 
+ * @param {Discord.Message} message The message who the command process is associated with.
+ * @param {string} channel_id The ID of the channel who the webhook will be associated with.
+ * @return  Return nothings, but the webhook_list has been edited.
+ */
 async function find_webhook(message, channel_id) {
-    /**
-     * Create a webhook for the specified channel if he is not already registered to the webhook server.
-     * 
-     * @param {Discord.Message} message The message who the command process is associated with.
-     * @param {string} channel_id The ID of the channel who the webhook will be associated with.
-     * @return  Return nothings, but the webhook_list has been edited.
-     */
+
     const channel = await bot.channels.fetch(channel_id);
     try {
 
