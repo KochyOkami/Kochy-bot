@@ -21,7 +21,7 @@ module.exports = {
                     { name: 'Daily', value: 'daily' },
                     { name: 'Weekly', value: 'weekly' },
                     { name: 'Weekly status', value: 'cookie status' },
-                    { name: 'Tickets status', value: 'tickets status' },
+                    { name: 'Tickets status', value: 'ticket status' },
                     { name: 'Yaoi status', value: 'yaoi status' },
                     { name: 'Waiting time', value: 'waiting' },
                     { name: 'Waiting Role', value: 'role' },)

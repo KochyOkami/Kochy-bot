@@ -448,6 +448,20 @@ bot.on('interactionCreate', async interaction => {
                     await interaction.update({ embeds: [text], components: [] });
                 }
             } else if (interaction.customId === 'create_ticket') {
+                if (settings.ticket_status == 'off') {
+                    const text = new EmbedBuilder()
+                        .setColor('#C0392B')
+                        .setTitle(`**Sorry**`)
+                        .setDescription(`Ticket system isn't on, please enable it.`)
+                        .setThumbnail('attachment://dead-cat.png')
+                        .setFooter({ text: '/set Ticket status on' })
+                    var error = await interaction.channel.send({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
+                    await interaction.update({ fetchReply: false });
+                    var interval = setTimeout(async () => { try { await error.delete() } catch { } }, 30 * 1000)
+
+                    return
+                }
+
                 var cooldown = JSON.parse(fs.readFileSync('./ticket_cooldown.json', 'utf8'));
                 if (cooldown['count'] >= settings.tickets_max) {
                     //send a message if the user dosent have the permission.
@@ -457,6 +471,8 @@ bot.on('interactionCreate', async interaction => {
                         .setDescription(`Sorry too many tickets has been created, please try again later.`)
                     var error = await interaction.channel.send({ embeds: [text] })
                     await interaction.update({ fetchReply: false });
+                    var interval = setTimeout(async () => { try { await error.delete() } catch { } }, 30 * 1000)
+
                     return
                 } else {
                     cooldown['count']++;

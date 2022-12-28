@@ -28,7 +28,9 @@ module.exports = {
                 .setThumbnail('attachment://dead-cat.png')
                 .setFooter({ text: '/set Ticket status on' })
             await interaction.editReply({ embeds: [text], files: [`./images/obj/dead-cat.png`] });
-        }
+            var interval = setTimeout(async () => { try { await interaction.deleteReply() } catch { } }, 10 * 1000)
+
+        }   
         //else send the message.
         else if (settings.ticket_status === 'on'){
             try {

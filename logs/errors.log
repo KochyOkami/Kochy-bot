@@ -1,0 +1,39 @@
+--------------------Start Log 2022-12-29 00:30:49--------------------
+2022-12-29 00:30:49: Successfully registered 28 application commands for global
+2022-12-29 00:30:49: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 00:30:49: test_bot#9176 logged successfully.
+2022-12-29 00:30:49: Command: /set 'tickets status' 'off'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-29 00:30:49: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-29 00:30:49: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-29 00:30:49: Command: /set 'tickets status' 'off'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+--------------------Start Log 2022-12-29 00:33:06--------------------
+2022-12-29 00:33:06: Successfully registered 28 application commands for global
+2022-12-29 00:33:06: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 00:33:06: test_bot#9176 logged successfully.
+2022-12-29 00:33:06: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:33:06: Command: /set 'ticket status' 'off'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:33:06: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:33:06: user send
+2022-12-29 00:33:06: cookie send
+--------------------Start Log 2022-12-29 00:38:38--------------------
+2022-12-29 00:38:38: Successfully registered 28 application commands for global
+2022-12-29 00:38:38: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 00:38:38: test_bot#9176 logged successfully.
+2022-12-29 00:38:38: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:38:38: Error [InteractionAlreadyReplied]: The reply to this interaction has already been sent or deferred.
+--------------------Start Log 2022-12-29 00:40:14--------------------
+2022-12-29 00:40:14: Successfully registered 28 application commands for global
+2022-12-29 00:40:14: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 00:40:14: test_bot#9176 logged successfully.
+2022-12-29 00:40:14: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+--------------------Start Log 2022-12-29 00:42:18--------------------
+2022-12-29 00:42:18: Successfully registered 28 application commands for global
+2022-12-29 00:42:18: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 00:42:18: test_bot#9176 logged successfully.
+2022-12-29 00:42:18: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:42:18: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:42:18: Command: /set 'ticket status' 'on'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:42:18: Command: /set 'ticket status' 'on'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:42:18: Command: /set 'ticket status' 'off'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:42:18: Command: /set 'ticket status' 'on'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
+2022-12-29 00:42:18: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #ahahh(<#988501605034889226>)
