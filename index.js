@@ -21,6 +21,7 @@ const {
     ButtonBuilder,
     ButtonStyle,
     PermissionsBitField,
+    PermissionFlagsBits,
     AttachmentBuilder
 } = require('discord.js');
 
@@ -447,47 +448,90 @@ bot.on('interactionCreate', async interaction => {
                     await interaction.update({ embeds: [text], components: [] });
                 }
             } else if (interaction.customId === 'create_ticket') {
-                log.write("A ticket has been created.", interaction.member, interaction.channel)
-                var user = interaction.member
+                var cooldown = JSON.parse(fs.readFileSync('./ticket_cooldown.json', 'utf8'));
+                if (cooldown['count'] >= settings.tickets_max) {
+                    //send a message if the user dosent have the permission.
+                    const text = new EmbedBuilder()
+                        .setColor('#C0392B')
+                        .setTitle('**Error**')
+                        .setDescription(`Sorry too many tickets has been created, please try again later.`)
+                    var error = await interaction.channel.send({ embeds: [text] })
+                    await interaction.update({ fetchReply: false });
+                    return
+                }else {
+                    cooldown['count'] ++;
+                }
 
-                //create the channel
-                var channel = await interaction.guild.channels.create({
-                    name: '❘-🎟️-Ticket-' + settings.ticket_number,
-                    type: 0,
-                    position: 0,
-                    topic: `Ticket create by ${interaction.member} (${interaction.member.id}) at ${dt.format('Y-m-d H:M:S')}`
-                })
+                if (!Object.hasOwn(cooldown, interaction.user.id)) {
+                    cooldown[interaction.user.id] =  Math.round(Date.now() / 1000)
+                    fs.writeFileSync("./ticket_cooldown.json", JSON.stringify(cooldown))
+                }
 
-                //First message in the ticket channel
-                const text = new EmbedBuilder()
-                    .setColor('#6c3483 ')
-                    .setTitle(`**Tickets #${settings.ticket_number}**`)
-                    .setThumbnail('attachment://tickets-icon.png')
-                    .setDescription("You have create a new tickets, please explain \
-                                    your problems and a @Modérateur or a @Divinités \
-                                    will be comme to help you. Thanks to not ping the \
-                                    staff, and be pacient.")
-                //button for deleting tickets.
-                const row = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setLabel(`Close Ticket`)
-                            .setCustomId('close_ticket')
-                            .setStyle(ButtonStyle.Danger),
-                    );
+                if (cooldown[interaction.user.id] <=  Math.round(Date.now() / 1000)) {
+                    log.write("A ticket has been created.", interaction.member, interaction.channel)
+                    var user = interaction.member
 
-                channel.send({
-                    embeds: [text],
-                    files: [{
-                        attachment: `./images/obj/tickets-parts/tickets-icon.png`,
-                        name: 'tickets-icon.png'
-                    }],
-                    components: [row]
-                })
-                settings.ticket_number = settings.ticket_number + 1
-                fs.writeFileSync("./settings.json", JSON.stringify(settings));
+                    //create the channel
+                    var channel = await interaction.guild.channels.create({
+                        name: '❘-🎟️-Ticket-' + settings.ticket_number,
+                        type: 0,
+                        position: 1,
+                        topic: `Ticket create by ${interaction.member} (${interaction.member.id}) at ${dt.format('Y-m-d H:M:S')}`
+                    })
+                    await channel.setParent(settings.ticket_catagory)
+                    await channel.permissionOverwrites.edit(interaction.user, {
+                        'SendMessages': true,
+                        'AttachFiles': true,
+                        'ReadMessageHistory': true,
+                        'AddReactions': true,
+                        'ViewChannel': true,
+                    })
 
-                await interaction.update({ fetchReply: false });
+                    //First message in the ticket channel
+                    const text = new EmbedBuilder()
+                        .setColor('#6c3483 ')
+                        .setTitle(`**Tickets #${settings.ticket_number}**`)
+                        .setThumbnail('attachment://tickets-icon.png')
+                        .setDescription("You have create a new tickets, please explain \
+                                your problems and a @Modérateur or a @Divinités \
+                                will be comme to help you. Thanks to not ping the \
+                                staff, and be pacient.")
+                    //button for deleting tickets.
+                    const row = new ActionRowBuilder()
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setLabel(`Close Ticket`)
+                                .setCustomId('close_ticket')
+                                .setStyle(ButtonStyle.Danger),
+                        );
+
+                    channel.send({
+                        embeds: [text],
+                        files: [{
+                            attachment: `./images/obj/tickets-parts/tickets-icon.png`,
+                            name: 'tickets-icon.png'
+                        }],
+                        components: [row]
+                    })
+                    settings.ticket_number = settings.ticket_number + 1
+                    fs.writeFileSync("./settings.json", JSON.stringify(settings));
+
+                    await interaction.update({ fetchReply: false });
+                    cooldown[interaction.user.id] = Math.round(Date.now() / 1000) + (5 * 60)
+                    fs.writeFileSync("./ticket_cooldown.json", JSON.stringify(cooldown))
+
+                } else {
+                    //send a message if the user dosent have the permission.
+                    const text = new EmbedBuilder()
+                        .setColor('#C0392B')
+                        .setTitle('**Error**')
+                        .setDescription(`You already have create a ticket, please wait <t:${cooldown[interaction.user.id]}:R>`)
+                    var error = await interaction.channel.send({ embeds: [text] })
+                    await interaction.update({ fetchReply: false });
+                    var interval = setTimeout(async () => { try { await error.delete() } catch { } }, 10 * 1000)
+
+                }
+
 
             } else if (interaction.customId === 'close_ticket') {
 
@@ -526,6 +570,9 @@ bot.on('interactionCreate', async interaction => {
                         }
 
                     });
+                    var cooldown = JSON.parse(fs.readFileSync('./ticket_cooldown.json', 'utf8'));
+                    cooldown['count'] --;
+                    fs.writeFileSync("./ticket_cooldown.json", JSON.stringify(cooldown))
 
                     //delete the channel.
                     log.write('End the ticket', interaction.author, interaction.channel)
