@@ -458,16 +458,16 @@ bot.on('interactionCreate', async interaction => {
                     var error = await interaction.channel.send({ embeds: [text] })
                     await interaction.update({ fetchReply: false });
                     return
-                }else {
-                    cooldown['count'] ++;
+                } else {
+                    cooldown['count']++;
                 }
 
                 if (!Object.hasOwn(cooldown, interaction.user.id)) {
-                    cooldown[interaction.user.id] =  Math.round(Date.now() / 1000)
+                    cooldown[interaction.user.id] = Math.round(Date.now() / 1000)
                     fs.writeFileSync("./ticket_cooldown.json", JSON.stringify(cooldown))
                 }
 
-                if (cooldown[interaction.user.id] <=  Math.round(Date.now() / 1000)) {
+                if (cooldown[interaction.user.id] <= Math.round(Date.now() / 1000)) {
                     log.write("A ticket has been created.", interaction.member, interaction.channel)
                     var user = interaction.member
 
@@ -571,7 +571,7 @@ bot.on('interactionCreate', async interaction => {
 
                     });
                     var cooldown = JSON.parse(fs.readFileSync('./ticket_cooldown.json', 'utf8'));
-                    cooldown['count'] --;
+                    cooldown['count']--;
                     fs.writeFileSync("./ticket_cooldown.json", JSON.stringify(cooldown))
 
                     //delete the channel.
@@ -781,7 +781,11 @@ bot.on("messageCreate", async (message) => {
                                         .catch(err => log.write(err));
                                 }
                             });
-
+                            //try to delete the downloaded image.
+                            if (fs.existsSync(path)) {
+                                fs.unlinkSync(path)
+                                    .catch(err => log.write(err));
+                            }
 
                         }
                     })
@@ -802,6 +806,11 @@ bot.on("messageCreate", async (message) => {
                                 )
                                 .catch(err => log.write(err));
                         });
+                        //try to delete the downloaded image.
+                        if (fs.existsSync(path)) {
+                            fs.unlinkSync(path)
+                                .catch(err => log.write(err));
+                        }
                     }
                 }
             }
@@ -838,6 +847,11 @@ bot.on("messageCreate", async (message) => {
                                         )
                                         .catch(err => log.write(err));
                                 });
+                                //try to delete the downloaded image.
+                                if (fs.existsSync(path)) {
+                                    fs.unlinkSync(path)
+                                        .catch(err => log.write(err));
+                                }
                             }
                         });
                     }
@@ -881,6 +895,12 @@ bot.on("messageCreate", async (message) => {
                                     .then(log.write(`Anonyme file ${name} send to channel ${link}`, message.member, message.channel))
                                     .catch(err => log.write(err));
                             });
+
+                            //try to delete the downloaded image.
+                            if (fs.existsSync(path)) {
+                                fs.unlinkSync(path)
+                                    .catch(err => log.write(err));
+                            }
                         }
                     });
                 }
@@ -897,11 +917,7 @@ bot.on("messageCreate", async (message) => {
                     });
                 }
             }
-            //try to delete the downloaded image.
-            if (fs.existsSync(i_path)) {
-                fs.unlinkSync(i_path)
-                    .catch(err => log.write(err));
-            }
+
 
         } catch (error) {
             log.write(error, message.member, message.channel);

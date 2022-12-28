@@ -1196,3 +1196,9 @@
 2022-12-29 00:04:39: test_bot#9176 logged successfully.
 2022-12-29 00:04:39: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #général(<#948170961360916543>)
 2022-12-29 00:04:39: DiscordAPIError[10062]: Unknown interaction
+--------------------Start Log 2022-12-29 00:09:58--------------------
+2022-12-29 00:09:58: Successfully registered 28 application commands for global
+2022-12-29 00:09:58: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 00:09:58: test_bot#9176 logged successfully.
+2022-12-29 00:09:58: [object Object] by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-29 00:09:58: [object Object] by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
