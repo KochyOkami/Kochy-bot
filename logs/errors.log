@@ -304,3 +304,80 @@
 2022-12-29 12:07:22: cookie send
 2022-12-29 12:07:22: user send
 2022-12-29 12:07:22: cookie send
+2022-12-29 12:07:22: cookie send
+2022-12-29 12:07:22: user send
+2022-12-29 12:07:22: user send
+2022-12-29 12:07:22: cookie send
+--------------------Start Log 2022-12-29 12:11:58--------------------
+2022-12-29 12:11:58: Successfully registered 28 application commands for global
+2022-12-29 12:11:58: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:11:58: test_bot#9176 logged successfully.
+2022-12-29 12:11:58: 415881207901978624415881207901978624
+2022-12-29 12:11:58: 415881207901978624415881207901978624
+2022-12-29 12:11:58: cookie send
+2022-12-29 12:11:58: user send
+2022-12-29 12:11:58: user send
+2022-12-29 12:11:58: cookie send
+2022-12-29 12:11:58: user send
+2022-12-29 12:11:58: cookie send
+--------------------Start Log 2022-12-29 12:16:42--------------------
+2022-12-29 12:16:42: Successfully registered 28 application commands for global
+2022-12-29 12:16:42: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:16:42: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-29 12:17:19--------------------
+2022-12-29 12:17:19: Successfully registered 28 application commands for global
+2022-12-29 12:17:19: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:17:19: test_bot#9176 logged successfully.
+--------------------Start Log 2022-12-29 12:17:43--------------------
+2022-12-29 12:17:43: Successfully registered 28 application commands for global
+2022-12-29 12:17:43: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:17:43: test_bot#9176 logged successfully.
+2022-12-29 12:17:43: voice last [object Object] new [object Object]
+2022-12-29 12:17:43: voice last [object Object] new [object Object]
+2022-12-29 12:17:43: user send
+2022-12-29 12:17:43: cookie send
+--------------------Start Log 2022-12-29 12:18:57--------------------
+2022-12-29 12:18:57: Successfully registered 28 application commands for global
+2022-12-29 12:18:57: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:18:57: test_bot#9176 logged successfully.
+2022-12-29 12:18:57: voice last [object Object] new [object Object]
+2022-12-29 12:18:57: voice last [object Object] new [object Object]
+--------------------Start Log 2022-12-29 12:25:20--------------------
+2022-12-29 12:25:20: Successfully registered 28 application commands for global
+2022-12-29 12:25:20: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:25:20: test_bot#9176 logged successfully.
+2022-12-29 12:25:20: unbanned [object Object]
+2022-12-29 12:25:20: user send
+2022-12-29 12:25:20: cookie send
+2022-12-29 12:25:20: <@1025477865434796064>
+2022-12-29 12:25:20: TypeError [InvalidType]: Supplied roles is not a Role, Snowflake or Array or Collection of Roles or Snowflakes.
+2022-12-29 12:25:20: new <@1025477865434796064>
+--------------------Start Log 2022-12-29 12:30:08--------------------
+2022-12-29 12:30:08: Successfully registered 28 application commands for global
+2022-12-29 12:30:08: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:30:08: test_bot#9176 logged successfully.
+2022-12-29 12:30:08: unbanned [object Object]
+2022-12-29 12:30:08: banned [object Object]
+2022-12-29 12:30:08: user send
+2022-12-29 12:30:08: cookie send
+--------------------Start Log 2022-12-29 12:31:55--------------------
+2022-12-29 12:31:55: Successfully registered 28 application commands for global
+2022-12-29 12:31:55: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:31:55: test_bot#9176 logged successfully.
+2022-12-29 12:31:55: banned [object Object]
+2022-12-29 12:31:55: user send
+2022-12-29 12:31:55: cookie send
+--------------------Start Log 2022-12-29 12:33:03--------------------
+2022-12-29 12:33:03: Successfully registered 28 application commands for global
+2022-12-29 12:33:03: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:33:03: test_bot#9176 logged successfully.
+2022-12-29 12:33:03: unbanned [object Object]
+2022-12-29 12:33:03: banned [object Object]
+--------------------Start Log 2022-12-29 12:42:37--------------------
+2022-12-29 12:42:37: Successfully registered 28 application commands for global
+2022-12-29 12:42:37: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 12:42:37: test_bot#9176 logged successfully.
+2022-12-29 12:42:37: delete @everyone I'm ready ^^
+2022-12-29 12:42:37: last fs new fssd sd
+2022-12-29 12:42:37: user send
+2022-12-29 12:42:37: cookie send

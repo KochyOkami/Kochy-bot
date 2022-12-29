@@ -7,6 +7,7 @@ const bot = new Discord.Client({
         "GuildWebhooks",
         "GuildMembers",
         "GuildBans",
+        "GuildVoiceStates"
     ]
 });
 //systemctl stop yaoicute.service
@@ -63,7 +64,7 @@ for (const file of commandFiles) {
     bot.commands.set(command.data.name, command)
     console.log(command.data.name)
 }
-var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+
 bot.on("ready", async () => {
     try {
         //set the presence of the bot
@@ -1006,7 +1007,7 @@ bot.on("channelUpdate", async (channel) => {
 bot.on('guildBanAdd', async (ban) => {
     var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
     var log_channel = await bot.channels.fetch(settings.log_channel)
-    console.log(ban)
+
     const text = new EmbedBuilder()
         .setColor('#6c3483')
         .setTitle('**Banned**')
@@ -1017,6 +1018,7 @@ bot.on('guildBanAdd', async (ban) => {
             { name: ':robot:Bot:', value: `${ban.user.bot}`, inline: true },
             { name: 'Reson', value: `${ban.reason}` },
         )
+
     await log_channel.send({ embeds: [text] });
     log.write(`banned ${ban}`);
 })
@@ -1094,7 +1096,7 @@ bot.on('invitationCreate', async (invitation) => {
             { name: ':robot:Bot:', value: invitation.inviter.bot.toString(), inline: true },
             { name: 'Create at', value: `*<t:${Math.round(invitation.createdTimestamp / 1000)}:R>*` },
             { name: 'Expire', value: `*<t:${Math.round(invitation.expiresTimestamp / 1000)}:R>*` },
-            { name: 'Max Usage:', value: `${invitation.maxUses}`}
+            { name: 'Max Usage:', value: `${invitation.maxUses}` }
         )
     await log_channel.send({ embeds: [text] });
     log.write(`invit ${invitation}`);
@@ -1109,7 +1111,7 @@ bot.on('messageDelete', async (message) => {
         .setTitle('**Message Deleted**')
         .setThumbnail(`${message.author.avatarURL()}`)
         .addFields(
-            { name: 'User:', value: `${message.author.tag}`  },
+            { name: 'User:', value: `${message.author.tag}` },
             { name: 'Message:', value: `${message.content}` }
         )
     await log_channel.send({ embeds: [text] });
@@ -1139,7 +1141,33 @@ bot.on('userUpdate', async (old_user, new_user) => {
 })
 
 bot.on('voiceStateUpdate', async (old_state, new_state) => {
-    log.write(old_state + new_state);
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+    if (new_state.channel == null) {
+        const text = new EmbedBuilder()
+            .setColor('#6c3483')
+            .setTitle('**Voice Exit**')
+            .setThumbnail(`${new_state.member.user.avatarURL()}`)
+            .addFields(
+                { name: 'User:', value: `${new_state.member.user.tag}` },
+                { name: 'Voice channel:', value: `${old_state.channel}` }
+            )
+        await log_channel.send({ embeds: [text] });
+    } else {
+        const text = new EmbedBuilder()
+            .setColor('#6c3483')
+            .setTitle('**Voice Enter**')
+            .setThumbnail(`${new_state.member.user.avatarURL()}`)
+            .addFields(
+                { name: 'User:', value: `${new_state.member.user.tag}` },
+                { name: 'Voice channel:', value: `${new_state.channel}` }
+            )
+        await log_channel.send({ embeds: [text] });
+    }
+
+
+
+    log.write(`voice last ${old_state} new ${new_state}`);
 })
 
 bot.on('warn', async (warn) => {
