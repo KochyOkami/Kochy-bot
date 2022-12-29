@@ -381,3 +381,13 @@
 2022-12-29 12:42:37: last fs new fssd sd
 2022-12-29 12:42:37: user send
 2022-12-29 12:42:37: cookie send
+--------------------Start Log 2022-12-29 13:16:10--------------------
+2022-12-29 13:16:10: Successfully registered 28 application commands for global
+2022-12-29 13:16:10: TypeError: Cannot read properties of undefined (reading 'statusCode')
+2022-12-29 13:16:10: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-29 13:16:10: test_bot#9176 logged successfully.
+2022-12-29 13:16:10: last dsx new dsx d
+2022-12-29 13:16:10: delete dsx d
+2022-12-29 13:16:10: user send
+2022-12-29 13:16:10: cookie send
+2022-12-29 13:16:10: delete nooo

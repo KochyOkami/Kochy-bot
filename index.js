@@ -1112,7 +1112,8 @@ bot.on('messageDelete', async (message) => {
         .setThumbnail(`${message.author.avatarURL()}`)
         .addFields(
             { name: 'User:', value: `${message.author.tag}` },
-            { name: 'Message:', value: `${message.content}` }
+            { name: 'Message:', value: `${message.content}` },
+            { name: 'Link', value: `${message.url}` }
         )
     await log_channel.send({ embeds: [text] });
     log.write(`delete ${message}`);
@@ -1129,7 +1130,8 @@ bot.on('messageUpdate', async (old_message, new_message) => {
         .addFields(
             { name: 'User:', value: `${old_message.author.tag}` },
             { name: 'Old Message:', value: `${old_message.content}` },
-            { name: 'New Message:', value: `${new_message.content}` }
+            { name: 'New Message:', value: `${new_message.content}` },
+            { name: 'Link', value: `${new_message.url}` }
         )
 
     await log_channel.send({ embeds: [text] });
