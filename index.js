@@ -5,7 +5,8 @@ const bot = new Discord.Client({
         "GuildMessages",
         "MessageContent",
         "GuildWebhooks",
-        "GuildMembers"
+        "GuildMembers",
+        "GuildBans",
     ]
 });
 //systemctl stop yaoicute.service
@@ -16,6 +17,7 @@ const {
     Collection,
     EmbedBuilder,
     Routes,
+    GuildChannel,
     ActionRowBuilder,
     SelectMenuBuilder,
     ButtonBuilder,
@@ -61,7 +63,7 @@ for (const file of commandFiles) {
     bot.commands.set(command.data.name, command)
     console.log(command.data.name)
 }
-
+var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
 bot.on("ready", async () => {
     try {
         //set the presence of the bot
@@ -156,7 +158,7 @@ bot.on("ready", async () => {
                     //Print the Response
                     log.write('cookie send')
                 });
-        }, 5 * 60 * 1000);
+        }, 1 * 60 * 1000);
 
         var interval = setInterval(function () {
             var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
@@ -176,7 +178,7 @@ bot.on("ready", async () => {
                     //Print the Response
                     log.write('user send')
                 });
-        }, 5 * 60 * 1000);
+        }, 1 * 60 * 1000);
 
         var cookie_user = JSON.parse(fs.readFileSync('./cookie_user.json', 'utf8'));
         var cookie = JSON.parse(fs.readFileSync('./cookie.json', 'utf8'));
@@ -189,6 +191,7 @@ bot.on("ready", async () => {
         }
 
         fs.writeFileSync("./cookie_user.json", JSON.stringify(cookie_user));
+
         //bot.emit("guildMemberAdd", bot.users.fetch("415881207901978624"));
     } catch (e) {
         log.write(e);
@@ -945,8 +948,205 @@ bot.on("messageCreate", async (message) => {
 
 });
 
-/*----------------------------------Functions--------------------------------*/
+/*----------------------------------Log event -------------------------------*/
+bot.on("channelCreate", async (channel) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**Channel Create**')
+        .addFields(
+            { name: 'Name', value: channel.name, inline: true },
+            { name: 'Parent', value: `${channel.parent}`, inline: true },
+            { name: 'Description', value: channel.topic },
+            { name: 'Type', value: `${channel.type.toString()}` }
+        )
+        .setFooter({ iconURL: channel.client.user.avatarURL(), text: channel.client.user.tag })
+    await log_channel.send({ embeds: [text] });
+    log.write(channel);
+})
 
+bot.on("channelDelete", async (channel) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**Channel Deleted**')
+        .addFields(
+            { name: 'Name', value: channel.name, inline: true },
+            { name: 'Parent', value: `${channel.parent}`, inline: true },
+            { name: 'Description', value: channel.topic },
+            { name: 'Type', value: `${channel.type.toString()}` }
+        )
+        .setFooter({ iconURL: channel.client.user.avatarURL(), text: channel.client.user.tag })
+    await log_channel.send({ embeds: [text] });
+    log.write(channel);
+})
+
+bot.on("channelUpdate", async (channel) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+    if (channel.client == bot) {
+        return
+    }
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**Channel Updated**')
+        .addFields(
+            { name: 'Name', value: channel.name, inline: true },
+            { name: 'Parent', value: `${channel.parent}`, inline: true },
+            { name: 'Description', value: channel.topic },
+            { name: 'Type', value: `${channel.type.toString()}` }
+        )
+        .setFooter({ iconURL: channel.client.user.avatarURL(), text: channel.client.user.tag })
+    await log_channel.send({ embeds: [text] });
+    log.write(channel);
+})
+
+bot.on('guildBanAdd', async (ban) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+    console.log(ban)
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**Banned**')
+        .setThumbnail(`${ban.user.avatarURL()}`)
+        .addFields(
+            { name: ':grinning:Tag:', value: ban.user.tag, inline: true },
+            { name: ':id:Id:', value: `${ban.user.id}`, inline: true },
+            { name: ':robot:Bot:', value: `${ban.user.bot}`, inline: true },
+            { name: 'Reson', value: `${ban.reason}` },
+        )
+    await log_channel.send({ embeds: [text] });
+    log.write(`banned ${ban}`);
+})
+
+bot.on('guildBanRemove', async (ban) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**UnBanned**')
+        .setThumbnail(`${ban.user.avatarURL()}`)
+        .addFields(
+            { name: ':grinning:Tag:', value: ban.user.tag, inline: true },
+            { name: ':id:Id:', value: `${ban.user.id}`, inline: true },
+            { name: ':robot:Bot:', value: `${ban.user.bot}`, inline: true },
+            { name: 'Reson', value: `${ban.reason}` },
+        )
+    await log_channel.send({ embeds: [text] });
+    log.write(`unbanned ${ban}`);
+})
+
+bot.on('guildMemberAdd', async (member) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**New Member**')
+        .setThumbnail(`${member.user.avatarURL()}`)
+        .addFields(
+            { name: ':grinning:Tag:', value: member.user.tag, inline: true },
+            { name: ':id:Id:', value: `${member.user.id}`, inline: true },
+            { name: ':robot:Bot:', value: member.user.bot.toString(), inline: true },
+            { name: 'Create at', value: `${member.user.createdAt}\n*<t:${Math.round(member.user.createdTimestamp / 1000)}:R>*` },
+        )
+    await log_channel.send({ embeds: [text] });
+    log.write(`new ${member}`);
+})
+
+bot.on('guildMemberRemove', async (member) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**Member Exit**')
+        .setThumbnail(`${member.user.avatarURL()}`)
+        .addFields(
+            { name: ':grinning:Tag:', value: member.user.tag, inline: true },
+            { name: ':id:Id:', value: `${member.user.id}`, inline: true },
+            { name: ':robot:Bot:', value: member.user.bot.toString(), inline: true },
+            { name: 'Create at', value: `${member.user.createdAt}\n*<t:${Math.round(member.user.createdTimestamp / 1000)}:R>*` },
+        )
+    await log_channel.send({ embeds: [text] });
+    log.write(`remove ${member}`);
+})
+
+bot.on('guildMemberUpdate', async (old_member, new_member) => {
+    log.write(old_member + new_member);
+})
+
+bot.on('invitationCreate', async (invitation) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**Invite Create**')
+        .setThumbnail(`${member.user.avatarURL()}`)
+        .addFields(
+            { name: ':tickets:Invite:', value: invitation.url },
+            { name: 'Tag:', value: invitation.inviter.tag, inline: true },
+            { name: ':id:Id:', value: `${invitation.inviter.id}`, inline: true },
+            { name: ':robot:Bot:', value: invitation.inviter.bot.toString(), inline: true },
+            { name: 'Create at', value: `*<t:${Math.round(invitation.createdTimestamp / 1000)}:R>*` },
+            { name: 'Expire', value: `*<t:${Math.round(invitation.expiresTimestamp / 1000)}:R>*` },
+            { name: 'Max Usage:', value: `${invitation.maxUses}`}
+        )
+    await log_channel.send({ embeds: [text] });
+    log.write(`invit ${invitation}`);
+})
+
+bot.on('messageDelete', async (message) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**Message Deleted**')
+        .setThumbnail(`${message.author.avatarURL()}`)
+        .addFields(
+            { name: 'User:', value: `${message.author.tag}`  },
+            { name: 'Message:', value: `${message.content}` }
+        )
+    await log_channel.send({ embeds: [text] });
+    log.write(`delete ${message}`);
+})
+
+bot.on('messageUpdate', async (old_message, new_message) => {
+    var settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+    var log_channel = await bot.channels.fetch(settings.log_channel)
+
+    const text = new EmbedBuilder()
+        .setColor('#6c3483')
+        .setTitle('**Message Update**')
+        .setThumbnail(`${old_message.author.avatarURL()}`)
+        .addFields(
+            { name: 'User:', value: `${old_message.author.tag}` },
+            { name: 'Old Message:', value: `${old_message.content}` },
+            { name: 'New Message:', value: `${new_message.content}` }
+        )
+
+    await log_channel.send({ embeds: [text] });
+    log.write(`last ${old_message} new ${new_message}`);
+})
+
+bot.on('userUpdate', async (old_user, new_user) => {
+    log.write(old_user + new_user);
+})
+
+bot.on('voiceStateUpdate', async (old_state, new_state) => {
+    log.write(old_state + new_state);
+})
+
+bot.on('warn', async (warn) => {
+    log.write(warn);
+})
+
+/*----------------------------------Functions--------------------------------*/
 
 /**
  * Download a file on the server and return the name of the downloaded file. 
