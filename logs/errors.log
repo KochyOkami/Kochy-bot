@@ -391,3 +391,50 @@
 2022-12-29 13:16:10: user send
 2022-12-29 13:16:10: cookie send
 2022-12-29 13:16:10: delete nooo
+--------------------Start Log 2022-12-29 19:15:30--------------------
+2022-12-29 19:15:30: Successfully registered 28 application commands for global
+2022-12-29 19:15:30: YaoiCute#4443 logged successfully.
+2022-12-29 19:15:30: Command: /set_ticket  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #🎟-tickets(<#1058085077248131172>)
+--------------------Start Log 2022-12-29 19:21:23--------------------
+2022-12-29 19:21:23: Successfully registered 28 application commands for global
+2022-12-29 19:21:23: delete ed
+2022-12-29 19:21:23: YaoiCute#4443 logged successfully.
+2022-12-29 19:21:23: user send
+2022-12-29 19:21:23: cookie send
+2022-12-29 19:21:23: <@1034137572722610237>
+2022-12-29 19:21:23: 10341375727226102371034137572722610237
+2022-12-29 19:21:23: Error: Received one or more errors
+2022-12-29 19:21:23: 10341375727226102371034137572722610237
+2022-12-29 19:21:23: new <@1034137572722610237>
+2022-12-29 19:21:23: Error: Received one or more errors
+2022-12-29 19:21:23: user send
+2022-12-29 19:21:23: cookie send
+2022-12-29 19:21:23: user send
+2022-12-29 19:21:23: cookie send
+--------------------Start Log 2022-12-29 19:25:37--------------------
+2022-12-29 19:25:37: Successfully registered 28 application commands for global
+2022-12-29 19:25:37: YaoiCute#4443 logged successfully.
+2022-12-29 19:25:37: Command: /set 'ticket log' '1057750799763120128'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #•logs🎍(<#961894734752800819>)
+2022-12-29 19:25:37: Error: Received one or more errors
+2022-12-29 19:25:37: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #🎟-tickets(<#1058085077248131172>)
+2022-12-29 19:25:37: <#1058088663923310642>
+2022-12-29 19:25:37: DiscordAPIError[50035]: Invalid Form Body
+parent_id[CHANNEL_PARENT_INVALID]: Category does not exist
+2022-12-29 19:25:37: Error: Received one or more errors
+2022-12-29 19:25:37: user send
+2022-12-29 19:25:37: cookie send
+2022-12-29 19:25:37: Command: /set 'ticket category' '962144218804002877'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #🎟-tickets(<#1058085077248131172>)
+2022-12-29 19:25:37: Error: Received one or more errors
+2022-12-29 19:25:37: Error: Received one or more errors
+2022-12-29 19:25:37: A ticket has been created. by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #🎟-tickets(<#1058085077248131172>)
+2022-12-29 19:25:37: <#1058088832794382366>
+2022-12-29 19:25:37: DiscordAPIError[10062]: Unknown interaction
+2022-12-29 19:25:37: Error: Received one or more errors
+2022-12-29 19:25:37: <#1058088663923310642>
+2022-12-29 19:25:37: <#1058088832794382366>
+2022-12-29 19:25:37: user send
+2022-12-29 19:25:37: cookie send
+2022-12-29 19:25:37: Command: /set 'log' '961894734752800819'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #•logs🎍(<#961894734752800819>)
+2022-12-29 19:25:37: Error: Received one or more errors
+2022-12-29 19:25:37: last ds new dsds
+2022-12-29 19:25:37: delete dsds

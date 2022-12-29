@@ -24,7 +24,10 @@ module.exports = {
                     { name: 'Tickets status', value: 'ticket status' },
                     { name: 'Yaoi status', value: 'yaoi status' },
                     { name: 'Waiting time', value: 'waiting' },
-                    { name: 'Waiting Role', value: 'role' },)
+                    { name: 'Waiting Role', value: 'role' },
+                    { name: 'Log Channel', value: 'log' },
+                    { name: 'Ticket log channel', value: 'ticket log' },
+                    { name: 'Ticket category channel', value: 'ticket category' },)
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('value')
@@ -115,7 +118,17 @@ module.exports = {
                             return
                         }
 
+                    } else if (option === 'log') {
+                        settings.log_channel = await interaction.options.getString('value', false)
+
+                    } else if (option === 'ticket log') {
+                        settings.ticket_log_channel = await interaction.options.getString('value', false)
+
+                    }else if (option === 'ticket category') {
+                        settings.ticket_catagory = await interaction.options.getString('value', false)
+
                     }
+
 
 
 
