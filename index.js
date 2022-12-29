@@ -826,11 +826,6 @@ bot.on("messageCreate", async (message) => {
                                 )
                                 .catch(err => log.write(err));
                         });
-                        //try to delete the downloaded image.
-                        if (fs.existsSync(path)) {
-                            fs.unlinkSync(path)
-                                .catch(err => log.write(err));
-                        }
                     }
                 }
             }
