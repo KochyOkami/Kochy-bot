@@ -802,10 +802,15 @@ bot.on("messageCreate", async (message) => {
                                 }
                             });
                             //try to delete the downloaded image.
-                            if (fs.existsSync(path)) {
-                                fs.unlinkSync(path)
-                                    .catch(err => log.write(err));
+                            try {
+                                if (fs.existsSync(path)) {
+                                    fs.unlinkSync(path)
+                                        .catch(err => log.write(err));
+                                }
+                            }catch(e){
+                                log.write(e);
                             }
+                            
 
                         }
                     })
@@ -863,9 +868,13 @@ bot.on("messageCreate", async (message) => {
                                         .catch(err => log.write(err));
                                 });
                                 //try to delete the downloaded image.
-                                if (fs.existsSync(path)) {
-                                    fs.unlinkSync(path)
-                                        .catch(err => log.write(err));
+                                try {
+                                    if (fs.existsSync(path)) {
+                                        fs.unlinkSync(path)
+                                            .catch(err => log.write(err));
+                                    }
+                                }catch(e){
+                                    log.write(e);
                                 }
                             }
                         });
@@ -912,9 +921,13 @@ bot.on("messageCreate", async (message) => {
                             });
 
                             //try to delete the downloaded image.
-                            if (fs.existsSync(path)) {
-                                fs.unlinkSync(path)
-                                    .catch(err => log.write(err));
+                            try {
+                                if (fs.existsSync(path)) {
+                                    fs.unlinkSync(path)
+                                        .catch(err => log.write(err));
+                                }
+                            }catch(e){
+                                log.write(e);
                             }
                         }
                     });
