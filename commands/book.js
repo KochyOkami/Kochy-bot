@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, AttachmentBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const log = require('../logs/logBuilder.js');
 const fs = require('fs');
@@ -58,7 +58,6 @@ module.exports = {
             var description = await interaction.options.getString('description', true);
             var language = await interaction.options.getString('language', true);
             var link = await interaction.options.getString('link', true);
-            var image = await interaction.options.getAttachment('image', false);
 
             const row = new ActionRowBuilder()
                 .addComponents(
@@ -67,6 +66,7 @@ module.exports = {
                         .setURL(link)
                         .setStyle(ButtonStyle.Link),
                 );
+
             var text = new EmbedBuilder()
                 .setColor('#ff36c5')
                 .setTitle(title)
@@ -75,11 +75,33 @@ module.exports = {
                 .setFooter({ text: language + "     by: " + interaction.member.displayName })
 
             if (await interaction.options.getAttachment('image')) {
-                text.setImage(image.url)
-                    .setThumbnail(image.url)
+                try {
+                    //Get the channel for save the ephemeral attachment
+                    var chann = await interaction.client.channels.fetch(settings.book_channel)
+
+                    //Send the attachment to the channel 
+                    var mess = await chann.send({ files: [await interaction.options.getAttachment('image', true)] })
+                }catch(e) {
+                    const text = new EmbedBuilder()
+                        .setColor('#C0392B')
+                        .setTitle('**Error**')
+                        .setDescription('The book save image is not defined.')
+                        .setFooter({ text: '/set `book save` `id`' })
+                    interaction.editReply({ embeds: [text] });
+                    return;
+                }
+                
+                var url = ''
+                var name = ''
+                mess.attachments.forEach(image => {
+                    url = image.url
+                    name = image.name
+                });
+
+                text.setImage(url)
+                    .setThumbnail(url)
 
             } else {
-
                 text.setThumbnail(config.unknown_book)
             }
 

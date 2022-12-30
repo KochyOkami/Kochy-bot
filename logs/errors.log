@@ -508,3 +508,143 @@ parent_id[CHANNEL_PARENT_INVALID]: Category does not exist
 2022-12-29 22:07:05: cookie send
 2022-12-29 22:07:05: en plus laprem faut que je m'achete de l'alcool by Sam Sam#9820(<@690141375420956715>) in channel #❘-général-1🎄(<#961094447284772906>)
 2022-12-29 22:07:05: je pars pas moi by Sam Sam#9820(<@690141375420956715>) in channel #❘-général-1🎄(<#961094447284772906>)
+--------------------Start Log 2022-12-30 21:44:29--------------------
+2022-12-30 21:44:29: Successfully registered 28 application commands for global
+2022-12-30 21:44:29: YaoiCute#4443 logged successfully.
+--------------------Start Log 2022-12-30 21:45:03--------------------
+2022-12-30 21:45:03: Successfully registered 28 application commands for global
+2022-12-30 21:45:03: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 21:45:03: test_bot#9176 logged successfully.
+2022-12-30 21:45:03: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058486068829245521'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:45:03: DiscordAPIError[50001]: Missing Access
+2022-12-30 21:45:03: DiscordAPIError[50001]: Missing Access
+2022-12-30 21:45:03: user send
+2022-12-30 21:45:03: cookie send
+2022-12-30 21:45:03: user send
+2022-12-30 21:45:03: cookie send
+2022-12-30 21:45:03: user send
+2022-12-30 21:45:03: cookie send
+--------------------Start Log 2022-12-30 21:49:05--------------------
+2022-12-30 21:49:05: Successfully registered 28 application commands for global
+2022-12-30 21:49:05: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 21:49:05: test_bot#9176 logged successfully.
+2022-12-30 21:49:05: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058486965948907551'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:49:05: DiscordAPIError[50001]: Missing Access
+2022-12-30 21:49:05: DiscordAPIError[50001]: Missing Access
+2022-12-30 21:49:05: user send
+2022-12-30 21:49:05: cookie send
+--------------------Start Log 2022-12-30 21:50:39--------------------
+2022-12-30 21:50:39: Successfully registered 28 application commands for global
+2022-12-30 21:50:39: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 21:50:39: test_bot#9176 logged successfully.
+2022-12-30 21:50:39: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058487359756324954'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:50:39: DiscordAPIError[50001]: Missing Access
+2022-12-30 21:50:39: DiscordAPIError[50001]: Missing Access
+--------------------Start Log 2022-12-30 21:51:34--------------------
+2022-12-30 21:51:34: Successfully registered 28 application commands for global
+2022-12-30 21:51:34: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 21:51:34: test_bot#9176 logged successfully.
+2022-12-30 21:51:34: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058487597510426715'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:51:34: DiscordAPIError[50006]: Cannot send an empty message
+2022-12-30 21:51:34: DiscordAPIError[50001]: Missing Access
+--------------------Start Log 2022-12-30 21:53:40--------------------
+2022-12-30 21:53:40: Successfully registered 28 application commands for global
+2022-12-30 21:53:40: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 21:53:40: test_bot#9176 logged successfully.
+2022-12-30 21:53:40: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058488139192225823'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:53:40: DiscordAPIError[50001]: Missing Access
+--------------------Start Log 2022-12-30 21:55:00--------------------
+2022-12-30 21:55:00: Successfully registered 28 application commands for global
+2022-12-30 21:55:00: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 21:55:00: test_bot#9176 logged successfully.
+2022-12-30 21:55:00: TypeError: Cannot read properties of undefined (reading 'statusCode')
+2022-12-30 21:55:00: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:55:00: DiscordAPIError[50001]: Missing Access
+2022-12-30 21:55:00: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058488486623203441'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:55:00: TypeError: Cannot read properties of undefined (reading 'url')
+2022-12-30 21:55:00: DiscordAPIError[50001]: Missing Access
+--------------------Start Log 2022-12-30 21:55:43--------------------
+2022-12-30 21:55:43: Successfully registered 28 application commands for global
+2022-12-30 21:55:43: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 21:55:43: test_bot#9176 logged successfully.
+2022-12-30 21:55:43: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058488634250117301'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:55:43: DiscordAPIError[10062]: Unknown interaction
+2022-12-30 21:55:43: DiscordAPIError[50001]: Missing Access
+2022-12-30 21:55:43: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058488696824938506'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 21:55:43: DiscordAPIError[50001]: Missing Access
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: cookie send
+2022-12-30 21:55:43: user send
+2022-12-30 21:55:43: cookie send
+--------------------Start Log 2022-12-30 22:06:37--------------------
+2022-12-30 22:06:37: Successfully registered 28 application commands for global
+2022-12-30 22:06:37: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 22:06:37: test_bot#9176 logged successfully.
+2022-12-30 22:06:37: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058491417225338880'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:06:37: ReferenceError: AttachmentBuilder is not defined
+2022-12-30 22:06:37: DiscordAPIError[50001]: Missing Access
+--------------------Start Log 2022-12-30 22:07:32--------------------
+2022-12-30 22:07:32: Successfully registered 28 application commands for global
+2022-12-30 22:07:32: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 22:07:32: test_bot#9176 logged successfully.
+2022-12-30 22:07:32: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:07:32: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:07:32: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058491670242537562'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:07:32: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:07:32: user send
+2022-12-30 22:07:32: cookie send
+--------------------Start Log 2022-12-30 22:08:54--------------------
+2022-12-30 22:08:54: Successfully registered 28 application commands for global
+2022-12-30 22:08:54: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 22:08:54: test_bot#9176 logged successfully.
+2022-12-30 22:08:54: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:08:54: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:08:54: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058491968465936384'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:08:54: DiscordAPIError[50001]: Missing Access
+--------------------Start Log 2022-12-30 22:11:48--------------------
+2022-12-30 22:11:48: Successfully registered 28 application commands for global
+2022-12-30 22:11:48: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058492785092726814'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:11:48: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058492842030399615'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:11:48: TypeError: Cannot read properties of undefined (reading 'statusCode')
+2022-12-30 22:11:48: DiscordAPIError[10062]: Unknown interaction
+2022-12-30 22:11:48: DiscordAPIError[10062]: Unknown interaction
+2022-12-30 22:11:48: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 22:11:48: test_bot#9176 logged successfully.
+2022-12-30 22:11:48: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:11:48: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:11:48: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com' '1058493039083012137'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:11:48: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:11:48: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:11:48: user send
+2022-12-30 22:11:48: cookie send
+2022-12-30 22:11:48: user send
+2022-12-30 22:11:48: cookie send
+--------------------Start Log 2022-12-30 22:17:06--------------------
+2022-12-30 22:17:06: Successfully registered 28 application commands for global
+2022-12-30 22:17:06: Error when sending staring message:  DiscordAPIError[50001]: Missing Access
+2022-12-30 22:17:06: test_bot#9176 logged successfully.
+2022-12-30 22:17:06: Command: /book 'light' 'za' 'eds' 'i' 'Français' 'https://lol.com'  by 『🐶Kochy_Okami🦮』#7398(<@415881207901978624>) in channel #eu(<#988784456959672350>)
+2022-12-30 22:17:06: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:17:06: DiscordAPIError[50001]: Missing Access
+2022-12-30 22:17:06: user send
+2022-12-30 22:17:06: cookie send
+2022-12-30 22:17:06: user send
+2022-12-30 22:17:06: cookie send
+2022-12-30 22:17:06: user send
+2022-12-30 22:17:06: cookie send
