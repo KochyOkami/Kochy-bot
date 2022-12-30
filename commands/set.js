@@ -15,6 +15,7 @@ module.exports = {
                 .addChoices(
                     { name: 'Book Light', value: 'book light' },
                     { name: 'Book Hard', value: 'book hard' },
+                    { name: 'Book Save', value: 'book save' },
                     { name: 'Box chance', value: 'box chance' },
                     { name: 'Box winning', value: 'box winning' },
                     { name: 'Cookie message', value: 'cookie' },
@@ -48,6 +49,9 @@ module.exports = {
 
                     } else if (option === 'book light') {
                         settings.light_book = await interaction.client.channels.fetch(await interaction.options.getString('value', true));
+                    
+                    } else if (option === 'book save') {
+                        settings.book_channel = parseInt(await interaction.options.getString('value', false))
 
                     } else if (option === 'box chance') {
                         settings.box_chance = parseInt(await interaction.options.getString('value', false))
@@ -124,7 +128,7 @@ module.exports = {
                     } else if (option === 'ticket log') {
                         settings.ticket_log_channel = await interaction.options.getString('value', false)
 
-                    }else if (option === 'ticket category') {
+                    } else if (option === 'ticket category') {
                         settings.ticket_catagory = await interaction.options.getString('value', false)
 
                     }
